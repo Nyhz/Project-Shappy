@@ -30,20 +30,10 @@ const groupSchema = new Schema({
         ref: "User"
     },
 
-    members: [{
-        type: Schema.Types.ObjectId,
-        ref: "User"
-    }],
-
-    slanders: [{
-        type: Schema.Types.ObjectId,
-        ref: "Slander"
-    }],
-
-    images: [{
-        type: Schema.Types.ObjectId,
-        ref: "Images"
-    }],
+    // members: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: "User"
+    // }],
 },
     {
         timestamps: true

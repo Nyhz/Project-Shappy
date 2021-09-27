@@ -6,6 +6,8 @@ const bcrypt = require("bcrypt")
 const bcryptSalt = 10
 
 const Group = require('./../models/Group.model')
+const Image = require('./../models/Image.model');
+const Slander = require("../models/Slander.model");
 
 
 router.post('/create', (req, res) => {
@@ -22,6 +24,58 @@ router.post('/create', (req, res) => {
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating group', err: err.message }))
 })
 
+router.get('/list', (req, res) => {
+
+    const id = '615094af051da6a78d694469' //TODO
+
+    Group
+        .find({ members: id })
+        .then((groups) => res.json({ code: 200, message: 'Groups fetched', groups }))
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching groups', err: err.message }))
+})
+
+router.get('/images', (req, res) => {
+
+    const groupId = '6151a8a9c522331a3ac4d0ca' //TODO
+
+    Image
+        .find({ groupRef: groupId })
+        .then((images) => res.json({ code: 200, message: 'Images fetched', images }))
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching images', err: err.message }))
+})
+
+
+router.get('/slanders', (req, res) => {
+
+    const groupId = '6151a8a9c522331a3ac4d0ca' //TODO
+
+    Slander
+        .find({ groupRef: groupId })
+        .then((slanders) => res.json({ code: 200, message: 'Slanders fetched', slanders }))
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching slanders', err: err.message }))
+})
+
+router.get('/tag', (req, res) => {
+
+    // const { tag } = req.body
+    const tag = 'asdf'
+
+    Image
+        .find({ tag })
+        .then((images) => res.json({ code: 200, message: 'Images fetched', images }))
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching images', err: err.message }))
+})
+
+router.get('/tag/:tag', (req, res) => {
+
+    // const { tag } = req.params
+    const tag = 'asdf'
+
+    Image
+        .find({ tag })
+        .then((images) => res.json({ code: 200, message: 'Images by tag fetched', images }))
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching images', err: err.message }))
+})
 
 
 module.exports = router

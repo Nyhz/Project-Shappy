@@ -9,7 +9,7 @@ const imageSchema = new Schema({
 
     likes: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     }],
 
     dislikes: [{
@@ -17,10 +17,10 @@ const imageSchema = new Schema({
         ref: 'User'
     }],
 
-    comments: [{
+    groupRef: {
         type: Schema.Types.ObjectId,
-        ref: "Comment"
-    }],
+        ref: "Group"
+    },
 
     tag: {
         type: String,
@@ -35,16 +35,11 @@ const imageSchema = new Schema({
         default: 0,
         required: true
     },
-
-    //     resistance: {
-    //         type: Number,
-    //         default: 1,
-    //         required: true,
-    //     }
 },
     {
         timestamps: true
     })
+
 const Image = model("Image", imageSchema);
 
 module.exports = Image;

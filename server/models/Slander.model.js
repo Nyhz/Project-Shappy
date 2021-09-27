@@ -16,6 +16,11 @@ const slanderSchema = new Schema({
         required: true,
     },
 
+    groupRef: {
+        type: Schema.Types.ObjectId,
+        ref: "Group"
+    },
+
     likes: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -36,12 +41,6 @@ const slanderSchema = new Schema({
         default: 0,
         required: true
     },
-
-    // resistance: {
-    //     type: Number,
-    //     default: 1,
-    //     required: true,
-    // }
 },
     {
         timestamps: true

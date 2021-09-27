@@ -41,10 +41,10 @@ const userSchema = new Schema({
     ref: 'Comment'
   }],
 
-  // groups: [{
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Group'
-  // }],
+  groups: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Group'
+  }],
 
   images: [{
     type: Schema.Types.ObjectId,
