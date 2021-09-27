@@ -27,7 +27,7 @@ const userSchema = new Schema({
   role: {
     type: String,
     required: true,
-    enum: ['admin', 'owner', 'user'],
+    enum: ['admin', 'user'],
     default: 'user',
   },
 
@@ -41,17 +41,17 @@ const userSchema = new Schema({
     ref: 'Comment'
   }],
 
-  groups: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Group'
-  }],
+  // groups: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Group'
+  // }],
 
   images: [{
     type: Schema.Types.ObjectId,
     ref: 'Image',
   }],
 
-  slander: [{
+  slanders: [{
     type: Schema.Types.ObjectId,
     ref: "Slander",
   }],

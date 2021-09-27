@@ -22,7 +22,6 @@ const commentSchema = new Schema({
         ref: 'User'
     },
 
-
     likes: {
         type: Number,
         required: true,

@@ -21,6 +21,15 @@ const groupSchema = new Schema({
         type: Date,
     },
 
+    isEnded: {
+        type: Boolean
+    },
+
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+
     members: [{
         type: Schema.Types.ObjectId,
         ref: "User"

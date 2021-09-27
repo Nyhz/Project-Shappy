@@ -2,23 +2,25 @@ const { Schema, model } = require("mongoose");
 
 const imageSchema = new Schema({
 
-    content: {
+    imageUrl: {
         type: String,
         required: true
     },
 
-    likes: {
-        type: Number
-    },
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
 
-    dislikes: {
-        type: Number
-    },
+    dislikes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
 
-    comments: {
+    comments: [{
         type: Schema.Types.ObjectId,
         ref: "Comment"
-    },
+    }],
 
     tag: {
         type: String,
@@ -34,11 +36,11 @@ const imageSchema = new Schema({
         required: true
     },
 
-    resistance: {
-        type: Number,
-        default: 1,
-        required: true,
-    }
+    //     resistance: {
+    //         type: Number,
+    //         default: 1,
+    //         required: true,
+    //     }
 },
     {
         timestamps: true

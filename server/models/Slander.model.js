@@ -16,18 +16,20 @@ const slanderSchema = new Schema({
         required: true,
     },
 
-    likes: {
-        type: Number,
-    },
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
 
-    dislikes: {
-        type: Number,
-    },
+    dislikes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
 
-    comments: {
+    comments: [{
         type: Schema.Types.ObjectId,
         ref: "Comment"
-    },
+    }],
 
     shields: {
         type: Number,
@@ -35,11 +37,11 @@ const slanderSchema = new Schema({
         required: true
     },
 
-    resistance: {
-        type: Number,
-        default: 1,
-        required: true,
-    }
+    // resistance: {
+    //     type: Number,
+    //     default: 1,
+    //     required: true,
+    // }
 },
     {
         timestamps: true
