@@ -91,6 +91,8 @@ router.put('/image/shield', (req, res) => { //TODO LINK DE LA IMAGEN EN PARAMS
             if (data[0] <= 0) {
                 res.json({ code: 200, message: 'User has no shields' })
             } else {
+                res.json({ code: 200, message: 'Image shielded successfuly' })
+
                 let newUserShields = --data[0]
                 return User
                     .findByIdAndUpdate(userId, { shields: newUserShields })
@@ -98,6 +100,54 @@ router.put('/image/shield', (req, res) => { //TODO LINK DE LA IMAGEN EN PARAMS
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to image', err: err.message }))
 })
+
+
+router.put('/image/attack', (req, res) => { //TODO LINK DE LA IMAGEN EN PARAMS
+
+    // const { id } = req.params
+    // const userId = req.session.currentUser
+
+    const id = '6151ca2692f0edebf2a0d746'
+    const userId = '615094af051da6a78d694469'
+
+    const data = []
+
+
+    User
+        .findById(userId)
+        .then(user => {
+            data.push(user.attacks)
+            return Image
+                .findById(id)
+        })
+        .then(image => {
+            data.push(image.shields)
+            if (data[0] <= 0) {
+                return
+            } else if (data[1] > 0) {
+                let newImageShields = --data[1]
+                return Image.
+                    findByIdAndUpdate(id, { shields: newImageShields })
+            } else {
+                return Image.
+                    findByIdAndRemove(id)
+            }
+        })
+        .then(() => {
+            if (data[0] <= 0) {
+                res.json({ code: 200, message: 'User has no attacks' })
+            } else {
+                res.json({ code: 200, message: 'Image attacked succesfuly' })
+                let newUserAttacks = --data[0]
+                return User
+                    .findByIdAndUpdate(userId, { attacks: newUserAttacks })
+            }
+        })
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to image', err: err.message }))
+})
+
+
+
 
 
 

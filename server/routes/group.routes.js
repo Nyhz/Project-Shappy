@@ -78,4 +78,51 @@ router.get('/tag/:tag', (req, res) => {
 })
 
 
+router.get('/desc', (req, res) => { //TODO Group Id params
+
+    // const { id } = req.params
+
+    const groupRef = '6151c2f176e7c343e24183a2'
+
+    Image
+        .find({ groupRef })
+        .sort({ 'createdAt': 'desc' })
+        .then((images) => {
+            res.json({ code: 200, message: 'Fetched images by group, order DESC', images })
+        })
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group images', err: err.message }))
+})
+
+router.get('/morelikes', (req, res) => { //TODO Group Id params
+
+    // const { id } = req.params
+
+    const groupRef = '6151a8a9c522331a3ac4d0ca'
+
+    Image
+        .find({ groupRef })
+        .sort({ 'likes': 'desc' })
+        .then((images) => {
+            res.json({ code: 200, message: 'Fetched images by group, ordered by popularity (HIGHER FIRST)', images })
+        })
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group images', err: err.message }))
+})
+
+router.get('/lesslikes', (req, res) => { //TODO Group Id params
+
+    // const { id } = req.params
+
+    const groupRef = '6151a8a9c522331a3ac4d0ca'
+
+    Image
+        .find({ groupRef })
+        .sort({ 'likes': 'asc' })
+        .then((images) => {
+            res.json({ code: 200, message: 'Fetched images by group, ordered by popularity (LOWER FIRST)', images })
+        })
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group images', err: err.message }))
+})
+
+
+
 module.exports = router
