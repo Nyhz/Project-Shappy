@@ -4,7 +4,7 @@ const contentRouter = require('./content.routes')
 const groupRouter = require('./group.routes')
 
 router.use("/auth", authRouter)
-router.use('/new', contentRouter)
+router.use('/content', contentRouter)
 router.use('/group', groupRouter)
 
 
