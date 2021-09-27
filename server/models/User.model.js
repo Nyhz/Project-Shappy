@@ -63,11 +63,16 @@ const userSchema = new Schema({
 
   shields: {
     type: Number,
+    required: true,
+    default: 1,
     max: 5,
+
   },
 
   attacks: {
     type: Number,
+    required: true,
+    default: 1,
     max: 2,
   },
 
