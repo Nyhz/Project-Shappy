@@ -8,13 +8,14 @@ const groupSchema = new Schema({
     },
 
     password: {
-        type: String
+        type: String,
+        required: true
     },
 
     groupAvatar: {
         type: String,
         required: true,
-        //default: to-do
+        default: 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
     },
 
     endDate: {
@@ -22,7 +23,9 @@ const groupSchema = new Schema({
     },
 
     isEnded: {
-        type: Boolean
+        type: Boolean,
+        default: false,
+        required: true
     },
 
     owner: {
@@ -30,10 +33,10 @@ const groupSchema = new Schema({
         ref: "User"
     },
 
-    // members: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: "User"
-    // }],
+    images: [{
+        type: Schema.Types.ObjectId,
+        ref: "Image"
+    }],
 },
     {
         timestamps: true

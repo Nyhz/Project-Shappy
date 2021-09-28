@@ -54,33 +54,31 @@ const userSchema = new Schema({
 
   slanders: [{
     type: Schema.Types.ObjectId,
-    ref: "Slander",
+    ref: "Slander"
   }],
 
   achievements: [{
     type: String,
-    //enum:[] todo
+    // enum:['Titán', ''] 
   }],
 
   shields: {
     type: Number,
     required: true,
     default: 1,
-    max: 8,
-
+    min: 0
   },
 
   attacks: {
     type: Number,
     required: true,
-    default: 1,
-    max: 2,
+    default: 1
   },
 
   coins: {
     type: Number,
     required: true,
-    default: 10,
+    default: 5,
     min: 0
   },
 },

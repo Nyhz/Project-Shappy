@@ -5,13 +5,14 @@ const User = require('./../models/User.model')
 
 router.get('/', (req, res) => {
 
-    // const { id} = req.session.currentUser
-
-    const id = '615094af051da6a78d694469'
+    const id = req.session.currentUser._id
 
     User
         .findById(id)
-        .then((user) => res.json({ code: 200, message: 'User profile retrieved', user }))
+        .then((user) => {
+            console.log(user)
+            res.json({ code: 200, message: 'User profile retrieved', user })
+        })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while retrieving user profile', err: err.message }))
 
 })
