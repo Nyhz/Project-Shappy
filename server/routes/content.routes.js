@@ -312,7 +312,7 @@ router.put('/image/shield', (req, res) => { //TODO LINK DE LA IMAGEN EN PARAMS
 })
 
 
-router.put('/image/attack', (req, res) => { //TODO LINK DE LA IMAGEN EN PARAMS
+router.put('/image/attack', (req, res) => {
 
     // const { id } = req.params
     // const userId = req.session.currentUser

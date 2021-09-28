@@ -28,7 +28,7 @@ router.get('/list', (req, res) => {
 
     // const { id} = req.session.currentUser
 
-    const id = '615094af051da6a78d694469'
+    const id = '6152e7fb9ba3688e1998bb78'
 
     User
         .findById(id)
