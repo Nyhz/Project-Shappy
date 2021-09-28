@@ -26,12 +26,17 @@ router.post('/create', (req, res) => {
 
 router.get('/list', (req, res) => {
 
-    const id = '615094af051da6a78d694469' //TODO
+    // const { id} = req.session.currentUser
 
-    Group
-        .find({ members: id })
-        .then((groups) => res.json({ code: 200, message: 'Groups fetched', groups }))
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching groups', err: err.message }))
+    const id = '615094af051da6a78d694469'
+
+    User
+        .findById(id)
+        .populate('groups')
+        .select('groups')
+        .then((user) => res.json({ code: 200, message: 'User groups retrieved', user }))
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while retrieving user groups', err: err.message }))
+
 })
 
 router.get('/images', (req, res) => {
