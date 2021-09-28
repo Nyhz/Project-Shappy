@@ -24,15 +24,6 @@ router.post('/create', (req, res) => {
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating group', err: err.message }))
 })
 
-router.get('/list', (req, res) => {
-
-    const id = '615094af051da6a78d694469' //TODO
-
-    Group
-        .find({ members: id })
-        .then((groups) => res.json({ code: 200, message: 'Groups fetched', groups }))
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching groups', err: err.message }))
-})
 
 router.get('/images', (req, res) => {
 
