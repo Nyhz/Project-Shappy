@@ -27,7 +27,7 @@ export default function Navigation(props) {
                     <Nav className="me-auto">
                         {props.loggedUser ?
                             <>
-                                <Link className="nav-link" to="#">Profile</Link>
+                                <Link className="nav-link" to="/profile">Profile</Link>
                                 <span className="nav-link" onClick={logout}>Logout</span>
                             </>
                             :
