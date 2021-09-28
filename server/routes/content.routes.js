@@ -30,18 +30,25 @@ router.put('/slander/like/', (req, res) => {
         .findById(id)
         .then((slander) => {
 
-            if (!slander.likes.includes(userId)) {
+            if (!slander.likes.includes(userId) && slander.dislikes.includes(userId)) {
 
                 Slander
-                    .findByIdAndUpdate(id, { $push: { likes: userId } })
-                    .then(() => res.json({ code: 200, message: 'Slander liked' }))
+                    .findByIdAndUpdate(id, { $push: { likes: userId }, $pull:{dislikes:userId} })
+                    .then(() => res.json({ code: 200, message: 'Slander liked case 1' }))
                     .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking slander', err: err.message }))
             }
-            else {
+            else if (!slander.likes.includes(userId) && !slander.dislikes.includes(userId)){
+
+                Slander
+                    .findByIdAndUpdate(id, { $push: { likes: userId }})
+                    .then(() => res.json({ code: 200, message: 'Slander liked case 2' }))
+                    .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking slander', err: err.message }))
+            }
+            else if (slander.likes.includes(userId)){
 
                 Slander
                     .findByIdAndUpdate(id, { $pull: { likes: userId } })
-                    .then(() => res.json({ code: 200, message: 'Slander like removed' }))
+                    .then(() => res.json({ code: 200, message: 'Slander like removed case 3' }))
                     .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking slander', err: err.message }))
             }
 
@@ -60,19 +67,26 @@ router.put('/slander/dislike/', (req, res) => {
         .findById(id)
         .then((slander) => {
 
-            if (!slander.dislikes.includes(userId)) {
+               if (!slander.dislikes.includes(userId) && slander.likes.includes(userId)) {
 
                 Slander
-                    .findByIdAndUpdate(id, { $push: { dislikes: userId } })
-                    .then(() => res.json({ code: 200, message: 'Slander disliked' }))
-                    .catch(err => res.status(500).json({ code: 500, message: 'DB error while disliking slander', err: err.message }))
+                    .findByIdAndUpdate(id, { $push: { dislikes: userId }, $pull:{likes:userId} })
+                    .then(() => res.json({ code: 200, message: 'Slander disliked case 1' }))
+                    .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking slander', err: err.message }))
             }
-            else {
+            else if (!slander.dislikes.includes(userId) && !slander.likes.includes(userId)){
+
+                Slander
+                    .findByIdAndUpdate(id, { $push: { dislikes: userId }})
+                    .then(() => res.json({ code: 200, message: 'Slander disliked case 2' }))
+                    .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking slander', err: err.message }))
+            }
+            else if (slander.dislikes.includes(userId)){
 
                 Slander
                     .findByIdAndUpdate(id, { $pull: { dislikes: userId } })
-                    .then(() => res.json({ code: 200, message: 'Slander dislike removed' }))
-                    .catch(err => res.status(500).json({ code: 500, message: 'DB error while disliking slander', err: err.message }))
+                    .then(() => res.json({ code: 200, message: 'Slander dislike removed case 3' }))
+                    .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking slander', err: err.message }))
             }
 
         })
@@ -105,28 +119,30 @@ router.put('/image/like/', (req, res) => { //TODO LINK DE LA IMAGEN EN PARAMS
         .findById(id)
         .then((image) => {
 
-            if (!image.likes.includes(userId)) {
+            if (!image.likes.includes(userId) && image.dislikes.includes(userId)) {
 
                 Image
-                    .findByIdAndUpdate(id, { $push: { likes: userId } })
-                    .then(() => res.json({ code: 200, message: 'Image liked' }))
+                    .findByIdAndUpdate(id, { $push: { likes: userId }, $pull:{dislikes:userId} })
+                    .then(() => res.json({ code: 200, message: 'Image liked case 1' }))
                     .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking image', err: err.message }))
             }
-            else {
+            else if (!image.likes.includes(userId) && !image.dislikes.includes(userId)){
+
+                Image
+                    .findByIdAndUpdate(id, { $push: { likes: userId }})
+                    .then(() => res.json({ code: 200, message: 'Image liked case 2' }))
+                    .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking image', err: err.message }))
+            }
+            else if (image.likes.includes(userId)){
 
                 Image
                     .findByIdAndUpdate(id, { $pull: { likes: userId } })
                     .then(() => res.json({ code: 200, message: 'Image like removed' }))
-                    .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking image', err: err.message }))
+                    .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking slander', err: err.message }))
             }
 
         })
 })
-
-
-
-
-
 
 router.put('/image/dislike/', (req, res) => {
 
@@ -140,20 +156,28 @@ router.put('/image/dislike/', (req, res) => {
         .findById(id)
         .then((image) => {
 
-            if (!image.dislikes.includes(userId)) {
+             if (!image.dislikes.includes(userId) && image.likes.includes(userId)) {
 
                 Image
-                    .findByIdAndUpdate(id, { $push: { dislikes: userId } })
-                    .then(() => res.json({ code: 200, message: 'Image disliked' }))
+                    .findByIdAndUpdate(id, { $push: { dislikes: userId }, $pull:{likes:userId} })
+                    .then(() => res.json({ code: 200, message: 'Image disliked case 1' }))
                     .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking image', err: err.message }))
             }
-            else {
+            else if (!image.dislikes.includes(userId) && !image.likes.includes(userId)){
+
+                Image
+                    .findByIdAndUpdate(id, { $push: { dislikes: userId }})
+                    .then(() => res.json({ code: 200, message: 'Image disliked case 2' }))
+                    .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking image', err: err.message }))
+            }
+            else if (image.dislikes.includes(userId)){
 
                 Image
                     .findByIdAndUpdate(id, { $pull: { dislikes: userId } })
                     .then(() => res.json({ code: 200, message: 'Image dislike removed' }))
                     .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking image', err: err.message }))
             }
+
 
         })
 })
