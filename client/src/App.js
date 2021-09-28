@@ -3,9 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import Routes from './components/routes/index'
-
 import Navigation from './components/layout/navbar/Navbar'
-
 import AuthService from './services/auth.services';
 
 class App extends Component {

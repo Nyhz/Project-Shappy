@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
+import './Signup.css'
 
 import AuthService from '../../../services/auth.services'
 
@@ -30,7 +31,7 @@ export default class Signup extends Component {
 
     render() {
         return (
-            <Container>
+            <Container className='form_container'>
                 <h1>SIGN UP</h1>
                 <Form onSubmit={this.handleFormSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicUsername">

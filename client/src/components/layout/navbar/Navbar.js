@@ -17,10 +17,10 @@ export default function Navigation(props) {
 
     return (
 
-        <Navbar bg="light" expand="md" className="mb-5">
+        <Navbar bg="light" expand="md">
             <Container>
                 <Navbar.Brand href="/">Project Shappy_</Navbar.Brand>
-                <Link className="nav-link" to="#">+</Link>
+                <Link className="nav-link" to="/creategroup">+</Link>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
                 <Navbar.Collapse id="basic-navbar-nav">
