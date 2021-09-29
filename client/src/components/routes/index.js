@@ -16,6 +16,7 @@ const Routes = ({ storeUser, loggedUser }) => {
             <Route exact path="/login" render={(props) => <Login storeUser={storeUser} {...props} />} />
             <Route exact path="/creategroup" render={(props) => <CreateGroup loggedUser={loggedUser} {...props} />} />
             <Route exact path="/profile" render={(props) => <ProfilePage loggedUser={loggedUser} {...props} />} />
+            <Route exact path="/dashboard" />
 
 
         </Switch>
