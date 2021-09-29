@@ -7,7 +7,7 @@ const User = require('./../models/User.model')
 
 router.get('/list', (req, res) => {
 
-    const id = '6152f1effc943b4ab2b6c3d1'
+    const id = req.session.currentUser._id
 
     User
         .findById(id)
@@ -18,7 +18,7 @@ router.get('/list', (req, res) => {
             const imgPromiseArray = flatImageArr.map((image) => Image.findById(image.toString()))
             return Promise.all(imgPromiseArray)
         })
-        .then(results => res.json({ code: 200, message: 'Group created', results }))
+        .then(results => res.json({ code: 200, message: 'Images found!', results }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating group', err: err.message }))
 })
 

@@ -25,7 +25,7 @@ class Login extends Component {
         this.authService.login(username, password)
             .then(res => {
                 this.props.storeUser(res.data)
-                this.props.history.push("/")
+                this.props.history.push("/dashboard")
             })
             .catch(err => console.log(err))
     }
