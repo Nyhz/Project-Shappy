@@ -1,0 +1,14 @@
+.card_title {
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+img {
+  width: 95vw;
+  margin: auto;
+}
+
+.card_img {
+  width: 50%;
+  margin: auto;
+}

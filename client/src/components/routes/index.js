@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import Signup from '../pages/Signup/Signup'
 import Login from '../pages/Login/Login'
 import CreateGroup from '../pages/CreateGroup/CreateGroup'

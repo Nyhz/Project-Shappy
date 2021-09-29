@@ -9,6 +9,7 @@ class ProfileService {
     }
 
     getInfo = () => this.instance.get("/")
+    getGroups = () => this.instance.get("/groups")
 }
 
 export default ProfileService;

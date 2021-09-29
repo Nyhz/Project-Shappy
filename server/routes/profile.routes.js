@@ -19,15 +19,16 @@ router.get('/', (req, res) => {
 
 router.get('/groups', (req, res) => {
 
-    // const { id} = req.session.currentUser
-
-    const id = '615094af051da6a78d694469'
+    const id = req.session.currentUser._id
 
     User
         .findById(id)
         .populate('groups')
         .select('groups')
-        .then((user) => res.json({ code: 200, message: 'User historic groups retrieved', user }))
+        .then((user) => {
+            console.log('USERRRRRRRRRR', user)
+            res.json({ code: 200, message: 'User historic groups retrieved', user })
+        })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while retrieving user groups', err: err.message }))
 
 })

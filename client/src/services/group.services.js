@@ -9,6 +9,7 @@ class GroupService {
     }
 
     create = (name, password, endDate, owner) => this.instance.post("/create", { name, password, endDate, owner })
+    getGroups = () => this.instance.get('/list')
 }
 
 export default GroupService;
