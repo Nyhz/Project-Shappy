@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ProfileServices from '../../../services/profile.services'
+import ProfileService from '../../../services/profile.services'
 import GroupItem from './GroupItem'
 
 export default class UserInfo extends Component {
@@ -10,7 +10,7 @@ export default class UserInfo extends Component {
             group: null
 
         }
-        this.profileServices = new ProfileServices()
+        this.profileService = new ProfileService()
     }
 
     componentDidMount = () => {
@@ -18,9 +18,8 @@ export default class UserInfo extends Component {
     }
 
     refreshGroups = () => {
-        this.profileServices.getGroups()
+        this.profileService.getGroups()
             .then((groups) => {
-                console.log('DATAAAAAAAAAAAA', groups.data.user.groups)
                 this.setState({
                     ...this.state,
                     group: groups.data.user.groups
@@ -34,7 +33,6 @@ export default class UserInfo extends Component {
 
         const filteredGroups = this.state.group.filter(group => group.isEnded === true)
         return (
-            console.log('grupos acabados', filteredGroups),
             filteredGroups.length > 0 ?
                 filteredGroups.map(group => {
                     console.log('cada grupo', group)
@@ -51,9 +49,7 @@ export default class UserInfo extends Component {
         return (
             <div className='group_container'>{
                 this.state.group ?
-
                     this.displayGroups()
-
                     :
                     <h1>Loading</h1>
             }

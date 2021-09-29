@@ -44,6 +44,7 @@ class Navigation extends React.Component {
                         <Nav className="me-auto">
                             {this.props.loggedUser ?
                                 <>
+                                    <Link className="nav-link" to="/dashboard">Dashboard</Link>
                                     <Link className="nav-link" to="/profile">Profile</Link>
                                     <span className="nav-link" onClick={this.functionCall}>Logout</span>
                                 </>
