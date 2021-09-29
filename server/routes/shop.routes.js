@@ -5,7 +5,7 @@ const User = require('./../models/User.model')
 router.put('/shield', (req, res) => { 
 
   
-    const userId = '6152e7fb9ba3688e1998bb78'
+    const userId = req.session.currentUser._id
 
     hasCoins = (user) => user.coins>=1
 
@@ -26,7 +26,7 @@ router.put('/shield', (req, res) => {
 router.put('/attack', (req, res) => { 
 
   
-    const userId = '6152e7fb9ba3688e1998bb78'
+    const userId = req.session.currentUser._id
 
     hasCoins = (user) => user.coins>=1
 
