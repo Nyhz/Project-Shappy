@@ -13,19 +13,18 @@ export default function CoasterItem({ _id, name, groupAvatar, endDate, createdAt
     }
 
     return (
+
         <Col md={4} className="mb-3">
             <Card>
+                <Card.Title className='card_title'>{name}</Card.Title>
                 <Card.Img className='card_img' variant="top" src={groupAvatar} />
                 <Card.Body>
-                    <Card.Title className='card_title'>{name}</Card.Title>
                     <Card.Text>
                         Start date: {formatDate(createdAt)} <br />
                         End date: {formatDate(endDate)}
-
                     </Card.Text>
-                    <Link to={`/montañas-rusas/${_id}`}>
+                    <Link to={`/groups/${_id}`}>
                         <Button variant="primary">Ver detalles</Button>
-
                     </Link>
                 </Card.Body>
             </Card>
