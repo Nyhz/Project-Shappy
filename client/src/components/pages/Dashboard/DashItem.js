@@ -9,14 +9,25 @@ class DashItem extends Component {
         super(props)
 
         this.state = {
-            image: this.props
+            image: this.props,
+            userId: "",
+            imageId: ""
 
         }
+
         this.contentService = new ContentService()
     }
 
+    addLike = (userId, imageId) => {
+        console.log('ENTRANDO EN ADDLIKE')
+        this.contentService.addLike(userId, imageId)
+            .then((res) => {
+                console.log('RESPUESTA', res)
+                this.setState({
+                    ...this.state
 
-    addLike = () => {
+                })
+            })
 
     }
 
@@ -32,7 +43,7 @@ class DashItem extends Component {
                         <Card.Body>
                             <Card.Title className='card_title'>{this.state.image.tag}</Card.Title>
                             <Card.Text>
-                                <span>Likes: {this.state.image.likes?.length}</span> - <span>Dislikes: {this.state.image.dislikes?.length}</span> - Shields: {this.state.image.shields}
+                                <span onClick={this.addLike}>Likes: {this.state.image.likes?.length}</span> - <span>Dislikes: {this.state.image.dislikes?.length}</span> - Shields: {this.state.image.shields}
                             </Card.Text>
                         </Card.Body>
                     </Card>

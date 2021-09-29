@@ -8,7 +8,7 @@ class ContentService {
         })
     }
 
-    addLike = () => this.instance.post('/image/addlike')
+    addLike = () => this.instance.put('/image/addlike')
 }
 
 export default ContentService;
