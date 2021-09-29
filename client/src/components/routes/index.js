@@ -6,12 +6,9 @@ import Login from '../pages/Login/Login'
 import CreateGroup from '../pages/CreateGroup/CreateGroup'
 import LandingPage from '../pages/LandingPage/LandingPage'
 import ProfilePage from '../pages/ProfilePage/ProfilePage'
-<<<<<<< HEAD
 import ShopItem from '../pages/Shop/ShopItem'
 
-=======
 import DashPage from '../pages/Dashboard/DashPage'
->>>>>>> dany
 
 
 const Routes = ({ storeUser, loggedUser }) => {
@@ -22,13 +19,9 @@ const Routes = ({ storeUser, loggedUser }) => {
             <Route exact path="/login" render={(props) => <Login storeUser={storeUser} {...props} />} />
             <Route exact path="/creategroup" render={(props) => <CreateGroup loggedUser={loggedUser} {...props} />} />
             <Route exact path="/profile" render={(props) => <ProfilePage loggedUser={loggedUser} {...props} />} />
-<<<<<<< HEAD
-            <Route exact path="/shop" render={(props) => <ShopItem/>} />
-            <Route exact path="/dashboard" />
+            <Route exact path="/shop" render={() => <ShopItem />} />
 
-=======
             <Route exact path="/dashboard" render={(props) => <DashPage loggedUser={loggedUser} {...props} />} />
->>>>>>> dany
 
         </Switch>
     )

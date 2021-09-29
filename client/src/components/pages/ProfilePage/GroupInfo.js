@@ -18,7 +18,7 @@ export default class UserInfo extends Component {
     }
 
     refreshGroups = () => {
-        this.profileServices.getGroups()
+        this.profileService.getGroups()
             .then((groups) => {
                 this.setState({
                     ...this.state,

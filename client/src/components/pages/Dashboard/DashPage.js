@@ -16,6 +16,7 @@ export default class DashPage extends Component {
 
     componentDidMount = () => {
         this.refreshImages()
+        console.log(this.props)
     }
 
     refreshImages = () => {
@@ -35,7 +36,7 @@ export default class DashPage extends Component {
             this.state.images.length > 0 ?
                 this.state.images.map(image => {
                     return (
-                        <DashItem key={image._id} {...image} />
+                        <DashItem key={image._id} {...image} loggedUser={this.props.loggedUser} />
                     )
                 }) :
                 <h2>Sin resultados</h2>

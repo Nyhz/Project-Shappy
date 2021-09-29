@@ -34,7 +34,7 @@ const imageSchema = new Schema({
         type: Number,
         default: 0,
         required: true,
-        max: 10
+        max: 5
     },
 },
     {

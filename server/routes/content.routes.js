@@ -25,10 +25,10 @@ router.put('/slander/like/', (req, res) => {
     const id = '61543bb2bb9ead502cf12702'
     const userId = '6152e7fb9ba3688e1998bb78'
 
-    const isAlreadyLiked = (slander, userId) => slander.likes.includes(userId)     
+    const isAlreadyLiked = (slander, userId) => slander.likes.includes(userId)
     const isNotVoted = (slander, userId) => !slander.likes.includes(userId) && !slander.dislikes.includes(userId)
     const isAlreadyDisliked = (slander, userId) => !slander.likes.includes(userId) && slander.dislikes.includes(userId)
-   
+
 
     Slander
         .findById(id)
@@ -36,17 +36,17 @@ router.put('/slander/like/', (req, res) => {
 
             if (isAlreadyDisliked(slander, userId)) {
 
-                return Slander.findByIdAndUpdate(id, { $push: { likes: userId }, $pull:{dislikes:userId} })
-                }
-            else if (isNotVoted(slander, userId)){
-                    
-                return Slander.findByIdAndUpdate(id, { $push: { likes: userId }})
-                }
-            else if (isAlreadyLiked(slander, userId)){
-                    
+                return Slander.findByIdAndUpdate(id, { $push: { likes: userId }, $pull: { dislikes: userId } })
+            }
+            else if (isNotVoted(slander, userId)) {
+
+                return Slander.findByIdAndUpdate(id, { $push: { likes: userId } })
+            }
+            else if (isAlreadyLiked(slander, userId)) {
+
                 return Slander.findByIdAndUpdate(id, { $pull: { likes: userId } })
-                }
-            })
+            }
+        })
         .then(() => res.json({ code: 200, message: 'Slander liked' }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking slander', err: err.message }))
 })
@@ -58,32 +58,32 @@ router.put('/slander/dislike/', (req, res) => {
     const id = '61543bb2bb9ead502cf12702'
     const userId = '6152e7fb9ba3688e1998bb78'
 
-    const isAlreadyLiked = (slander, userId) => slander.likes.includes(userId)     
+    const isAlreadyLiked = (slander, userId) => slander.likes.includes(userId)
     const isNotVoted = (slander, userId) => !slander.likes.includes(userId) && !slander.dislikes.includes(userId)
     const isAlreadyDisliked = (slander, userId) => !slander.likes.includes(userId) && slander.dislikes.includes(userId)
-    
+
 
     Slander
         .findById(id)
         .then((slander) => {
 
             if (isAlreadyLiked(slander, userId)) {
-                return Slander.findByIdAndUpdate(id, { $push: { dislikes: userId }, $pull: {likes : userId} })
+                return Slander.findByIdAndUpdate(id, { $push: { dislikes: userId }, $pull: { likes: userId } })
             }
-            else if (isNotVoted(slander, userId)){
-                return Slander.findByIdAndUpdate(id, { $push: { dislikes: userId }})
+            else if (isNotVoted(slander, userId)) {
+                return Slander.findByIdAndUpdate(id, { $push: { dislikes: userId } })
             }
-            else if (isAlreadyDisliked(slander, userId)){
+            else if (isAlreadyDisliked(slander, userId)) {
                 return Slander.findByIdAndUpdate(id, { $pull: { dislikes: userId } })
-            }       
+            }
         })
         .then(() => res.json({ code: 200, message: 'Slander disliked' }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while disliking slander', err: err.message }))
-        
+
 })
 
 router.put('/slander/shield', (req, res) => { //TODO LINK DEL SLANDER? EN PARAMS
-   
+
     // const { id } = req.params
     // const userId = req.session.currentUser
 
@@ -133,7 +133,7 @@ router.put('/slander/attack', (req, res) => { //TODO LINK DEL SLANDER EN PARAMS
     const userId = '6152e7fb9ba3688e1998bb78'
 
     const data = []
-   
+
 
     User
         .findById(userId)
@@ -181,80 +181,79 @@ router.post('/image', (req, res) => {
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating image', err: err.message }))
 })
 
-router.put('/image/like/', (req, res) => { //TODO LINK DE LA IMAGEN EN PARAMS
+router.get('/image/:imageId/get', (req, res) => {
 
-    // const { id } = req.params
-    // const userId = req.session.currentUser
-
-
-    const id = '6151e51cebea69b476ca8721'
-    const userId = '6152e7fb9ba3688e1998bb78'
-
-    const isAlreadyLiked = (image, userId) => image.likes.includes(userId)     
-    const isNotVoted = (image, userId) => !image.likes.includes(userId) && !image.dislikes.includes(userId)
-    const isAlreadyDisliked = (image, userId) => !image.likes.includes(userId) && image.dislikes.includes(userId)
-   
+    const { imageId } = req.params
 
     Image
-        .findById(id)
+        .findById(imageId)
+        .then((image) => res.json({ code: 200, message: 'Image liked', image }))
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching image', err: err.message }))
+
+
+})
+
+router.put('/image/:imageId/like', (req, res) => {
+
+    const userId = req.session.currentUser._id
+    const { imageId } = req.params
+
+    const isAlreadyLiked = (image, userId) => image.likes.includes(userId)
+    const isNotVoted = (image, userId) => !image.likes.includes(userId) && !image.dislikes.includes(userId)
+    const isAlreadyDisliked = (image, userId) => !image.likes.includes(userId) && image.dislikes.includes(userId)
+
+    Image
+        .findById(imageId)
         .then((image) => {
+            if (isAlreadyLiked(image, userId)) {
 
-            if (isAlreadyDisliked(image, userId)) {
+                return Image.findByIdAndUpdate(image, { $pull: { likes: userId } }, { new: true })
+            }
+            else if (isNotVoted(image, userId)) {
 
-                return Image.findByIdAndUpdate(id, { $push: { likes: userId }, $pull:{dislikes:userId} })
-                }
-            else if (isNotVoted(image, userId)){
-                    
-                return Image.findByIdAndUpdate(id, { $push: { likes: userId }})
-                }
-            else if (isAlreadyLiked(image, userId)){
-                    
-                return Image.findByIdAndUpdate(id, { $pull: { likes: userId } })
-                }
-            })
-        .then(() => res.json({ code: 200, message: 'Image liked' }))
+                return Image.findByIdAndUpdate(image, { $push: { likes: userId } }, { new: true })
+            }
+            else if (isAlreadyDisliked(image, userId)) {
+
+                return Image.findByIdAndUpdate(image, { $push: { likes: userId }, $pull: { dislikes: userId } }, { new: true })
+            }
+        })
+        .then((newImage) => res.json({ code: 200, message: 'Image liked', newImage }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking image', err: err.message }))
 })
 
-router.put('/image/dislike/', (req, res) => {
+router.put('/image/:imageId/dislike', (req, res) => {
 
-    // const { id } = req.params
+    const userId = req.session.currentUser._id
+    const { imageId } = req.params
 
-    const id = '6151e51cebea69b476ca8721'
-    const userId = '6152e7fb9ba3688e1998bb78'
-    
-    const isAlreadyLiked = (image, userId) => !image.dislikes.includes(userId) && image.likes.includes(userId)      
+    const isAlreadyLiked = (image, userId) => !image.dislikes.includes(userId) && image.likes.includes(userId)
     const isNotVoted = (image, userId) => !image.dislikes.includes(userId) && !image.likes.includes(userId)
     const isAlreadyDisliked = (image, userId) => image.dislikes.includes(userId)
 
     Image
-        .findById(id)
+        .findById(imageId)
         .then((image) => {
-
             if (isAlreadyLiked(image, userId)) {
-                return Image.findByIdAndUpdate(id, { $push: { dislikes: userId }, $pull:{likes:userId} })
+                return Image.findByIdAndUpdate(image, { $push: { dislikes: userId }, $pull: { likes: userId } }, { new: true })
             }
-            else if (isNotVoted(image, userId)){
-                return Image.findByIdAndUpdate(id, { $push: { dislikes: userId }})
+            else if (isNotVoted(image, userId)) {
+                return Image.findByIdAndUpdate(image, { $push: { dislikes: userId } }, { new: true })
             }
-            else if (isAlreadyDisliked(image, userId)){
-                return Image.findByIdAndUpdate(id, { $pull: { dislikes: userId } })
-            }       
+            else if (isAlreadyDisliked(image, userId)) {
+                return Image.findByIdAndUpdate(image, { $pull: { dislikes: userId } }, { new: true })
+            }
         })
-        .then(() => res.json({ code: 200, message: 'Image disliked' }))
+        .then((newImage) => res.json({ code: 200, message: 'Image disliked', newImage }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while disliking image', err: err.message }))
 })
 
-router.put('/image/shield', (req, res) => { //TODO LINK DE LA IMAGEN EN PARAMS
+router.put('/image/:id/shield', (req, res) => {
 
-    // const { id } = req.params
-    // const userId = req.session.currentUser
-
-    const id = '6151c946db328131a8163f8e'
-    const userId = '6152e7fb9ba3688e1998bb78'
+    const { id } = req.params
+    const userId = req.session.currentUser
 
     const data = []
-
 
     User
         .findById(userId)
@@ -263,25 +262,24 @@ router.put('/image/shield', (req, res) => { //TODO LINK DE LA IMAGEN EN PARAMS
             return Image
                 .findById(id)
         })
-        .then(image => {
+        .then((image) => {
             data.push(image.shields)
-            if (data[0] <= 0) {
-                return
-            } else {
-                let newImageShields = ++data[1]
-                return Image.
-                    findByIdAndUpdate(id, { shields: newImageShields })
+            if (data[0] > 0) {
+                return User
+                    .findByIdAndUpdate(userId, { $inc: { shields: -1 } }, { new: true })
             }
         })
         .then(() => {
-            if (data[0] <= 0) {
-                res.json({ code: 200, message: 'User has no shields' })
+            if (data[0] > 0 && data[1] < 5) {
+                return Image
+                    .findByIdAndUpdate(id, { $inc: { shields: 1 } }, { new: true })
+            }
+        })
+        .then(newImage => {
+            if (newImage) {
+                res.json({ code: 200, message: 'Image shielded succesfuly', newImage })
             } else {
-                res.json({ code: 200, message: 'Image shielded successfuly' })
-
-                let newUserShields = --data[0]
-                return User
-                    .findByIdAndUpdate(userId, { shields: newUserShields })
+                return
             }
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to image', err: err.message }))

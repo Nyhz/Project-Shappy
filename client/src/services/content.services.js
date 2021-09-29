@@ -8,11 +8,10 @@ class ContentService {
         })
     }
 
-<<<<<<< HEAD
-    addLike = (imageId, userId) => this.instance.post('/image/addlike', { imageId, userId })
-=======
-    addLike = () => this.instance.put('/image/addlike')
->>>>>>> dany
+    addLike = (imageId) => this.instance.put(`/image/${imageId}/like`, { imageId })
+    addDislike = (imageId) => this.instance.put(`/image/${imageId}/dislike`, { imageId })
+    refreshImage = (imageId) => this.instance.get(`/image/${imageId}/get`, { imageId })
+    addShield = (imageId) => this.instance.put(`/image/${imageId}/shield`, { imageId })
 }
 
 export default ContentService;
