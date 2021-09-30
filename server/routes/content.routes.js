@@ -5,7 +5,7 @@ const Slander = require('./../models/Slander.model')
 const Image = require('./../models/Image.model')
 const User = require('./../models/User.model')
 const Group = require('./../models/Group.model')
-
+const { democracy } = require("./../utils");
 
 
 router.post('/slander', (req, res) => {
@@ -243,11 +243,26 @@ router.put('/image/:imageId/dislike', (req, res) => {
     Image
         .findById(imageId)
         .then((image) => {
-            if (isAlreadyLiked(image, userId)) {
-                return Image.findByIdAndUpdate(image, { $push: { dislikes: userId }, $pull: { likes: userId } }, { new: true })
+            if (isAlreadyLiked(image, userId)) {//DESTROY CONDITION HERE
+
+                if(!democracy()){
+                    return Image.findByIdAndUpdate(image, { $push: { dislikes: userId }, $pull: { likes: userId } }, { new: true })
+
+                }
+                else{
+
+      
+                }
             }
-            else if (isNotVoted(image, userId)) {
-                return Image.findByIdAndUpdate(image, { $push: { dislikes: userId } }, { new: true })
+            else if (isNotVoted(image, userId)) {//DESTROY CONDITION HERE
+                if(!democracy()){
+
+                    return Image.findByIdAndUpdate(image, { $push: { dislikes: userId } }, { new: true })
+                }
+                else{
+
+                    
+                }
             }
             else if (isAlreadyDisliked(image, userId)) {
                 return Image.findByIdAndUpdate(image, { $pull: { dislikes: userId } }, { new: true })
