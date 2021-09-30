@@ -13,7 +13,9 @@ class ContentService {
     refreshImage = (imageId) => this.instance.get(`/image/${imageId}/get`, { imageId })
     addShield = (imageId) => this.instance.put(`/image/${imageId}/shield`, { imageId })
     addAttack = (imageId) => this.instance.put(`/image/${imageId}/attack`, { imageId })
-    
+
+    getGroups = () => this.instance.get('/getformdata')
+
     newImage = (image) => this.instance.post('/image', image)
 }
 

@@ -19,9 +19,8 @@ export default class GroupPage extends Component {
 
     }
 
-
-    componentDidUpdate = () => {
-        this.refreshImages()
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevProps.match.params.groupId !== this.props.match.params.groupId) this.refreshImages()
     }
 
     refreshImages = () => {
@@ -43,7 +42,7 @@ export default class GroupPage extends Component {
             this.state.images.length > 0 ?
                 this.state.images.map(image => {
                     return (
-                        <DashItem key={image._id} {...image} loggedUser={this.props.loggedUser} />
+                        <DashItem key={image._id} {...image} refreshImages={this.refreshImages} loggedUser={this.props.loggedUser} />
                     )
                 }) :
                 <h2>Sin resultados</h2>

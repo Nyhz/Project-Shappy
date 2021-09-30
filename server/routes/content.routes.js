@@ -170,13 +170,25 @@ router.put('/slander/attack', (req, res) => { //TODO LINK DEL SLANDER EN PARAMS
 })
 
 
+router.get('/getformdata', (req, res) => {
+
+    const userId = req.session.currentUser._id
+
+    User
+        .findById(userId)
+        .populate('groups')
+        .select('groups')
+        .then((groups) => res.json({ code: 200, message: 'Groups fetched', groups }))
+})
+
+
 router.post('/image', (req, res) => {
 
     const authorId = req.session.currentUser._id
     const { imageUrl } = req.body
 
     Image
-        .create({ authorId, imageUrl, tag: "tagRandom", groupRef: "61532a2642b46ced2efb889e" })
+        .create({ authorId, imageUrl, tag: "tagRandom", groupRef: "6155de9d08fc82a20f3791a0" })
         .then((image) => {
             Group
                 .findByIdAndUpdate(image.groupRef, { $push: { images: image._id } }, { new: true })
@@ -317,28 +329,28 @@ router.put('/image/:id/attack', (req, res) => {
 
             if (data[0] > 0) {
                 User.findByIdAndUpdate(userId, { $inc: { attacks: -1 } }, { new: true })
-                .then(res => console.log(res))
-                .catch(err => console.log(err, "ERORORRORORORO"))
-            } 
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err, "ERORORRORORORO"))
+            }
 
             return image
         })
         .then(image => {
 
-            if (data[0]>0 && data[1]>0) {
+            if (data[0] > 0 && data[1] > 0) {
 
                 Image.findByIdAndUpdate(id, { $inc: { shields: -1 } }, { new: true })
-                .then(res => console.log(res))
-                .catch(err => console.log(err, "ERORORRORORORO"))
-
-            } else if(data[0]>0 && data[1]==0){
-
-                Group.findByIdAndUpdate(image.groupRef, {$pull: {images:image._id}})
-                .then(group => {
-                    Image.findByIdAndDelete(id)
                     .then(res => console.log(res))
                     .catch(err => console.log(err, "ERORORRORORORO"))
-                })
+
+            } else if (data[0] > 0 && data[1] == 0) {
+
+                Group.findByIdAndUpdate(image.groupRef, { $pull: { images: image._id } })
+                    .then(group => {
+                        Image.findByIdAndDelete(id)
+                            .then(res => console.log(res))
+                            .catch(err => console.log(err, "ERORORRORORORO"))
+                    })
             }
         })
         .then((newImage) => res.json({ code: 200, message: 'Image attacked', newImage }))
