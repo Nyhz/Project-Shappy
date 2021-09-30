@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Card, Col, Button } from 'react-bootstrap'
+import { Card, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import ContentService from '../../../services/content.services'
@@ -8,6 +8,7 @@ class DashItem extends Component {
     constructor(props) {
         super(props)
         
+
         this.contentService = new ContentService()
     }
 

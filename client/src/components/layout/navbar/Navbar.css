@@ -1,0 +1,12 @@
+.nav_container {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  margin: 0px 15px;
+}
+
+.create_group {
+  font-size: 2rem;
+}

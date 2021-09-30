@@ -7,6 +7,7 @@ const User = require('./../models/User.model')
 const Group = require('./../models/Group.model')
 
 
+
 router.post('/slander', (req, res) => {
 
     // const { authorId } = req.session.currentUser
@@ -171,14 +172,22 @@ router.put('/slander/attack', (req, res) => { //TODO LINK DEL SLANDER EN PARAMS
 
 router.post('/image', (req, res) => {
 
-    // const { authorId } = req.session.currentUser
-
-    const { authorId, imageUrl, tag, groupRef, shields } = req.body
+    const authorId = req.session.currentUser._id
+    const { imageUrl } = req.body
 
     Image
-        .create({ authorId, imageUrl, tag, groupRef, shields })
-        .then(() => res.json({ code: 200, message: 'Image created' }))
+        .create({ authorId, imageUrl, tag: "tagRandom", groupRef: "61532a2642b46ced2efb889e" })
+        .then((image) => {
+            Group
+                .findByIdAndUpdate(image.groupRef, { $push: { images: image._id } }, { new: true })
+                .then(() => {
+                    return Image.findById(image._id)
+                })
+                .then(image => res.json({ code: 200, message: 'Image created', image }))
+        })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating image', err: err.message }))
+
+
 })
 
 router.get('/image/:imageId/get', (req, res) => {

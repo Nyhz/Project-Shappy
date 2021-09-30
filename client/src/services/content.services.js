@@ -14,6 +14,7 @@ class ContentService {
     addShield = (imageId) => this.instance.put(`/image/${imageId}/shield`, { imageId })
     addAttack = (imageId) => this.instance.put(`/image/${imageId}/attack`, { imageId })
     
+    newImage = (image) => this.instance.post('/image', image)
 }
 
 export default ContentService;

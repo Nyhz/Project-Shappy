@@ -1,31 +1,37 @@
 import React, { Component } from 'react'
-import BaseService from '../../../services/base.services'
-import DashItem from './DashItem'
+import GroupService from '../../../services/group.services'
 import GroupList from '../GroupList/GroupList'
+import DashItem from '../Dashboard/DashItem'
 
-export default class DashPage extends Component {
-
+export default class GroupPage extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             images: null
-            
 
         }
-        this.baseService = new BaseService()
+        this.groupService = new GroupService()
     }
 
     componentDidMount = () => {
         this.refreshImages()
+
+    }
+
+
+    componentDidUpdate = () => {
+        this.refreshImages()
     }
 
     refreshImages = () => {
-        this.baseService.showDashboard()
-            .then((images) => {
+        const groupId = this.props.match.params.groupId
+
+        this.groupService.getSingleGroup(groupId)
+            .then((group) => {
                 this.setState({
                     ...this.state,
-                    images: images.data.results
+                    images: group.data.images
                 })
             })
             .catch(err => console.log(err))
@@ -34,10 +40,10 @@ export default class DashPage extends Component {
     displayImages = () => {
 
         return (
-            this.state.images?.length > 0 ?
+            this.state.images.length > 0 ?
                 this.state.images.map(image => {
                     return (
-                        <DashItem refreshImages={this.refreshImages} key={image._id} {...image} loggedUser={this.props.loggedUser} />//? EN IMAGE EVITA QUE EXPLOTE
+                        <DashItem key={image._id} {...image} loggedUser={this.props.loggedUser} />
                     )
                 }) :
                 <h2>Sin resultados</h2>
@@ -62,12 +68,3 @@ export default class DashPage extends Component {
         )
     }
 }
-
-
-
-
-
-
-
-
-

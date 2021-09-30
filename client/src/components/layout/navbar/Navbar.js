@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Link, withRouter } from 'react-router-dom'
+import './Navbar.css'
 
 import AuthService from '../../../services/auth.services'
 
@@ -33,32 +34,25 @@ class Navigation extends React.Component {
 
     render = () => {
         return (
-
             <Navbar bg="light" expand="md" >
                 <Container>
-                    <Navbar.Brand href="/">Project Shappy_</Navbar.Brand>
-                    <Link className="nav-link" to="/creategroup">+</Link>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            {this.props.loggedUser ?
-                                <>
-                                    <Link className="nav-link" to="/dashboard">Dashboard</Link>
-                                    <Link className="nav-link" to="/profile">Profile</Link>
-                                    <span className="nav-link" onClick={this.functionCall}>Logout</span>
-                                </>
-                                :
-                                <>
-                                    <Link className="nav-link" to="/signup">Sign Up</Link>
-                                    <Link className="nav-link" to="/login">Login</Link>
-                                </>
-                            }
-                        </Nav>
-                    </Navbar.Collapse>
+                    <Link to='/dashboard'><Navbar.Brand href="/dashboard">Shappy_</Navbar.Brand></Link>
+                    <Nav className="me-auto ">
+                        {this.props.loggedUser ?
+                            <div className='nav_container'>
+                                <Link className="nav-link create_group" to="/creategroup">+</Link>
+                                <Link className="nav-link" to="/profile">Profile</Link>
+                                <span className="nav-link" onClick={this.functionCall}>Logout</span>
+                            </div>
+                            :
+                            <div className='nav_container'>
+                                <Link className="nav-link" to="/signup">Sign Up</Link>
+                                <Link className="nav-link" to="/login">Login</Link>
+                            </div>
+                        }
+                    </Nav>
                 </Container>
             </Navbar >
-
         )
     }
 }

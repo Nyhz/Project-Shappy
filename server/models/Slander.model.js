@@ -39,7 +39,8 @@ const slanderSchema = new Schema({
     shields: {
         type: Number,
         default: 0,
-        required: true
+        required: true,
+        max: 10
     },
 },
     {
