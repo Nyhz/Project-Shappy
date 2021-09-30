@@ -12,6 +12,7 @@ class ContentService {
     addDislike = (imageId) => this.instance.put(`/image/${imageId}/dislike`, { imageId })
     refreshImage = (imageId) => this.instance.get(`/image/${imageId}/get`, { imageId })
     addShield = (imageId) => this.instance.put(`/image/${imageId}/shield`, { imageId })
+    newImage = (image) => this.instance.post('/image', image)
 }
 
 export default ContentService;

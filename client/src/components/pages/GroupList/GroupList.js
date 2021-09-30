@@ -25,8 +25,6 @@ export default class GroupList extends Component {
     refreshGroups = () => {
         this.groupService.getGroups()
             .then((groups) => {
-                console.log('GROUPS???', groups.data);
-                console.log('GROUP ARRR????', groups.data.groupArr)
                 this.setState({
                     ...this.state,
                     groups: groups.data.groupArr
@@ -53,7 +51,6 @@ export default class GroupList extends Component {
                 <Row>
                     {
                         this.state.groups ?
-
                             this.displayGroups()
                             :
                             <h1>Loading groups</h1>

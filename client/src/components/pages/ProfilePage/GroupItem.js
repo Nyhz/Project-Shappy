@@ -5,7 +5,7 @@ import moment from 'moment'
 import './GroupItem.css'
 
 
-export default function CoasterItem({ _id, name, groupAvatar, endDate, createdAt }) {
+export default function GroupItem({ _id, name, groupAvatar, endDate, createdAt }) {
 
 
     const formatDate = (date) => { // TODO PASAR A UTILS
@@ -23,7 +23,7 @@ export default function CoasterItem({ _id, name, groupAvatar, endDate, createdAt
                         Start date: {formatDate(createdAt)} <br />
                         End date: {formatDate(endDate)}
                     </Card.Text>
-                    <Link to={`/groups/${_id}`}>
+                    <Link to={`/group/${_id}`}>
                         <Button variant="primary">Ver detalles</Button>
                     </Link>
                 </Card.Body>

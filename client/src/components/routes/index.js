@@ -8,6 +8,8 @@ import LandingPage from '../pages/LandingPage/LandingPage'
 import ProfilePage from '../pages/ProfilePage/ProfilePage'
 import ShopItem from '../pages/Shop/ShopItem'
 import DashPage from '../pages/Dashboard/DashPage'
+import GroupPage from '../pages/GroupPage/GroupPage'
+import CreateImage from '../pages/CreateImage/CreateImage'
 
 
 const Routes = ({ storeUser, loggedUser }) => {
@@ -20,6 +22,8 @@ const Routes = ({ storeUser, loggedUser }) => {
             <Route exact path="/profile" render={(props) => <ProfilePage loggedUser={loggedUser} {...props} />} />
             <Route exact path="/shop" render={() => <ShopItem />} />
             <Route exact path="/dashboard" render={(props) => loggedUser ? <DashPage loggedUser={loggedUser} {...props} /> : <Redirect to='/' />} />
+            <Route path="/group/:groupId" render={(props) => <GroupPage loggedUser={loggedUser} {...props} />} />
+            <Route exact path="/createimage" render={(props) => <CreateImage loggedUser={loggedUser} {...props} />} />
 
 
 

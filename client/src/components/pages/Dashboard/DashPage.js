@@ -17,7 +17,6 @@ export default class DashPage extends Component {
 
     componentDidMount = () => {
         this.refreshImages()
-        console.log(this.props)
     }
 
     refreshImages = () => {

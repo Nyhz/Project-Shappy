@@ -12,7 +12,6 @@ class DashItem extends Component {
             image: this.props
 
         }
-
         this.contentService = new ContentService()
     }
 

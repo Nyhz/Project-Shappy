@@ -38,20 +38,23 @@ router.get('/list', (req, res) => {
         .select('groups')
         .then((groups) => {
             const groupArr = groups.groups
-            console.log(groupArr)
             res.json({ code: 200, message: 'User groups retrieved', groupArr })
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while retrieving user groups', err: err.message }))
-
 })
 
-router.get('/images', (req, res) => {
 
-    const groupId = '6151a8a9c522331a3ac4d0ca' //TODO
+router.get('/images/:groupId', (req, res) => {
+
+    const { groupId } = req.params
+    console.log(groupId);
 
     Image
         .find({ groupRef: groupId })
-        .then((images) => res.json({ code: 200, message: 'Images fetched', images }))
+        .then((images) => {
+            console.log('imagenes del grupo', images)
+            res.json({ code: 200, message: 'Images fetched', images })
+        })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching images', err: err.message }))
 })
 
