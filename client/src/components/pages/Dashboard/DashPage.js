@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import BaseService from '../../../services/base.services'
 import DashItem from './DashItem'
+import GroupList from '../GroupList/GroupList'
 
 export default class DashPage extends Component {
 
@@ -46,14 +47,18 @@ export default class DashPage extends Component {
 
     render() {
         return (
-            <div className='dashboard_container'>
-                {
-                    this.state.images ?
-                        this.displayImages()
-                        :
-                        <h1>Loading</h1>
-                }
-            </div>
+            <>
+                <GroupList loggedUser={this.state.loggedUser} storeUser={this.storeUser} />
+                <div className='dashboard_container'>
+
+                    {
+                        this.state.images ?
+                            this.displayImages()
+                            :
+                            <h1>Loading</h1>
+                    }
+                </div>
+            </>
         )
     }
 }

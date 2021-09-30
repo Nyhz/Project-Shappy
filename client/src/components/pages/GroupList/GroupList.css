@@ -1,0 +1,10 @@
+p {
+  font-size: 0.8rem;
+}
+
+.groups_container {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}

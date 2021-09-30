@@ -30,13 +30,17 @@ router.post('/create', (req, res) => {
 
 router.get('/list', (req, res) => {
 
-    const { id } = req.session.currentUser
+    const id = req.session.currentUser._id
 
     User
         .findById(id)
         .populate('groups')
         .select('groups')
-        .then((groups) => res.json({ code: 200, message: 'User groups retrieved', groups }))
+        .then((groups) => {
+            const groupArr = groups.groups
+            console.log(groupArr)
+            res.json({ code: 200, message: 'User groups retrieved', groupArr })
+        })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while retrieving user groups', err: err.message }))
 
 })

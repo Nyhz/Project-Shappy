@@ -66,20 +66,23 @@ const userSchema = new Schema({
     type: Number,
     required: true,
     default: 1,
-    min: 0
+    min: 0,
+    max: 5
   },
 
   attacks: {
     type: Number,
     required: true,
-    default: 1
+    default: 1,
+    max: 5
   },
 
   coins: {
     type: Number,
     required: true,
     default: 5,
-    min: 0
+    min: 0,
+    max: 50
   },
 },
   {

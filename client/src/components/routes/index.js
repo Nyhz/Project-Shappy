@@ -1,13 +1,12 @@
 
 import React from 'react'
-import { Switch, Route, } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import Signup from '../pages/Signup/Signup'
 import Login from '../pages/Login/Login'
 import CreateGroup from '../pages/CreateGroup/CreateGroup'
 import LandingPage from '../pages/LandingPage/LandingPage'
 import ProfilePage from '../pages/ProfilePage/ProfilePage'
 import ShopItem from '../pages/Shop/ShopItem'
-
 import DashPage from '../pages/Dashboard/DashPage'
 
 
@@ -20,8 +19,9 @@ const Routes = ({ storeUser, loggedUser }) => {
             <Route exact path="/creategroup" render={(props) => <CreateGroup loggedUser={loggedUser} {...props} />} />
             <Route exact path="/profile" render={(props) => <ProfilePage loggedUser={loggedUser} {...props} />} />
             <Route exact path="/shop" render={() => <ShopItem />} />
+            <Route exact path="/dashboard" render={(props) => loggedUser ? <DashPage loggedUser={loggedUser} {...props} /> : <Redirect to='/' />} />
 
-            <Route exact path="/dashboard" render={(props) => <DashPage loggedUser={loggedUser} {...props} />} />
+
 
         </Switch>
     )
