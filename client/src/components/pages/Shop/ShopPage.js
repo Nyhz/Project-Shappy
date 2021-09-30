@@ -22,6 +22,7 @@ export default function ShopPage({ loggedUser}) {
         <Container className='shop_container'>
 
             <h1>Welcome {loggedUser?.username}</h1>
+            <h3>Shields: {loggedUser?.shields} - Attacks:{loggedUser?.attacks} - Coins:{loggedUser?.coins} </h3>
 
             <ShopItem title="Shield" description="Adds one shield to an image or slander. You can only add a maximum of 10 shields to a particular content." image="hola" buyShield={buyShield}/>
             <ShopItem title="Attack" description="Reduce the shields protecting an image or a slander by one. If there are no shields, the image or slander gets destroyed." image="a" buyShield={buyShield} buyAttack = {buyAttack}/>

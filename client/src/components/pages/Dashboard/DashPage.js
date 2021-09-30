@@ -9,6 +9,7 @@ export default class DashPage extends Component {
 
         this.state = {
             images: null
+            
 
         }
         this.baseService = new BaseService()
@@ -33,10 +34,10 @@ export default class DashPage extends Component {
     displayImages = () => {
 
         return (
-            this.state.images.length > 0 ?
+            this.state.images?.length > 0 ?
                 this.state.images.map(image => {
                     return (
-                        <DashItem key={image._id} {...image} loggedUser={this.props.loggedUser} />
+                        <DashItem refreshImages={this.refreshImages} key={image._id} {...image} loggedUser={this.props.loggedUser} />//? EN IMAGE EVITA QUE EXPLOTE
                     )
                 }) :
                 <h2>Sin resultados</h2>

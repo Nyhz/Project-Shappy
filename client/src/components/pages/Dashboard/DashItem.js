@@ -7,22 +7,14 @@ import ContentService from '../../../services/content.services'
 class DashItem extends Component {
     constructor(props) {
         super(props)
-
-        this.state = {
-            image: this.props
-
-        }
-
+        
         this.contentService = new ContentService()
     }
 
     addImageLike = () => {
         this.contentService.addLike(this.props._id)
             .then((res) => {
-                this.setState({
-                    ...this.state,
-                    image: res.data.newImage
-                })
+                this.props.refreshImages()
             })
             .catch(err => console.log(err))
     }
@@ -30,10 +22,7 @@ class DashItem extends Component {
     addImageDislike = () => {
         this.contentService.addDislike(this.props._id)
             .then((res) => {
-                this.setState({
-                    ...this.state,
-                    image: res.data.newImage
-                })
+                this.props.refreshImages()
             })
             .catch(err => console.log(err))
     }
@@ -42,32 +31,38 @@ class DashItem extends Component {
         this.contentService.addShield(this.props._id)
             .then((res) => {
                 console.log('res de shield', res)
-                this.setState({
-                    ...this.state,
-                    image: res.data.newImage
-                })
+                this.props.refreshImages()
             })
             .catch(err => console.log(err))
 
     }
 
+    addImageAttack = () => {
+        this.contentService.addAttack(this.props._id)
+            .then((res) => {
+                console.log('res de Attack', res)
+                this.props.refreshImages()
+            })
+            .catch(err => console.log(err))
+
+    }
     render = () => {
         return (
             <div>
                 <Col md={4} className="mb-3">
                     <Card>
-                        <Link className='card_img' to={`/group/${this.state.image?.groupRef}`}>
-                            <Card.Img variant="top" src={this.state.image?.imageUrl} />
+                        <Link className='card_img' to={`/group/${this.props?.groupRef}`}>
+                            <Card.Img variant="top" src={this.props?.imageUrl} />
                         </Link>
                         <Card.Body>
-                            <Card.Title className='card_title'>{this.state.image?.tag}</Card.Title>
+                            <Card.Title className='card_title'>{this.props?.tag}</Card.Title>
                             <Card.Text>
-                                <span onClick={this.addImageLike}>Likes: {this.state.image?.likes?.length}</span> - <span onClick={this.addImageDislike}>Dislikes: {this.state.image?.dislikes?.length}</span> - <span onClick={this.addImageShield}>Shields: {this.state.image?.shields}</span>
+                                <span onClick={this.addImageLike}>Likes: {this.props?.likes?.length}</span> - <span onClick={this.addImageDislike}>Dislikes: {this.props?.dislikes?.length}</span> - <span onClick={this.addImageShield}>Shields: {this.props?.shields}</span> - <span onClick={this.addImageAttack}>Attacks: {this.props.loggedUser?.attacks}</span>
                             </Card.Text>
                         </Card.Body>
                     </Card>
                 </Col>
-            </div >
+            </div>
         )
     }
 }

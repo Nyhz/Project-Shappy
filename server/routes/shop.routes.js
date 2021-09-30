@@ -15,7 +15,7 @@ router.put('/shield', (req, res) => {
 
         if(hasCoins(user)){
 
-            return User.findByIdAndUpdate(user,{$inc: { shields: 1, coins:-1 }}, {runValidators : true})
+            return User.findByIdAndUpdate(user,{$inc: { shields: 1, coins:-10 }}, {runValidators : true})
         }           
     })  
     .then(() => res.json({ code: 200, message: 'User bought a shield'}))
@@ -36,7 +36,7 @@ router.put('/attack', (req, res) => {
 
         if(hasCoins(user)){
 
-            return User.findByIdAndUpdate(user,{$inc: { attacks: 1, coins:-1 }}, {runValidators : true})
+            return User.findByIdAndUpdate(user,{$inc: { attacks: 1, coins:-10 }}, {runValidators : true})
         }           
     })  
     .then(() => res.json({ code: 200, message: 'User bought a shield'}))

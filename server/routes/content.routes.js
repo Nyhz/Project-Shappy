@@ -4,7 +4,7 @@ const router = express.Router();
 const Slander = require('./../models/Slander.model')
 const Image = require('./../models/Image.model')
 const User = require('./../models/User.model')
-
+const Group = require('./../models/Group.model')
 
 
 router.post('/slander', (req, res) => {
@@ -286,49 +286,115 @@ router.put('/image/:id/shield', (req, res) => {
 })
 
 
-router.put('/image/attack', (req, res) => {
+router.put('/image/:id/attack', (req, res) => {
 
-    // const { id } = req.params
-    // const userId = req.session.currentUser
 
-    const id = '6151ca2692f0edebf2a0d746'
-    const userId = '6152e7fb9ba3688e1998bb78'
+    const { id } = req.params
+    const userId = req.session.currentUser._id
 
     const data = []
 
 
+    //Promise.all()
     User
         .findById(userId)
         .then(user => {
             data.push(user.attacks)
-            return Image
-                .findById(id)
+            return Image.findById(id)
+        })
+        .then((image) => {
+            data.push(image.shields)
+            console.log(data[0] > 0, "attacks vs shields", userId, id)
+
+            if (data[0] > 0) {
+                User.findByIdAndUpdate(userId, { $inc: { attacks: -1 } }, { new: true })
+                .then(res => console.log(res))
+                .catch(err => console.log(err, "ERORORRORORORO"))
+            } 
+
+            return image
         })
         .then(image => {
-            data.push(image.shields)
-            if (data[0] <= 0) {
-                return
-            } else if (data[1] > 0) {
-                let newImageShields = --data[1]
-                return Image.
-                    findByIdAndUpdate(id, { shields: newImageShields })
+
+            if (data[0]>0 && data[1]>0) {
+
+                Image.findByIdAndUpdate(id, { $inc: { shields: -1 } }, { new: true })
+                .then(res => console.log(res))
+                .catch(err => console.log(err, "ERORORRORORORO"))
+
+            } else if(data[0]>0 && data[1]==0){
+
+                Group.findByIdAndUpdate(image.groupRef, {$pull: {images:image._id}})
+                .then(group => {
+                    Image.findByIdAndDelete(id)
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err, "ERORORRORORORO"))
+                })
+            }
+        })
+        .then((newImage) => res.json({ code: 200, message: 'Image attacked', newImage }))
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to image', err: err.message }))
+})
+
+
+
+//instanceOf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    const { id } = req.params
+    const userId = req.session.currentUser
+
+    User
+        .findById(userId)
+        .then(user => {
+            return Image.findById(id)
+        })
+        .then(image => {
+            
+            if (image.shields > 0) {
+                
+                return Image.findByIdAndUpdate(id, { $inc: { shields: -1 } }, { new: true })
+
             } else {
-                return Image.
-                    findByIdAndRemove(id)
+
+                return Image.findByIdAndRemove(id)
             }
         })
         .then(() => {
-            if (data[0] <= 0) {
+            if (userId.attacks <= 0) {
                 res.json({ code: 200, message: 'User has no attacks' })
+
             } else {
-                res.json({ code: 200, message: 'Image attacked succesfuly' })
-                let newUserAttacks = --data[0]
+                res.json({ code: 200, message: 'Image attacked succesfuly'})
                 return User
-                    .findByIdAndUpdate(userId, { attacks: newUserAttacks })
+                    .findByIdAndUpdate(userId, { $inc: { attacks: -1 } }, { new: true })
             }
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to image', err: err.message }))
 })
+*/
 
 
 module.exports = router

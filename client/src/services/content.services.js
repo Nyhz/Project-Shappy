@@ -12,6 +12,8 @@ class ContentService {
     addDislike = (imageId) => this.instance.put(`/image/${imageId}/dislike`, { imageId })
     refreshImage = (imageId) => this.instance.get(`/image/${imageId}/get`, { imageId })
     addShield = (imageId) => this.instance.put(`/image/${imageId}/shield`, { imageId })
+    addAttack = (imageId) => this.instance.put(`/image/${imageId}/attack`, { imageId })
+    
 }
 
 export default ContentService;
