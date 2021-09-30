@@ -8,8 +8,8 @@ class ShopService {
         })
     }
 
-    buyShield = () => this.instance.get("/shield")
-    buyAttack = () => this.instance.get("/attack")
+    buyShield = () => this.instance.put("/shield")
+    buyAttack = () => this.instance.put("/attack")
 }
 
 export default ShopService;
