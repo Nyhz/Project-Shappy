@@ -1,8 +1,8 @@
 
 module.exports = {
-    democracy : (arrDislikes,arrUsers) => {
+    democracy : (arrDislikes,shields,users) => {
 
-       if(((arrDislikes.length*100)/arrUsers.length)>=75){
+       if(((arrDislikes.length*100)/users)>=75 && shields == 0){
            return true;
        } 
        else{
@@ -10,3 +10,4 @@ module.exports = {
        }
     }
 }
+

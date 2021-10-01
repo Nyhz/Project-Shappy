@@ -1,4 +1,7 @@
 const { Schema, model } = require("mongoose");
+const User = require("./User.model");
+const Group = require("./Group.model")
+const mongoose = require("mongoose")
 
 const imageSchema = new Schema({
 
@@ -41,6 +44,27 @@ const imageSchema = new Schema({
         timestamps: true
     })
 
-const Image = model("Image", imageSchema);
+    imageSchema.methods.countUsersInGroup = function() {
+        return mongoose.model('User').count({groups: this.groupRef});
+    },
 
+    imageSchema.methods.destroy = function() {
+
+        mongoose.model('Group').findByIdAndUpdate(this.groupRef, {$pull: {images:this._id}})
+        .then(()=>Image.findByIdAndDelete(this._id))
+        .catch(err => console.log(err, "ERORORRORORORO"))
+    }
+
+
+
+    
+const Image = model("Image", imageSchema);
 module.exports = Image;
+
+//DESTROY:
+ //     Group.findByIdAndUpdate(image.groupRef, {$pull: {images:image._id}})
+                        //     .then(group => {
+                        //     Image.findByIdAndDelete(image._id)
+                        //     .then(res => console.log(res))
+                        //     .catch(err => console.log(err, "ERORORRORORORO"))
+                        //     })
