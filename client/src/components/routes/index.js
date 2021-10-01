@@ -7,7 +7,6 @@ import CreateGroup from '../pages/CreateGroup/CreateGroup'
 import LandingPage from '../pages/LandingPage/LandingPage'
 import ProfilePage from '../pages/ProfilePage/ProfilePage'
 import ShopPage from '../pages/Shop/ShopPage'
-
 import DashPage from '../pages/Dashboard/DashPage'
 import GroupPage from '../pages/GroupPage/GroupPage'
 import CreateImage from '../pages/CreateImage/CreateImage'
@@ -28,7 +27,6 @@ const Routes = ({ storeUser, loggedUser }) => {
             <Route path="/group/:groupId" render={(props) => <GroupPage loggedUser={loggedUser} {...props} />} />
             <Route exact path="/createimage" render={(props) => <CreateImage loggedUser={loggedUser} {...props} />} />
             <Route exact path="/createslander" render={(props) => <CreateSlander loggedUser={loggedUser} {...props} />} />
-
         </Switch>
     )
 }

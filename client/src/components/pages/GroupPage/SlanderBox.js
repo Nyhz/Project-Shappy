@@ -48,7 +48,7 @@ export default class SlanderBox extends Component {
             this.state.slanders?.length > 0 ?
                 this.state.slanders.map(slander => {
                     return (
-                        <SlanderItem {...slander} />
+                        <SlanderItem refreshSlander={this.refreshSlander} key={slander._id} {...slander} loggedUser={this.props.loggedUser} />
                     )
                 }) :
                 <h2>Sin resultados</h2>

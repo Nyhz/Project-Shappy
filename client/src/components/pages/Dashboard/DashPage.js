@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import BaseService from '../../../services/base.services'
 import DashItem from './DashItem'
 import GroupList from '../GroupList/GroupList'
-
 import ButtonContainer from '../Buttons/ButtonContainer'
 
 export default class DashPage extends Component {
@@ -12,8 +11,6 @@ export default class DashPage extends Component {
 
         this.state = {
             images: null
-
-
         }
         this.baseService = new BaseService()
     }
@@ -45,8 +42,6 @@ export default class DashPage extends Component {
                 <h2>Sin resultados</h2>
         )
     }
-
-
     render() {
         return (
             <>

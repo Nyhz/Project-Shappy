@@ -104,7 +104,7 @@ export default class CreateSlander extends Component {
                         Submit
                     </Button>
                 </Form>
-            </Container >
+            </Container>
         )
     }
 }

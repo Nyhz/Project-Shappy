@@ -14,8 +14,13 @@ class ContentService {
     addShield = (imageId) => this.instance.put(`/image/${imageId}/shield`, { imageId })
     addAttack = (imageId) => this.instance.put(`/image/${imageId}/attack`, { imageId })
 
-    getGroups = () => this.instance.get('/getformdata')
+    addSlanderLike = (slanderId) => this.instance.put(`/slander/${slanderId}/like`, { slanderId })
+    addSlanderDislike = (slanderId) => this.instance.put(`/slander/${slanderId}/dislike`, { slanderId })
+    refreshSlander = (slanderId) => this.instance.get(`/slander/${slanderId}/get`, { slanderId })
+    addSlanderShield = (slanderId) => this.instance.put(`/slander/${slanderId}/shield`, { slanderId })
+    addSlanderAttack = (slanderId) => this.instance.put(`/slander/${slanderId}/attack`, { slanderId })
 
+    getGroups = () => this.instance.get('/getformdata')
     newImage = (image) => this.instance.post('/image', image)
     newSlander = (slander) => this.instance.post('/slander', slander)
 }

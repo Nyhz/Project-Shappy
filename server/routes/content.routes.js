@@ -19,12 +19,10 @@ router.post('/slander', (req, res) => {
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating slander', err: err.message }))
 })
 
-router.put('/slander/like/', (req, res) => {
+router.put('/slander/:slanderId/like/', (req, res) => {
 
-    // const { id } = req.params
-
-    const id = '61543bb2bb9ead502cf12702'
-    const userId = '6152e7fb9ba3688e1998bb78'
+    const { slanderId } = req.params
+    const userId = req.session.currentUser
 
     const isAlreadyLiked = (slander, userId) => slander.likes.includes(userId)
     const isNotVoted = (slander, userId) => !slander.likes.includes(userId) && !slander.dislikes.includes(userId)
@@ -32,7 +30,7 @@ router.put('/slander/like/', (req, res) => {
 
 
     Slander
-        .findById(id)
+        .findById(slanderId)
         .then((slander) => {
 
             if (isAlreadyDisliked(slander, userId)) {
@@ -52,12 +50,10 @@ router.put('/slander/like/', (req, res) => {
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking slander', err: err.message }))
 })
 
-router.put('/slander/dislike/', (req, res) => {
+router.put('/slander/:slanderId/dislike/', (req, res) => {
 
-    // const { id } = req.params
-
-    const id = '61543bb2bb9ead502cf12702'
-    const userId = '6152e7fb9ba3688e1998bb78'
+    const { slanderId } = req.params
+    const userId = req.session.currentUser
 
     const isAlreadyLiked = (slander, userId) => slander.likes.includes(userId)
     const isNotVoted = (slander, userId) => !slander.likes.includes(userId) && !slander.dislikes.includes(userId)
@@ -65,17 +61,17 @@ router.put('/slander/dislike/', (req, res) => {
 
 
     Slander
-        .findById(id)
+        .findById(slanderId)
         .then((slander) => {
 
             if (isAlreadyLiked(slander, userId)) {
-                return Slander.findByIdAndUpdate(id, { $push: { dislikes: userId }, $pull: { likes: userId } })
+                return Slander.findByIdAndUpdate(slanderId, { $push: { dislikes: userId }, $pull: { likes: userId } })
             }
             else if (isNotVoted(slander, userId)) {
-                return Slander.findByIdAndUpdate(id, { $push: { dislikes: userId } })
+                return Slander.findByIdAndUpdate(slanderId, { $push: { dislikes: userId } })
             }
             else if (isAlreadyDisliked(slander, userId)) {
-                return Slander.findByIdAndUpdate(id, { $pull: { dislikes: userId } })
+                return Slander.findByIdAndUpdate(slanderId, { $pull: { dislikes: userId } })
             }
         })
         .then(() => res.json({ code: 200, message: 'Slander disliked' }))
@@ -83,16 +79,12 @@ router.put('/slander/dislike/', (req, res) => {
 
 })
 
-router.put('/slander/shield', (req, res) => { //TODO LINK DEL SLANDER? EN PARAMS
+router.put('/slander/:id/shield', (req, res) => { //TODO LINK DEL SLANDER? EN PARAMS
 
-    // const { id } = req.params
-    // const userId = req.session.currentUser
-
-    const id = '61543bb2bb9ead502cf12702'
-    const userId = '6152e7fb9ba3688e1998bb78'
+    const { id } = req.params
+    const userId = req.session.currentUser
 
     const data = []
-
 
     User
         .findById(userId)
@@ -125,13 +117,13 @@ router.put('/slander/shield', (req, res) => { //TODO LINK DEL SLANDER? EN PARAMS
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to slander', err: err.message }))
 })
 
-router.put('/slander/attack', (req, res) => { //TODO LINK DEL SLANDER EN PARAMS
+router.put('/slander/:id/attack', (req, res) => { //TODO LINK DEL SLANDER EN PARAMS
 
-    // const { id } = req.params
-    // const userId = req.session.currentUser
+    const { id } = req.params
+    const userId = req.session.currentUser
 
-    const id = '61543bb2bb9ead502cf12702'
-    const userId = '6152e7fb9ba3688e1998bb78'
+    // const id = '61543bb2bb9ead502cf12702'
+    // const userId = '6152e7fb9ba3688e1998bb78'
 
     const data = []
 
@@ -198,8 +190,6 @@ router.post('/image', (req, res) => {
                 .then(image => res.json({ code: 200, message: 'Image created', image }))
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating image', err: err.message }))
-
-
 })
 
 router.get('/image/:imageId/get', (req, res) => {
