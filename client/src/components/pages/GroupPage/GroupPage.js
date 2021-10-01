@@ -5,6 +5,8 @@ import DashItem from '../Dashboard/DashItem'
 import SlanderBox from './SlanderBox'
 import './GroupPage.css'
 
+import ButtonContainer from '../Buttons/ButtonContainer'
+
 export default class GroupPage extends Component {
     constructor(props) {
         super(props)
@@ -60,7 +62,7 @@ export default class GroupPage extends Component {
                 {
                     this.state.images ?
 
-                        <h2 className='group-title'>{this.state.images[0].groupRef.name}</h2>
+                        <h2 className='group-title'>{this.state.images[0]?.groupRef.name}</h2>
                         :
                         <h2>Loading</h2>
                 }
@@ -75,6 +77,7 @@ export default class GroupPage extends Component {
                             <h1>Loading</h1>
                     }
                 </div>
+                <ButtonContainer />
             </>
         )
     }

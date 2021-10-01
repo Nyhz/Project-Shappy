@@ -34,9 +34,11 @@ export default class GroupList extends Component {
     }
 
     displayGroups = () => {
+        const filteredGroups = this.state.groups.filter(group => group.isEnded === false)
+
         return (
-            this.state.groups.length > 0 ?
-                this.state.groups.map(group => {
+            filteredGroups.length > 0 ?
+                filteredGroups.map(group => {
                     return (
                         <GroupCircle key={group._id} {...group} loggedUser={this.props.loggedUser} />
                     )

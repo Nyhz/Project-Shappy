@@ -35,7 +35,6 @@ export default class UserInfo extends Component {
         return (
             filteredGroups.length > 0 ?
                 filteredGroups.map(group => {
-                    console.log('cada grupo', group)
                     return (
                         <GroupItem key={group._id} {...group} />
                     )

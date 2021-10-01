@@ -25,7 +25,10 @@ export default class Signup extends Component {
         e.preventDefault();
         const { username, password, email } = this.state
         this.authService.signUp(username, password, email)
-            .then(() => this.props.history.push("/"))
+            .then((res) => {
+                this.props.storeUser(res.data)
+                this.props.history.push("/group/615717d8f7e751f86fb2c046")
+            })
             .catch(err => console.log(err))
     }
 
