@@ -9,7 +9,7 @@ export default class CreateGroup extends Component {
         super(props)
         this.state = {
             name: "",
-            password: "",
+            secret: "",
             groupAvatar: "",
             endDate: "",
             isEnded: false,
@@ -24,40 +24,63 @@ export default class CreateGroup extends Component {
     }
 
     handleFormSubmit = (e) => {
-        e.preventDefault();
-        const { name, password, endDate } = this.state
+        e.preventDefault()
+        const { name, secret, endDate } = this.state
         const owner = this.props.loggedUser._id
         console.log(owner)
-        this.groupService.create(name, password, endDate, owner)
+        this.groupService.create(name, secret, endDate, owner)
             .then(() => this.props.history.push("/"))
             .catch(err => console.log(err))
     }
 
+    handleJoinForm = (e) => {
+        e.preventDefault()
+        this.groupService.join(this.state.secret)
+            .then(() => this.props.history.push('/dashboard'))
+            .catch(err => console.log(err))
+
+    }
+
+    handleSecret = (e) => {
+        const { name, value } = e.target
+        this.setState({ [name]: value })
+    }
+
     render() {
         return (
-            <Container className='form_container'>
-                <h1>Create a group</h1>
-                <Form onSubmit={this.handleFormSubmit}>
-                    <Form.Group className="mb-3" controlId="formBasicUsername">
-                        <Form.Label>Name of the group</Form.Label>
-                        <Form.Control name="name" value={this.state.name} onChange={this.handleInput} type="text" placeholder="Enter group name..." />
-                    </Form.Group>
+            <div>
+                <Container className='form_container'>
+                    <h1>Create a group</h1>
+                    <Form onSubmit={this.handleFormSubmit}>
+                        <Form.Group className="mb-3" controlId="formBasicUsername">
+                            <Form.Label>Name of the group</Form.Label>
+                            <Form.Control name="name" value={this.state.name} onChange={this.handleInput} type="text" placeholder="Enter group name..." />
+                        </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control name="password" value={this.state.password} onChange={this.handleInput} type="password" placeholder="Enter group password..." />
-                    </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Specify end date</Form.Label>
+                            <Form.Control name="endDate" value={this.state.endDate} onChange={this.handleInput} type="date" />
+                        </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Specify end date</Form.Label>
-                        <Form.Control name="endDate" value={this.state.endDate} onChange={this.handleInput} type="date" />
-                    </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </Form>
+                </Container>
+                <Container>
+                    <Form onSubmit={this.handleJoinForm}>
+                        <Form.Group className="mb-3" controlId="formBasicUsername">
+                            <Form.Label>Type supersecret code:</Form.Label>
+                            <Form.Control name="secret" value={this.state.secret} onChange={this.handleSecret} type="text" placeholder="Enter code..." />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </Form>
 
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
-                </Form>
-            </Container>
+
+                </Container>
+            </div>
         )
     }
 }

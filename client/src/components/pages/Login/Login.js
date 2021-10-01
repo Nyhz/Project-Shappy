@@ -15,15 +15,19 @@ class Login extends Component {
 
     handleInput = (e) => {
         const { name, value } = e.target
+        console.log(name, value);
+
         this.setState({ [name]: value })
     }
 
     handleFormSubmit = (e) => {
         e.preventDefault();
         const { username, password } = this.state
-
+        console.log('state', this.state);
         this.authService.login(username, password)
             .then(res => {
+                this.props.closeModal();
+
                 this.props.storeUser(res.data)
                 this.props.history.push("/dashboard")
             })

@@ -7,9 +7,10 @@ const groupSchema = new Schema({
         required: true
     },
 
-    password: {
+    secret: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     groupAvatar: {

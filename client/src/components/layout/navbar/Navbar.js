@@ -47,7 +47,6 @@ class Navigation extends React.Component {
                             :
                             <div className='nav_container'>
                                 <Link className="nav-link" to="/signup">Sign Up</Link>
-                                <Link className="nav-link" to="/login">Login</Link>
                             </div>
                         }
                     </Nav>

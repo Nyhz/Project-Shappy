@@ -1,31 +1,72 @@
 const express = require("express");
 const router = express.Router();
 
-const bcrypt = require("bcrypt")
-const bcryptSalt = 10
-
 const Group = require('./../models/Group.model')
 const User = require('../models/User.model')
 const Image = require('./../models/Image.model');
 const Slander = require("../models/Slander.model");
 
+const transporter = require('../config/mailing.config')
+
+
+let rand = function () {
+    return Math.random().toString(36).substr(2); // remove `0.`
+};
+
+let token = function () {
+    return rand() + rand(); // to make it longer
+};
+
+token();
+
 
 router.post('/create', (req, res) => {
 
-    const owner = req.session.currentUser._id
-    const { name, password, endDate } = req.body
 
-    const salt = bcrypt.genSaltSync(bcryptSalt)
-    const hashPass = bcrypt.hashSync(password, salt)
+    const secret = token()
+    const { _id, email, username } = req.session.currentUser
+    const { name, endDate } = req.body
+
+    console.log(_id, email, username);
 
     Group
-        .create({ name, password: hashPass, endDate, owner })
+        .create({ name, secret, endDate, owner: _id })
         .then((newGroup) => {
             return User
-                .findByIdAndUpdate(owner, { $push: { groups: newGroup._id } })
+                .findByIdAndUpdate(_id, { $push: { groups: newGroup._id } })
         })
         .then(() => res.json({ code: 200, message: 'Group created' }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating group', err: err.message }))
+
+    transporter
+        .sendMail({
+            from: 'Shappy <shappycrew@gmail.com>',
+            to: email,
+            subject: 'Here is your group access token!',
+            text: 'Hello',
+            html: `<b>Hello ${username}!<br>Welcome to Shappy :) Here is your access token: ${secret} <br> Make sure you share it with your friends</b>`
+        })
+})
+
+router.put('/join/:secret', (req, res) => {
+
+    const { secret } = req.params
+    const userId = req.session.currentUser._id
+
+    Group
+        .find({ secret })
+        .then(group => {
+            const groupId = group[0]._id.toString()
+            console.log('grupo obtenido', group);
+            console.log('id de ese grup', group[0]._id.toString());
+            return User
+                .findByIdAndUpdate(userId, { $push: { groups: groupId } }, { new: true })
+        })
+        .then(user => {
+            console.log('usuario', user);
+            res.json({ code: 200, message: 'User joined the group!', user })
+        })
+        .catch(err => console.log(err))
 })
 
 router.get('/list', (req, res) => {

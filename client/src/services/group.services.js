@@ -9,6 +9,7 @@ class GroupService {
     }
 
     create = (name, password, endDate, owner) => this.instance.post("/create", { name, password, endDate, owner })
+    join = (secret) => this.instance.put(`/join/${secret}`)
     getGroups = () => this.instance.get('/list')
     getSingleGroup = (groupId) => this.instance.get(`/images/${groupId}`)
     getSlanders = (groupId) => this.instance.get(`/slanders/${groupId}`)
