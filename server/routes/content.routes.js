@@ -10,12 +10,12 @@ const Group = require('./../models/Group.model')
 
 router.post('/slander', (req, res) => {
 
-    // const { authorId } = req.session.currentUser
-    const { authorId, content } = req.body
+    const authorId = req.session.currentUser._id
+    const { content, groupRef } = req.body
 
     Slander
-        .create({ authorId, content })
-        .then(() => res.json({ code: 200, message: 'Slander created' }))
+        .create({ authorId, content, groupRef })
+        .then((slander) => res.json({ code: 200, message: 'Slander created', slander }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating slander', err: err.message }))
 })
 
@@ -185,10 +185,10 @@ router.get('/getformdata', (req, res) => {
 router.post('/image', (req, res) => {
 
     const authorId = req.session.currentUser._id
-    const { imageUrl } = req.body
+    const { imageUrl, groupRef, tag } = req.body
 
     Image
-        .create({ authorId, imageUrl, tag: "tagRandom", groupRef: "6155de9d08fc82a20f3791a0" })
+        .create({ authorId, imageUrl, tag, groupRef })
         .then((image) => {
             Group
                 .findByIdAndUpdate(image.groupRef, { $push: { images: image._id } }, { new: true })

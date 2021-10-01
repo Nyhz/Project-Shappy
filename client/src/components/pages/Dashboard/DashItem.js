@@ -63,7 +63,7 @@ class DashItem extends Component {
                             <Card.Img variant="top" src={this.props?.imageUrl} />
                         </Link>
                         <Card.Body>
-                            <Card.Title className='card_title'>{this.props?.tag}</Card.Title>
+                            <Card.Title className='card_title'>#{this.props?.tag}</Card.Title>
                             <Card.Text>
                                 <span onClick={this.addImageLike}>Likes: {this.props?.likes?.length}</span> -
                                 <span onClick={this.addImageDislike}>Dislikes: {this.props?.dislikes?.length}</span> -

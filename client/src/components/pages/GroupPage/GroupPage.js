@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import GroupService from '../../../services/group.services'
 import GroupList from '../GroupList/GroupList'
 import DashItem from '../Dashboard/DashItem'
+import SlanderBox from './SlanderBox'
+import './GroupPage.css'
 
 export default class GroupPage extends Component {
     constructor(props) {
@@ -24,6 +26,7 @@ export default class GroupPage extends Component {
     }
 
     refreshImages = () => {
+        console.log('logogog', this.props.loggedUser);
         const groupId = this.props.match.params.groupId
 
         this.groupService.getSingleGroup(groupId)
@@ -53,8 +56,17 @@ export default class GroupPage extends Component {
     render() {
         return (
             <>
-                <GroupList loggedUser={this.state.loggedUser} storeUser={this.storeUser} />
+                <GroupList />
+                {
+                    this.state.images ?
+
+                        <h2 className='group-title'>{this.state.images[0].groupRef.name}</h2>
+                        :
+                        <h2>Loading</h2>
+                }
+                <SlanderBox loggedUser={this.props.loggedUser} groupId={this.props.match.params.groupId} />
                 <div className='dashboard_container'>
+                    <h2 className='images-title'>Images</h2>
 
                     {
                         this.state.images ?

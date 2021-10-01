@@ -7,10 +7,11 @@ export default class CreateImage extends Component {
     constructor() {
         super()
         this.state = {
-            image: null,
             imageUrl: null,
-            // isLoading: "",
-            groups: null
+            tag: null,
+            groupRef: null,
+            groups: null,
+            name: 'groupRef'
 
         }
 
@@ -27,7 +28,7 @@ export default class CreateImage extends Component {
         return (
             this.state.groups?.map(elm => {
                 return (
-                    <option onSelect={(e) => this.handleFile(e)} value={elm._id}>{elm.name}</option>
+                    <option value={elm._id} name={'groupRef'}>{elm.name}</option>
                 )
             })
         )
@@ -45,7 +46,30 @@ export default class CreateImage extends Component {
     }
 
 
+    handleChange = (e) => {
+
+        const { value } = e.target;
+        console.log(value);
+        console.log(this.state.tag);
+
+        this.setState({
+            ...this.state,
+            tag: value
+        })
+    }
+
+    handleSelectChanges = (e) => {
+
+        const { value } = e.target;
+
+        this.setState({
+            ...this.state,
+            groupRef: value
+        })
+    }
+
     handleFile = (e) => {
+        console.log(e.target);
         this.setState({
             ...this.state,
             isLoading: true
@@ -54,6 +78,7 @@ export default class CreateImage extends Component {
         const uploadData = new FormData()
 
         uploadData.append('imageData', e.target.files[0])
+
         this.uploadService.uploadImg(uploadData)
             .then(res => {
                 this.setState({
@@ -63,12 +88,13 @@ export default class CreateImage extends Component {
                 })
             })
             .catch(err => alert(err, "ERRRORRRRR"))
+
     }
 
     handleSubmit = (e) => {
 
         e.preventDefault();
-
+        console.log(this.state);
         this.contentService.newImage(this.state)
             .then((resImage) => {
                 console.log('RES IMAGE', resImage.data.image);
@@ -77,6 +103,7 @@ export default class CreateImage extends Component {
                     imageUrl: ""
                 })
             })
+            .then(() => this.props.history.push(`/group/${this.state.groupRef}`))
             .catch(err => console.error(err))
     }
 
@@ -86,12 +113,17 @@ export default class CreateImage extends Component {
             <Container className='form_container'>
                 <h1>Upload new image</h1>
                 <Form onSubmit={this.handleSubmit}>
+                    <Form.Group className="mb-3" controlId="tag">
+                        <Form.Label>Tag: </Form.Label>
+                        <Form.Control onChange={(e) => this.handleChange(e)} name="tag" type="text" />
+                    </Form.Group>
                     <Form.Group className="mb-3" controlId="imageUrl">
                         <Form.Label>Imagen: </Form.Label>
                         <Form.Control onChange={(e) => this.handleFile(e)} name="imageUrl" type="file" />
                     </Form.Group>
                     <Form.Group>
-                        <Form.Control as="select">
+                        <Form.Control as="select" onChange={(e) => this.handleSelectChanges(e)}>
+                            <option>Select group</option>
                             {
                                 this.state.groups ?
                                     this.displayGroupList()

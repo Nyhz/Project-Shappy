@@ -10,7 +10,7 @@ export default class DashPage extends Component {
 
         this.state = {
             images: null
-            
+
 
         }
         this.baseService = new BaseService()
@@ -48,7 +48,7 @@ export default class DashPage extends Component {
     render() {
         return (
             <>
-                <GroupList loggedUser={this.state.loggedUser} storeUser={this.storeUser} />
+                <GroupList />
                 <div className='dashboard_container'>
 
                     {

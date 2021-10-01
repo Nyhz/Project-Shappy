@@ -12,3 +12,8 @@ p {
 .add_container img {
   width: 75px;
 }
+
+.group-title {
+  text-align: center;
+  font-size: 1.8rem;
+}

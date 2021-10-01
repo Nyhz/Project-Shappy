@@ -11,6 +11,7 @@ class GroupService {
     create = (name, password, endDate, owner) => this.instance.post("/create", { name, password, endDate, owner })
     getGroups = () => this.instance.get('/list')
     getSingleGroup = (groupId) => this.instance.get(`/images/${groupId}`)
+    getSlanders = (groupId) => this.instance.get(`/slanders/${groupId}`)
 }
 
 export default GroupService;

@@ -17,6 +17,7 @@ class ContentService {
     getGroups = () => this.instance.get('/getformdata')
 
     newImage = (image) => this.instance.post('/image', image)
+    newSlander = (slander) => this.instance.post('/slander', slander)
 }
 
 export default ContentService;
