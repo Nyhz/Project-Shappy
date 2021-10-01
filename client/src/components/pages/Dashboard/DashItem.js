@@ -7,10 +7,17 @@ import ContentService from '../../../services/content.services'
 class DashItem extends Component {
     constructor(props) {
         super(props)
-        
+
+        // this.state = {
+        //     calling: false
+        // }
 
         this.contentService = new ContentService()
     }
+
+    // shouldCall = (func) => {
+    //     !this.state.calling && func()
+    // }
 
     addImageLike = () => {
         this.contentService.addLike(this.props._id)
@@ -28,10 +35,11 @@ class DashItem extends Component {
             .catch(err => console.log(err))
     }
 
-    addImageShield = () => {
+    addImageShield = async () => {
+        // await this.setState({ calling: true })
         this.contentService.addShield(this.props._id)
             .then((res) => {
-                console.log('res de shield', res)
+                // this.setState({ calling: false })
                 this.props.refreshImages()
             })
             .catch(err => console.log(err))
@@ -41,7 +49,6 @@ class DashItem extends Component {
     addImageAttack = () => {
         this.contentService.addAttack(this.props._id)
             .then((res) => {
-                console.log('res de Attack', res)
                 this.props.refreshImages()
             })
             .catch(err => console.log(err))
@@ -56,9 +63,12 @@ class DashItem extends Component {
                             <Card.Img variant="top" src={this.props?.imageUrl} />
                         </Link>
                         <Card.Body>
-                            <Card.Title className='card_title'>{this.props?.tag}</Card.Title>
+                            <Card.Title className='card_title'>#{this.props?.tag}</Card.Title>
                             <Card.Text>
-                                <span onClick={this.addImageLike}>Likes: {this.props?.likes?.length}</span> - <span onClick={this.addImageDislike}>Dislikes: {this.props?.dislikes?.length}</span> - <span onClick={this.addImageShield}>Shields: {this.props?.shields}</span> - <span onClick={this.addImageAttack}>Attacks: {this.props.loggedUser?.attacks}</span>
+                                <span onClick={this.addImageLike}>Likes: {this.props?.likes?.length}</span> -
+                                <span onClick={this.addImageDislike}>Dislikes: {this.props?.dislikes?.length}</span> -
+                                <span onClick={this.addImageShield}>Shields: {this.props?.shields}</span> -
+                                <span onClick={this.addImageAttack}>Attacks: {this.props.loggedUser?.attacks}</span>
                             </Card.Text>
                         </Card.Body>
                     </Card>

@@ -20,12 +20,18 @@ router.post('/signup', (req, res) => {
 
             const salt = bcrypt.genSaltSync(bcryptSalt)
             const hashPass = bcrypt.hashSync(password, salt)
-            User
+            return User
                 .create({ username, password: hashPass, avatar, email })
-                .then(() => res.json({ code: 200, message: 'User created' }))
-                .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating user', err: err.message }))
         })
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching user', err: err.message }))
+        .then((user) => {
+            return User
+                .findByIdAndUpdate(user._id, { $push: { groups: '615717d8f7e751f86fb2c046' } }, { new: true })
+        })
+        .then((user) => {
+            req.session.currentUser = user
+            res.json(req.session.currentUser)
+        })
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating user', err: err.message }))
 })
 
 router.post('/login', (req, res) => {

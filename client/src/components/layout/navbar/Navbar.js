@@ -34,7 +34,7 @@ class Navigation extends React.Component {
 
     render = () => {
         return (
-            <Navbar bg="light" expand="md" >
+            <Navbar className='navbar sticky-top' bg="light" expand="md" >
                 <Container>
                     <Link to='/dashboard'><Navbar.Brand href="/dashboard">Shappy_</Navbar.Brand></Link>
                     <Nav className="me-auto ">

@@ -47,21 +47,20 @@ router.get('/list', (req, res) => {
 router.get('/images/:groupId', (req, res) => {
 
     const { groupId } = req.params
-    console.log(groupId);
 
     Image
         .find({ groupRef: groupId })
+        .populate('groupRef')
         .then((images) => {
-            console.log('imagenes del grupo', images)
             res.json({ code: 200, message: 'Images fetched', images })
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching images', err: err.message }))
 })
 
 
-router.get('/slanders', (req, res) => {
+router.get('/slanders/:groupId', (req, res) => {
 
-    const groupId = '6151a8a9c522331a3ac4d0ca' //TODO
+    const groupId = req.params.groupId
 
     Slander
         .find({ groupRef: groupId })

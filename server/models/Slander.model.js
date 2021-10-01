@@ -9,6 +9,8 @@ const slanderSchema = new Schema({
 
     isValidated: {
         type: Boolean,
+        required: true,
+        default: false
     },
 
     authorId: {
@@ -31,16 +33,11 @@ const slanderSchema = new Schema({
         ref: 'User'
     }],
 
-    comments: [{
-        type: Schema.Types.ObjectId,
-        ref: "Comment"
-    }],
-
     shields: {
         type: Number,
         default: 0,
         required: true,
-        max: 10
+        max: 5
     },
 },
     {

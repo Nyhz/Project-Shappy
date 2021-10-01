@@ -5,10 +5,15 @@ p {
 .groups_container {
   display: flex;
   margin: 0;
-  padding: 0;
+  padding: 20px;
   text-align: center;
 }
 
 .add_container img {
   width: 75px;
+}
+
+.group-title {
+  text-align: center;
+  font-size: 1.8rem;
 }

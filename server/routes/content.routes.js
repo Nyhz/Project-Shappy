@@ -10,12 +10,12 @@ const { democracy } = require("./../utils");
 
 router.post('/slander', (req, res) => {
 
-    // const { authorId } = req.session.currentUser
-    const { authorId, content } = req.body
+    const authorId = req.session.currentUser._id
+    const { content, groupRef } = req.body
 
     Slander
-        .create({ authorId, content })
-        .then(() => res.json({ code: 200, message: 'Slander created' }))
+        .create({ authorId, content, groupRef })
+        .then((slander) => res.json({ code: 200, message: 'Slander created', slander }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating slander', err: err.message }))
 })
 
@@ -170,13 +170,25 @@ router.put('/slander/attack', (req, res) => { //TODO LINK DEL SLANDER EN PARAMS
 })
 
 
+router.get('/getformdata', (req, res) => {
+
+    const userId = req.session.currentUser._id
+
+    User
+        .findById(userId)
+        .populate('groups')
+        .select('groups')
+        .then((groups) => res.json({ code: 200, message: 'Groups fetched', groups }))
+})
+
+
 router.post('/image', (req, res) => {
 
     const authorId = req.session.currentUser._id
-    const { imageUrl } = req.body
+    const { imageUrl, groupRef, tag } = req.body
 
     Image
-        .create({ authorId, imageUrl, tag: "tagRandom", groupRef: "61532a2642b46ced2efb889e" })
+        .create({ authorId, imageUrl, tag, groupRef })
         .then((image) => {
             Group
                 .findByIdAndUpdate(image.groupRef, { $push: { images: image._id } }, { new: true })
@@ -345,9 +357,9 @@ router.put('/image/:id/attack', (req, res) => {
 
             if (data[0] > 0) {
                 User.findByIdAndUpdate(userId, { $inc: { attacks: -1 } }, { new: true })
-                .then(res => console.log(res))
-                .catch(err => console.log(err, "ERORORRORORORO"))
-            } 
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err, "ERORORRORORORO"))
+            }
 
             return image
         })
@@ -355,17 +367,17 @@ router.put('/image/:id/attack', (req, res) => {
 
             if (data[0]>0 && data[1]>0) {
                 Image.findByIdAndUpdate(id, { $inc: { shields: -1 } }, { new: true })
-                .then(res => console.log(res))
-                .catch(err => console.log(err, "ERORORRORORORO"))
-
-            } else if(data[0]>0 && data[1]==0){
-
-                Group.findByIdAndUpdate(image.groupRef, {$pull: {images:image._id}})
-                .then(group => {
-                    Image.findByIdAndDelete(id)
                     .then(res => console.log(res))
                     .catch(err => console.log(err, "ERORORRORORORO"))
-                })
+
+            } else if (data[0] > 0 && data[1] == 0) {
+
+                Group.findByIdAndUpdate(image.groupRef, { $pull: { images: image._id } })
+                    .then(group => {
+                        Image.findByIdAndDelete(id)
+                            .then(res => console.log(res))
+                            .catch(err => console.log(err, "ERORORRORORORO"))
+                    })
             }
         })
         .then((newImage) => res.json({ code: 200, message: 'Image attacked', newImage }))

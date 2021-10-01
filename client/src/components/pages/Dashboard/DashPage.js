@@ -3,6 +3,8 @@ import BaseService from '../../../services/base.services'
 import DashItem from './DashItem'
 import GroupList from '../GroupList/GroupList'
 
+import ButtonContainer from '../Buttons/ButtonContainer'
+
 export default class DashPage extends Component {
 
     constructor(props) {
@@ -10,7 +12,7 @@ export default class DashPage extends Component {
 
         this.state = {
             images: null
-            
+
 
         }
         this.baseService = new BaseService()
@@ -48,7 +50,7 @@ export default class DashPage extends Component {
     render() {
         return (
             <>
-                <GroupList loggedUser={this.state.loggedUser} storeUser={this.storeUser} />
+                <GroupList />
                 <div className='dashboard_container'>
 
                     {
@@ -58,6 +60,7 @@ export default class DashPage extends Component {
                             <h1>Loading</h1>
                     }
                 </div>
+                <ButtonContainer />
             </>
         )
     }
