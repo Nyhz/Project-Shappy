@@ -22,12 +22,9 @@ token();
 
 router.post('/create', (req, res) => {
 
-
     const secret = token()
     const { _id, email, username } = req.session.currentUser
     const { name, endDate } = req.body
-
-    console.log(_id, email, username);
 
     Group
         .create({ name, secret, endDate, owner: _id })
@@ -57,13 +54,10 @@ router.put('/join/:secret', (req, res) => {
         .find({ secret })
         .then(group => {
             const groupId = group[0]._id.toString()
-            console.log('grupo obtenido', group);
-            console.log('id de ese grup', group[0]._id.toString());
             return User
                 .findByIdAndUpdate(userId, { $push: { groups: groupId } }, { new: true })
         })
         .then(user => {
-            console.log('usuario', user);
             res.json({ code: 200, message: 'User joined the group!', user })
         })
         .catch(err => console.log(err))
@@ -147,15 +141,13 @@ router.get('/desc', (req, res) => { //TODO Group Id params
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group images', err: err.message }))
 })
 
-router.get('/morelikes', (req, res) => { //TODO Group Id params
+router.get('/morelikes/:groupId', (req, res) => {
 
-    // const { id } = req.params
-
-    const groupRef = '6151a8a9c522331a3ac4d0ca'
+    const { groupId } = req.params
 
     Image
-        .find({ groupRef })
-        .sort({ 'likes': 'desc' })
+        .find({ groupRef: groupId })
+        .sort({ 'likes': -1 })
         .then((images) => {
             res.json({ code: 200, message: 'Fetched images by group, ordered by popularity (HIGHER FIRST)', images })
         })
@@ -177,6 +169,20 @@ router.get('/lesslikes', (req, res) => { //TODO Group Id params
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group images', err: err.message }))
 })
 
+router.get('/summary/:groupId', (req, res) => {
+
+    const { groupId } = req.params
+    console.log(groupId);
+
+    Group
+        .findById(groupId)
+        .populate('images')
+        .then(group => {
+            console.log(group);
+            res.json({ code: 200, message: 'Group fetched', group })
+        })
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group', err: err.message }))
+})
 
 
 module.exports = router

@@ -18,7 +18,10 @@ router.get('/list', (req, res) => {
             const imgPromiseArray = flatImageArr.map((image) => Image.findById(image.toString()))
             return Promise.all(imgPromiseArray)
         })
-        .then(results => res.json({ code: 200, message: 'Images found!', results }))
+        .then(results => {
+            console.log(results)
+            res.json({ code: 200, message: 'Images found!', results })
+        })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating group', err: err.message }))
 })
 

@@ -35,8 +35,11 @@ export default class Signup extends Component {
     render() {
         return (
             <Container className='form_container'>
+
                 <h1>SIGN UP</h1>
+
                 <Form onSubmit={this.handleFormSubmit}>
+
                     <Form.Group className="mb-3" controlId="formBasicUsername">
                         <Form.Label>Username</Form.Label>
                         <Form.Control name="username" value={this.state.username} onChange={this.handleInput} type="text" placeholder="Enter username" />
@@ -52,9 +55,8 @@ export default class Signup extends Component {
                         <Form.Control name="password" value={this.state.password} onChange={this.handleInput} type="password" placeholder="Password" />
                     </Form.Group>
 
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
+                    <Button variant="primary" type="submit">Submit</Button>
+
                 </Form>
             </Container>
         )

@@ -38,15 +38,11 @@ class Navigation extends React.Component {
                 <Container>
                     <Link to='/dashboard'><Navbar.Brand href="/dashboard">Shappy_</Navbar.Brand></Link>
                     <Nav className="me-auto ">
-                        {this.props.loggedUser ?
+                        {this.props.loggedUser &&
                             <div className='nav_container'>
                                 <Link className="nav-link create_group" to="/creategroup">+</Link>
                                 <Link className="nav-link" to="/profile">Profile</Link>
                                 <span className="nav-link" onClick={this.functionCall}>Logout</span>
-                            </div>
-                            :
-                            <div className='nav_container'>
-                                <Link className="nav-link" to="/signup">Sign Up</Link>
                             </div>
                         }
                     </Nav>

@@ -28,7 +28,6 @@ export default class GroupPage extends Component {
     }
 
     refreshImages = () => {
-        console.log('logogog', this.props.loggedUser);
         const groupId = this.props.match.params.groupId
 
         this.groupService.getSingleGroup(groupId)
