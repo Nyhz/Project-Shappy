@@ -70,7 +70,7 @@ router.get('/slanders/:groupId', (req, res) => {
 
 router.get('/tag', (req, res) => {
 
-    // const { tag } = req.body
+   // const { tag } = req.body
     const tag = 'asdf'
 
     Image
@@ -81,8 +81,8 @@ router.get('/tag', (req, res) => {
 
 router.get('/tag/:tag', (req, res) => {
 
-    // const { tag } = req.params
-    const tag = 'asdf'
+    //const { tag } = req.params
+    //const tag = 'asdf'
 
     Image
         .find({ tag })

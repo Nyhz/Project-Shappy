@@ -5,7 +5,7 @@ const Slander = require('./../models/Slander.model')
 const Image = require('./../models/Image.model')
 const User = require('./../models/User.model')
 const Group = require('./../models/Group.model')
-const { democracy } = require("./../utils");
+const { democracy, democracySlander } = require("./../utils");
 
 
 router.post('/slander', (req, res) => {
@@ -19,41 +19,10 @@ router.post('/slander', (req, res) => {
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating slander', err: err.message }))
 })
 
-router.put('/slander/:slanderId/like/', (req, res) => {
+router.put('/slander/:slanderId/like', (req, res) => {
 
+    const userId = req.session.currentUser._id
     const { slanderId } = req.params
-    const userId = req.session.currentUser
-
-    const isAlreadyLiked = (slander, userId) => slander.likes.includes(userId)
-    const isNotVoted = (slander, userId) => !slander.likes.includes(userId) && !slander.dislikes.includes(userId)
-    const isAlreadyDisliked = (slander, userId) => !slander.likes.includes(userId) && slander.dislikes.includes(userId)
-
-
-    Slander
-        .findById(slanderId)
-        .then((slander) => {
-
-            if (isAlreadyDisliked(slander, userId)) {
-
-                return Slander.findByIdAndUpdate(id, { $push: { likes: userId }, $pull: { dislikes: userId } })
-            }
-            else if (isNotVoted(slander, userId)) {
-
-                return Slander.findByIdAndUpdate(id, { $push: { likes: userId } })
-            }
-            else if (isAlreadyLiked(slander, userId)) {
-
-                return Slander.findByIdAndUpdate(id, { $pull: { likes: userId } })
-            }
-        })
-        .then(() => res.json({ code: 200, message: 'Slander liked' }))
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking slander', err: err.message }))
-})
-
-router.put('/slander/:slanderId/dislike/', (req, res) => {
-
-    const { slanderId } = req.params
-    const userId = req.session.currentUser
 
     const isAlreadyLiked = (slander, userId) => slander.likes.includes(userId)
     const isNotVoted = (slander, userId) => !slander.likes.includes(userId) && !slander.dislikes.includes(userId)
@@ -65,13 +34,103 @@ router.put('/slander/:slanderId/dislike/', (req, res) => {
         .then((slander) => {
 
             if (isAlreadyLiked(slander, userId)) {
-                return Slander.findByIdAndUpdate(slanderId, { $push: { dislikes: userId }, $pull: { likes: userId } })
+
+                return Slander.findByIdAndUpdate(slander, { $pull: { likes: userId } }, { new: true })
+                
             }
             else if (isNotVoted(slander, userId)) {
-                return Slander.findByIdAndUpdate(slanderId, { $push: { dislikes: userId } })
+
+               Slander.findByIdAndUpdate(slander, { $push: { likes: userId } }, { new: true })
+
+                .then((slander)=>{
+                    slander.countUsersInGroup()
+                    .then(totalUsers => {
+                        
+                        if(democracySlander(slander.dislikes,slander.shields,totalUsers)){
+                            
+                          return Slander.findByIdAndUpdate(slanderId, { isValidated: 1 }, { new: true })
+                        }  
+                    })
+                })
+
             }
             else if (isAlreadyDisliked(slander, userId)) {
-                return Slander.findByIdAndUpdate(slanderId, { $pull: { dislikes: userId } })
+
+                Slander.findByIdAndUpdate(slander, { $push: { likes: userId }, $pull: { dislikes: userId } }, { new: true })
+                
+                .then((slander)=>{
+                    slander.countUsersInGroup()
+                    .then(totalUsers => {
+                        
+                        if(democracySlander(slander.dislikes,slander.shields,totalUsers)){
+                            
+                          return Slander.findByIdAndUpdate(slanderId, { isValidated: 1 }, { new: true })
+                        }  
+                    })
+                })
+
+
+
+
+            }
+        })
+        .then(() => res.json({ code: 200, message: 'Slander liked' }))
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while liking slander', err: err.message }))
+})
+
+router.put('/slander/:slanderId/dislike', (req, res) => {
+    
+    const userId = req.session.currentUser._id
+    const { slanderId } = req.params
+
+    const isAlreadyLiked = (slander, userId) => slander.likes.includes(userId)
+    const isNotVoted = (slander, userId) => !slander.likes.includes(userId) && !slander.dislikes.includes(userId)
+    const isAlreadyDisliked = (slander, userId) => !slander.likes.includes(userId) && slander.dislikes.includes(userId)
+
+
+    Slander
+        .findById(slanderId)
+        .then((slander) => {
+
+            if (isAlreadyLiked(slander, userId)) {
+
+
+                Slander.findByIdAndUpdate(slander, { $push: { dislikes: userId }, $pull: { likes: userId } }, { new: true } )
+
+                .then((slander)=>{
+
+                    slander.countUsersInGroup()
+                    .then(totalUsers => {
+
+                         if(democracySlander(slander.dislikes,slander.shields,totalUsers)){
+
+                          return Slander.findByIdAndUpdate(slanderId, { isValidated: -1 }, { new: true } )
+                        }  
+                    })
+                })
+            }
+
+            else if (isNotVoted(slander, userId)) {
+
+                Slander.findByIdAndUpdate(slander, { $push: { dislikes: userId } }, { new: true })
+                .then((slander)=>{
+
+                    slander.countUsersInGroup()
+                    .then(totalUsers => {
+                        
+                        if(democracySlander(slander.dislikes,slander.shields,totalUsers)){
+                            
+                          return Slander.findByIdAndUpdate(slanderId, { isValidated: -1 }, { new: true })
+                        }  
+                    })
+                })
+            }
+
+            else if (isAlreadyDisliked(slander, userId)) {
+
+                Slander.findByIdAndUpdate(slander, { $pull: { dislikes: userId } }, { 
+                new: true })
+
             }
         })
         .then(() => res.json({ code: 200, message: 'Slander disliked' }))
@@ -82,7 +141,7 @@ router.put('/slander/:slanderId/dislike/', (req, res) => {
 router.put('/slander/:id/shield', (req, res) => { //TODO LINK DEL SLANDER? EN PARAMS
 
     const { id } = req.params
-    const userId = req.session.currentUser
+    const userId = req.session.currentUser._id
 
     const data = []
 
@@ -120,10 +179,7 @@ router.put('/slander/:id/shield', (req, res) => { //TODO LINK DEL SLANDER? EN PA
 router.put('/slander/:id/attack', (req, res) => { //TODO LINK DEL SLANDER EN PARAMS
 
     const { id } = req.params
-    const userId = req.session.currentUser
-
-    // const id = '61543bb2bb9ead502cf12702'
-    // const userId = '6152e7fb9ba3688e1998bb78'
+    const userId = req.session.currentUser._id
 
     const data = []
 

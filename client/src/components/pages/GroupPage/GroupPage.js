@@ -24,10 +24,13 @@ export default class GroupPage extends Component {
     }
 
     componentDidUpdate = (prevProps, prevState) => {
+
         if (prevProps.match.params.groupId !== this.props.match.params.groupId) this.refreshImages()
+
     }
 
     refreshImages = () => {
+
         console.log('logogog', this.props.loggedUser);
         const groupId = this.props.match.params.groupId
 

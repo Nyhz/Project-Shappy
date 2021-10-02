@@ -1,11 +1,10 @@
 import { Component } from 'react'
-import { Card} from 'react-bootstrap'
+import {Card} from 'react-bootstrap'
 import ContentService from '../../../services/content.services'
 
 
 
-export default class SlanderItem extends Component {
-
+class SlanderItem extends Component {
     constructor(props) {
         super(props)
 
@@ -13,12 +12,14 @@ export default class SlanderItem extends Component {
     }
     addLike = () => {
         
-        // this.contentService.addSlanderLike(this.props._id)
-        //     .then((res) => {
-        //         this.props.refreshSlanders()
-        //     })
-        //     .catch(err => console.log(err))
-        console.log("CLICKY");
+        this.contentService.addSlanderLike(this.props._id)
+        
+            .then((res) => {
+                
+                this.props.refreshSlanders()
+            })
+            .catch(err => console.log(err))
+        // console.log("CLICKY");
     }
 
     addDislike = () => {
@@ -56,16 +57,17 @@ export default class SlanderItem extends Component {
                     <Card.Title className='slander-card-active'>{this.props.content}</Card.Title>
                 </Card.Body>
             </Card> 
-                            <span onClick={this.addLike}>Likes: {this.props?.likes?.length}</span> -
-                            <span onClick={this.addDislike}>Dislikes: {this.props?.dislikes?.length}</span> -
-                            <span onClick={this.addShield}>Shields: {this.props?.shields}</span> -
-                            <span onClick={this.addAttack}>Attacks: {this.props.loggedUser?.attacks}</span>
+            <br/>
+                            <span className="display" onClick={this.addLike}>Likes: {this.props?.likes?.length}</span> -
+                            <span className="display" onClick={this.addDislike}>Dislikes: {this.props?.dislikes?.length}</span> -
+                            <span className="display" onClick={this.addShield}>Shields: {this.props?.shields}</span> -
+                            <span className="display" onClick={this.addAttack}>Attacks: {this.props.loggedUser?.attacks}</span>
             </div>
         )
     }
 }
 
-
+export default SlanderItem
 
 
 

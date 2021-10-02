@@ -26,11 +26,18 @@ export default class SlanderBox extends Component {
     }
 
     componentDidUpdate = (prevProps, prevState) => {
+
         if (prevProps.groupId !== this.props.groupId) this.refreshSlanders()
+
+        //if (prevProps.match.params.groupId !== this.props.match.params.groupId) this.refreshSlanders()
     }
 
     refreshSlanders = () => {
+        
+        //const groupId = this.props.match.params.groupId
+
         this.groupService.getSlanders(this.props.groupId)
+
             .then((slanders) => {
                 console.log('SLANDERSSS', slanders);
                 this.setState({
@@ -39,8 +46,9 @@ export default class SlanderBox extends Component {
                 })
             })
             .catch(err => console.log(err))
-    }
+            
 
+    }
 
     displaySlanders = () => {
 
@@ -48,7 +56,7 @@ export default class SlanderBox extends Component {
             this.state.slanders?.length > 0 ?
                 this.state.slanders.map(slander => {
                     return (
-                        <SlanderItem refreshSlander={this.refreshSlander} key={slander._id} {...slander} loggedUser={this.props.loggedUser} />
+                        <SlanderItem refreshSlanders={this.refreshSlanders} key={slander._id} {...slander} loggedUser={this.props.loggedUser} />
                     )
                 }) :
                 <h2>Sin resultados</h2>
@@ -62,11 +70,7 @@ export default class SlanderBox extends Component {
             this.state.slanders?.length > 0 ?
 
                 <div className="slider-container">
-                    <Carousel
-                        className="carousel-style"
-                        width="100%"
-                    >
-
+                    <Carousel className="carousel-style"width="100%">
                         {this.displaySlanders()}
                     </Carousel>
                 </div>

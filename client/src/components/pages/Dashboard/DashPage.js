@@ -20,8 +20,11 @@ export default class DashPage extends Component {
     }
 
     refreshImages = () => {
+
         this.baseService.showDashboard()
+
             .then((images) => {
+                console.log(images)
                 this.setState({
                     ...this.state,
                     images: images.data.results

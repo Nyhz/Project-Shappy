@@ -8,6 +8,7 @@ class BaseService {
         })
     }
     showDashboard = () => this.instance.get("/list")
+    
 }
 
 export default BaseService;
