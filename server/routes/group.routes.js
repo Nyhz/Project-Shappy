@@ -8,26 +8,22 @@ const Slander = require("../models/Slander.model");
 
 const transporter = require('../config/mailing.config')
 
-
 let rand = function () {
-    return Math.random().toString(36).substr(2); // remove `0.`
-};
+    return Math.random().toString(36).substr(2)
+}
 
 let token = function () {
-    return rand() + rand(); // to make it longer
-};
-
-token();
-
+    return rand() + rand()
+}
 
 router.post('/create', (req, res) => {
 
     const secret = token()
     const { _id, email, username } = req.session.currentUser
-    const { name, endDate } = req.body
+    const { name, endDate, groupAvatar } = req.body
 
     Group
-        .create({ name, secret, endDate, owner: _id })
+        .create({ name, secret, endDate, groupAvatar, owner: _id })
         .then((newGroup) => {
             return User
                 .findByIdAndUpdate(_id, { $push: { groups: newGroup._id } })
@@ -41,7 +37,18 @@ router.post('/create', (req, res) => {
             to: email,
             subject: 'Here is your group access token!',
             text: 'Hello',
-            html: `<b>Hello ${username}!<br>Welcome to Shappy :) Here is your access token: ${secret} <br> Make sure you share it with your friends</b>`
+            html: `
+            Hello ${username}!
+            <br>
+            Welcome to Shappy :) 
+            <br><br> 
+            Here is your access token: <b>${secret}</b> 
+            <br><br> 
+            Make sure you share it with your friends.
+            <br><br>
+            Sincerely, 
+            <br>
+            the Shappy Team!`
         })
 })
 
@@ -60,7 +67,7 @@ router.put('/join/:secret', (req, res) => {
         .then(user => {
             res.json({ code: 200, message: 'User joined the group!', user })
         })
-        .catch(err => console.log(err))
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while joining group', err: err.message }))
 })
 
 router.get('/list', (req, res) => {
@@ -78,7 +85,6 @@ router.get('/list', (req, res) => {
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while retrieving user groups', err: err.message }))
 })
 
-
 router.get('/images/:groupId', (req, res) => {
 
     const { groupId } = req.params
@@ -92,7 +98,6 @@ router.get('/images/:groupId', (req, res) => {
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching images', err: err.message }))
 })
 
-
 router.get('/slanders/:groupId', (req, res) => {
 
     const groupId = req.params.groupId
@@ -101,17 +106,6 @@ router.get('/slanders/:groupId', (req, res) => {
         .find({ groupRef: groupId })
         .then((slanders) => res.json({ code: 200, message: 'Slanders fetched', slanders }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching slanders', err: err.message }))
-})
-
-router.get('/tag', (req, res) => {
-
-    // const { tag } = req.body
-    const tag = 'asdf'
-
-    Image
-        .find({ tag })
-        .then((images) => res.json({ code: 200, message: 'Images fetched', images }))
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching images', err: err.message }))
 })
 
 router.get('/tag/:tag', (req, res) => {
@@ -125,46 +119,15 @@ router.get('/tag/:tag', (req, res) => {
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching images', err: err.message }))
 })
 
-
-router.get('/desc', (req, res) => { //TODO Group Id params
-
-    // const { id } = req.params
-
-    const groupRef = '6151c2f176e7c343e24183a2'
-
-    Image
-        .find({ groupRef })
-        .sort({ 'createdAt': 'desc' })
-        .then((images) => {
-            res.json({ code: 200, message: 'Fetched images by group, order DESC', images })
-        })
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group images', err: err.message }))
-})
-
 router.get('/morelikes/:groupId', (req, res) => {
 
     const { groupId } = req.params
 
     Image
         .find({ groupRef: groupId })
-        .sort({ 'likes': -1 })
         .then((images) => {
-            res.json({ code: 200, message: 'Fetched images by group, ordered by popularity (HIGHER FIRST)', images })
-        })
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group images', err: err.message }))
-})
-
-router.get('/lesslikes', (req, res) => { //TODO Group Id params
-
-    // const { id } = req.params
-
-    const groupRef = '6151a8a9c522331a3ac4d0ca'
-
-    Image
-        .find({ groupRef })
-        .sort({ 'likes': 'asc' })
-        .then((images) => {
-            res.json({ code: 200, message: 'Fetched images by group, ordered by popularity (LOWER FIRST)', images })
+            const sortedImages = [...images].sort((a, b) => a.likes.length > b.likes.length)
+            res.json({ code: 200, message: 'Fetched images by group, ordered by popularity (HIGHER FIRST)', images: sortedImages })
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group images', err: err.message }))
 })
@@ -172,16 +135,49 @@ router.get('/lesslikes', (req, res) => { //TODO Group Id params
 router.get('/summary/:groupId', (req, res) => {
 
     const { groupId } = req.params
-    console.log(groupId);
 
     Group
         .findById(groupId)
         .populate('images')
         .then(group => {
-            console.log(group);
             res.json({ code: 200, message: 'Group fetched', group })
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group', err: err.message }))
+})
+
+router.get('/groupend', (req, res) => {
+
+    const today = new Date();
+    console.log(today);
+
+    Group
+        .find({})
+        .then((groups) => {
+
+            const closingGroups = []
+
+            for (let i = 0; i < groups.length; i++) {
+                if (!groups[i].isEnded && groups[i].endDate < today) {
+                    closingGroups.push(groups[i])
+                }
+            }
+            return closingGroups
+
+
+        })
+        .then(groups => {
+            console.log(groups);
+            return Group
+                .findByIdAndUpdate(groups[0]?._id, { isEnded: true })
+        })
+        .then(group => res.json({ code: 200, message: 'Group closed', group }))
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while closing groups', err: err.message }))
+})
+
+router.put('/closegroup', (req, res) => {
+
+    Group
+        .findByIdAndUpdate({})
 })
 
 

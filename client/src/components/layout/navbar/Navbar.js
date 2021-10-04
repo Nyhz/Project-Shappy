@@ -9,10 +9,7 @@ import AuthService from '../../../services/auth.services'
 
 
 class Navigation extends React.Component {
-    constructor() {
-        super()
 
-    }
     authService = new AuthService()
 
     logout = () => {

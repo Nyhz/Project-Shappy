@@ -97,7 +97,6 @@ export default class CreateImage extends Component {
         console.log(this.state);
         this.contentService.newImage(this.state)
             .then((resImage) => {
-                console.log('RES IMAGE', resImage.data.image);
                 this.setState({
                     image: resImage.data.image,
                     imageUrl: ""

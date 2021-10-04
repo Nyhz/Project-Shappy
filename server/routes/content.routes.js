@@ -353,12 +353,10 @@ router.put('/image/:id/attack', (req, res) => {
         })
         .then((image) => {
             data.push(image.shields)
-            console.log(data[0] > 0, "attacks vs shields", userId, id)
-
             if (data[0] > 0) {
                 User.findByIdAndUpdate(userId, { $inc: { attacks: -1 } }, { new: true })
                     .then(res => console.log(res))
-                    .catch(err => console.log(err, "ERORORRORORORO"))
+                    .catch(err => console.log(err, "Error"))
             }
 
             return image
@@ -368,7 +366,7 @@ router.put('/image/:id/attack', (req, res) => {
             if (data[0] > 0 && data[1] > 0) {
                 Image.findByIdAndUpdate(id, { $inc: { shields: -1 } }, { new: true })
                     .then(res => console.log(res))
-                    .catch(err => console.log(err, "ERORORRORORORO"))
+                    .catch(err => console.log(err, "Error"))
 
             } else if (data[0] > 0 && data[1] == 0) {
 
@@ -376,73 +374,12 @@ router.put('/image/:id/attack', (req, res) => {
                     .then(group => {
                         Image.findByIdAndDelete(id)
                             .then(res => console.log(res))
-                            .catch(err => console.log(err, "ERORORRORORORO"))
+                            .catch(err => console.log(err, "Error"))
                     })
             }
         })
         .then((newImage) => res.json({ code: 200, message: 'Image attacked', newImage }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to image', err: err.message }))
 })
-
-
-
-//instanceOf
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    const { id } = req.params
-    const userId = req.session.currentUser
-
-    User
-        .findById(userId)
-        .then(user => {
-            return Image.findById(id)
-        })
-        .then(image => {
-            
-            if (image.shields > 0) {
-                
-                return Image.findByIdAndUpdate(id, { $inc: { shields: -1 } }, { new: true })
-
-            } else {
-
-                return Image.findByIdAndRemove(id)
-            }
-        })
-        .then(() => {
-            if (userId.attacks <= 0) {
-                res.json({ code: 200, message: 'User has no attacks' })
-
-            } else {
-                res.json({ code: 200, message: 'Image attacked succesfuly'})
-                return User
-                    .findByIdAndUpdate(userId, { $inc: { attacks: -1 } }, { new: true })
-            }
-        })
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to image', err: err.message }))
-})
-*/
-
 
 module.exports = router

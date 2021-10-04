@@ -1,3 +1,7 @@
 .search_container img {
   width: 75px;
 }
+
+.grouplist-column {
+  justify-content: center;
+}

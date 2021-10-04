@@ -25,7 +25,7 @@ router.post('/signup', (req, res) => {
         })
         .then((user) => {
             return User
-                .findByIdAndUpdate(user._id, { $push: { groups: '615717d8f7e751f86fb2c046' } }, { new: true })
+                .findByIdAndUpdate(user._id, { $push: { groups: '615ac7752af5ca370dafd384' } }, { new: true })
         })
         .then((user) => {
             req.session.currentUser = user

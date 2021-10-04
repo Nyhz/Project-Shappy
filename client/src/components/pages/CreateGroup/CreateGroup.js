@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
 
 import GroupService from '../../../services/group.services'
+import UploadsService from '../../../services/uploads.services'
 
 export default class CreateGroup extends Component {
 
@@ -14,8 +15,10 @@ export default class CreateGroup extends Component {
             endDate: "",
             isEnded: false,
             owner: "",
+            isLoading: false
         }
         this.groupService = new GroupService()
+        this.uploadsService = new UploadsService()
     }
 
     handleInput = (e) => {
@@ -25,10 +28,9 @@ export default class CreateGroup extends Component {
 
     handleFormSubmit = (e) => {
         e.preventDefault()
-        const { name, secret, endDate } = this.state
+        const { name, secret, endDate, groupAvatar } = this.state
         const owner = this.props.loggedUser._id
-        console.log(owner)
-        this.groupService.create(name, secret, endDate, owner)
+        this.groupService.create(name, secret, endDate, owner, groupAvatar)
             .then(() => this.props.history.push("/"))
             .catch(err => console.log(err))
     }
@@ -46,6 +48,29 @@ export default class CreateGroup extends Component {
         this.setState({ [name]: value })
     }
 
+    handleFile = (e) => {
+        console.log(e.target);
+        this.setState({
+            ...this.state,
+            isLoading: true
+        })
+
+        const uploadData = new FormData()
+
+        uploadData.append('imageData', e.target.files[0])
+
+        this.uploadsService.uploadImg(uploadData)
+            .then(res => {
+                this.setState({
+                    ...this.state,
+                    isLoading: false,
+                    groupAvatar: res.data.cloudinary_url
+                })
+            })
+            .catch(err => alert(err, "Error"))
+
+    }
+
     render() {
         return (
             <div>
@@ -55,6 +80,11 @@ export default class CreateGroup extends Component {
                         <Form.Group className="mb-3" controlId="formBasicUsername">
                             <Form.Label>Name of the group</Form.Label>
                             <Form.Control name="name" value={this.state.name} onChange={this.handleInput} type="text" placeholder="Enter group name..." />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="imageUrl">
+                            <Form.Label>Group Avatar </Form.Label>
+                            <Form.Control onChange={(e) => this.handleFile(e)} name="imageUrl" type="file" />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">

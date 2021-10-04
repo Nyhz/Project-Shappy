@@ -32,7 +32,6 @@ export default class SlanderBox extends Component {
     refreshSlanders = () => {
         this.groupService.getSlanders(this.props.groupId)
             .then((slanders) => {
-                console.log('SLANDERSSS', slanders);
                 this.setState({
                     ...this.state,
                     slanders: slanders.data.slanders
@@ -63,7 +62,11 @@ export default class SlanderBox extends Component {
 
                 <div className="slider-container">
                     <Carousel
+                        showThumbs={false}
                         className="carousel-style"
+                        stopOnHover={true}
+                        showIndicators={false}
+                        showStatus={false}
                         width="100%"
                     >
 
@@ -71,7 +74,7 @@ export default class SlanderBox extends Component {
                     </Carousel>
                 </div>
                 :
-                <Carousel>
+                <Carousel showThumbs={false}>
                     <div>
                         <Card>
                             <Card.Body>

@@ -34,7 +34,7 @@ export default class UserInfo extends Component {
     render() {
         return (
             <div>
-                <img src={this.state.user?.avatar} alt="Profile image" />
+                <img src={this.state.user?.avatar} alt="avatar" />
                 <p>Name: {this.state.user?.username}</p>
                 <p>Email: {this.state.user?.email}</p>
             </div>
