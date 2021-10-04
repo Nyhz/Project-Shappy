@@ -27,7 +27,7 @@ router.put('/slander/:slanderId/like', (req, res) => {
     const isAlreadyLiked = (slander, userId) => slander.likes.includes(userId) && (slander.isValidated == 0 || (slander.shields > 0 && slander.isValidated < 0 ))
     const isNotVoted = (slander, userId) => !slander.likes.includes(userId) && !slander.dislikes.includes(userId) && (slander.isValidated == 0 || (slander.shields > 0 && slander.isValidated < 0 ))
     const isAlreadyDisliked = (slander, userId) => !slander.likes.includes(userId) && slander.dislikes.includes(userId) && (slander.isValidated == 0 || (slander.shields > 0 && slander.isValidated < 0 ))
-//(arrDislikes,arrLikes,users)
+
 
 
     Slander
@@ -150,7 +150,7 @@ router.put('/slander/:id/shield', (req, res) => {
     const { id } = req.params
     const userId = req.session.currentUser._id
 
-    const data = [] //USER SHIELDS - SLANDER SHIELD 
+    const data = [] 
 
     User
         .findById(userId)
@@ -178,20 +178,8 @@ router.put('/slander/:id/shield', (req, res) => {
                             return User.findByIdAndUpdate(userId, { shields: newUserShields })
                     }) 
             }
-       
         })
-        // .then(() => {
-
-        //     if (data[0] <= 0) {
-        //         res.json({ code: 200, message: 'User has no shields' })
-        //     } else {
-        //         res.json({ code: 200, message: 'Slander shielded successfuly' })
-
-        //         let newUserShields = --data[0]
-        //         return User
-        //             .findByIdAndUpdate(userId, { shields: newUserShields })
-        //     }
-        // })
+   
         .then(() => {
 
             if (data[0] == 0 || (data[1] == 0)) {
@@ -204,13 +192,11 @@ router.put('/slander/:id/shield', (req, res) => {
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to slander', err: err.message }))
 })
 
-router.put('/slander/:id/attack', (req, res) => { //TODO LINK DEL SLANDER EN PARAMS
+router.put('/slander/:id/attack', (req, res) => { 
 
     const { id } = req.params
     const userId = req.session.currentUser._id
-
-    const data = [] //ATTACKS VS SHIELDS
-
+    const data = [] 
 
     User
         .findById(userId)
@@ -226,7 +212,7 @@ router.put('/slander/:id/attack', (req, res) => { //TODO LINK DEL SLANDER EN PAR
 
                 return
 
-            } else if ((data[1] > 0 && slander.isValidated==0) ||(data[1] > 0 && (slander.isValidated <0 && slander.shields>0))) { // si tiene escudos y estado 0 o si tiene escudos y estado -1 y 
+            } else if ((data[1] > 0 && slander.isValidated==0) ||(data[1] > 0 && (slander.isValidated <0 && slander.shields>0))) { 
 
                 let newSlanderShields = --data[1]
                 let newUserAttacks = --data[0]
@@ -247,26 +233,7 @@ router.put('/slander/:id/attack', (req, res) => { //TODO LINK DEL SLANDER EN PAR
 
                     return User.findByIdAndUpdate(userId, { attacks: newUserAttacks })
                 })
-                
             }
-                // if(newSlanderShields == 0){
-
-                //     Slander.findById(slanderId)
-                //     .then((slander) => {
-                //     slander.countUsersInGroup()
-                //     .then(totalUsers => {
-
-                //           return Slander.findByIdAndUpdate(slanderId, { isValidated: democracySlander(slander.dislikes,slander.likes,totalUsers)}, { new: true } )
-                        
-                //     })
-                // })
-                // }
-                // else{        
-            /*
-            else {
-                return Slander.findByIdAndRemove(id)
-            }
-            */
         })
         .then(() => {
 
@@ -423,14 +390,12 @@ router.put('/image/:id/shield', (req, res) => {
         .then((image) => {
             data.push(image.shields)
             if (data[0] > 0) {
-                return User
-                    .findByIdAndUpdate(userId, { $inc: { shields: -1 } }, { new: true })
+                return User.findByIdAndUpdate(userId, { $inc: { shields: -1 } }, { new: true })
             }
         })
         .then(() => {
             if (data[0] > 0 && data[1] < 5) {
-                return Image
-                    .findByIdAndUpdate(id, { $inc: { shields: 1 } }, { new: true })
+                return Image.findByIdAndUpdate(id, { $inc: { shields: 1 } }, { new: true })
             }
         })
         .then(newImage => {
@@ -446,14 +411,10 @@ router.put('/image/:id/shield', (req, res) => {
 
 router.put('/image/:id/attack', (req, res) => {
 
-
     const { id } = req.params
     const userId = req.session.currentUser._id
+    const data = [] 
 
-    const data = []
-
-
-    //Promise.all()
     User
         .findById(userId)
         .then(user => {
@@ -461,23 +422,34 @@ router.put('/image/:id/attack', (req, res) => {
             return Image.findById(id)
         })
         .then((image) => {
+
             data.push(image.shields)
             console.log(data[0] > 0, "attacks vs shields", userId, id)
 
             if (data[0] > 0) {
+
                 User.findByIdAndUpdate(userId, { $inc: { attacks: -1 } }, { new: true })
                     .then(res => console.log(res))
                     .catch(err => console.log(err, "ERORORRORORORO"))
             }
-
             return image
         })
         .then(image => {
 
             if (data[0]>0 && data[1]>0) {
+
                 Image.findByIdAndUpdate(id, { $inc: { shields: -1 } }, { new: true })
-                    .then(res => console.log(res))
-                    .catch(err => console.log(err, "ERORORRORORORO"))
+                .then((image)=>{
+
+                    image.countUsersInGroup()
+                    .then(totalUsers => {
+                        
+                        if(democracy(image.dislikes,image.shields,totalUsers)){
+               
+                            image.destroy()
+                        }  
+                    })
+                })
 
             } else if (data[0] > 0 && data[1] == 0) {
 
@@ -492,66 +464,6 @@ router.put('/image/:id/attack', (req, res) => {
         .then((newImage) => res.json({ code: 200, message: 'Image attacked', newImage }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to image', err: err.message }))
 })
-
-
-
-//instanceOf
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    const { id } = req.params
-    const userId = req.session.currentUser
-
-    User
-        .findById(userId)
-        .then(user => {
-            return Image.findById(id)
-        })
-        .then(image => {
-            
-            if (image.shields > 0) {
-                
-                return Image.findByIdAndUpdate(id, { $inc: { shields: -1 } }, { new: true })
-
-            } else {
-
-                return Image.findByIdAndRemove(id)
-            }
-        })
-        .then(() => {
-            if (userId.attacks <= 0) {
-                res.json({ code: 200, message: 'User has no attacks' })
-
-            } else {
-                res.json({ code: 200, message: 'Image attacked succesfuly'})
-                return User
-                    .findByIdAndUpdate(userId, { $inc: { attacks: -1 } }, { new: true })
-            }
-        })
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to image', err: err.message }))
-})
-*/
 
 
 module.exports = router

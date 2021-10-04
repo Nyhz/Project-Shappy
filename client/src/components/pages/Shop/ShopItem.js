@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, Col } from 'react-bootstrap'
+import {Card, Col } from 'react-bootstrap'
 
 export default function ShopItem({description, title, image, buyShield, buyAttack}) {
    
@@ -22,7 +22,6 @@ export default function ShopItem({description, title, image, buyShield, buyAttac
         }
     }
    
-    
     return (
         <div>
             <Col md={4} className="mb-3">
