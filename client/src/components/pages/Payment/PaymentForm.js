@@ -1,0 +1,59 @@
+
+import React from "react";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import PaymentService from './../../../services/payment.services'
+import axios from "axios";
+import './PaymentForm.css'
+
+
+export const PaymentForm = (loggedUser) => {
+    const stripe = useStripe();
+    const elements = useElements();
+
+    const paymentService = new PaymentService
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const { error, paymentMethod } = await stripe.createPaymentMethod({
+            type: "card",
+            card: elements.getElement(CardElement),
+        });
+
+        if (!error) {
+            const { id } = paymentMethod
+            const e = document.getElementById('amount')
+
+            axios.post(
+                "http://localhost:5005/api/stripe/charge",
+                {
+                    amount: e.options[e.selectedIndex].value,
+                    id
+                }
+            ).then(response => {
+                if (response.data.success) {
+                    console.log(response.data.success);
+                    paymentService.addCoins(response.data.amount)
+                }
+            })
+                .catch(err => console.log("Error | ", err))
+        } else {
+            console.log(error.message);
+        }
+    }
+
+    return (
+        <form onSubmit={handleSubmit} style={{ maxWidth: 400 }}>
+            <CardElement className='card-element' />
+            <select name="amount" id="amount">
+                <option value="99">10 coins = 9.99€</option>
+                <option value="499">50 + 10 FREE coins = 4.99€</option>
+                <option value="999">100 + 50 FREE coins = 9.99€</option>
+                <option value="1999">200 + 150 FREE coins = 19.99€</option>
+                <option value="4999">500 + 500 FREE coins = 49.99€</option>
+            </select>
+            <button>Pay</button>
+        </form>
+    );
+};
+
+export default PaymentForm

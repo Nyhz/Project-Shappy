@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const REMOTEDB = process.env.DB_REMOTE
 
-
 mongoose
   .connect(REMOTEDB)
   .then((x) => {

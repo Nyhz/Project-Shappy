@@ -8,11 +8,17 @@ class Login extends Component {
         super(props)
         this.state = {
             username: "",
-            password: ""
+            password: "",
         }
+        this.innerRef = React.createRef();
         this.authService = new AuthService()
     }
 
+    componentDidMount = () => {
+        setTimeout(() => {
+            this.innerRef.current.focus();
+        }, 1)
+    }
     handleInput = (e) => {
         const { name, value } = e.target
         this.setState({ [name]: value })
@@ -21,9 +27,9 @@ class Login extends Component {
     handleFormSubmit = (e) => {
         e.preventDefault();
         const { username, password } = this.state
-
         this.authService.login(username, password)
             .then(res => {
+                this.props.closeLoginModal();
                 this.props.storeUser(res.data)
                 this.props.history.push("/dashboard")
             })
@@ -33,11 +39,14 @@ class Login extends Component {
     render() {
         return (
             <Container className='form_container'>
+
                 <h1>LOGIN</h1>
+
                 <Form onSubmit={this.handleFormSubmit}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+
+                    <Form.Group className="mb-3" controlId="formBasicUsername">
                         <Form.Label>Username</Form.Label>
-                        <Form.Control name="username" value={this.state.username} onChange={this.handleInput} type="text" placeholder="Enter username" />
+                        <Form.Control ref={this.innerRef} name="username" value={this.state.username} onChange={this.handleInput} type="text" placeholder="Enter username" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -45,9 +54,8 @@ class Login extends Component {
                         <Form.Control name="password" value={this.state.password} onChange={this.handleInput} type="password" placeholder="Password" />
                     </Form.Group>
 
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
+                    <Button variant="primary" type="submit">Submit</Button>
+
                 </Form>
             </Container>
         )

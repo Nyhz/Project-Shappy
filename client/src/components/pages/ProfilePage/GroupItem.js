@@ -23,7 +23,7 @@ export default function GroupItem({ _id, name, groupAvatar, endDate, createdAt }
                         Start date: {formatDate(createdAt)} <br />
                         End date: {formatDate(endDate)}
                     </Card.Text>
-                    <Link to={`/group/${_id}`}>
+                    <Link to={`/summary/${_id}`}>
                         <Button variant="primary">Ver detalles</Button>
                     </Link>
                 </Card.Body>

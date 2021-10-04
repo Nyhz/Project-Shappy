@@ -1,3 +1,8 @@
+:root {
+  --clr-neon: hsl(317 100% 54%);
+  --clr-bg: hsl(323 21% 16%);
+}
+
 .landing_container {
   height: 90vh;
   background-color: black;
@@ -7,4 +12,8 @@
 
 h3 {
   color: grey;
+}
+
+.modal_container {
+  margin-top: 80px;
 }

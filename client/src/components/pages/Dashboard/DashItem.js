@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import { Card, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import './DashItem.css'
 
 import ContentService from '../../../services/content.services'
 
@@ -18,6 +18,14 @@ class DashItem extends Component {
     // shouldCall = (func) => {
     //     !this.state.calling && func()
     // }
+
+
+    componentDidMount = () => {
+        console.log(this.props.groupRef)
+    }
+
+
+
 
     addImageLike = () => {
         this.contentService.addLike(this.props._id)
@@ -58,10 +66,8 @@ class DashItem extends Component {
         return (
             <div>
                 <Col md={4} className="mb-3">
-                    <Card>
-                        <Link className='card_img' to={`/group/${this.props?.groupRef}`}>
-                            <Card.Img variant="top" src={this.props?.imageUrl} />
-                        </Link>
+                    <Card className='image-card'>
+                        <Card.Img variant="top" src={this.props?.imageUrl} />
                         <Card.Body>
                             <Card.Title className='card_title'>#{this.props?.tag}</Card.Title>
                             <Card.Text>

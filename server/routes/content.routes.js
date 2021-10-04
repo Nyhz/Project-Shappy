@@ -323,7 +323,7 @@ router.put('/image/:imageId/dislike', (req, res) => {
 
     const userId = req.session.currentUser._id
     const { imageId } = req.params
-    
+
 
     const isAlreadyLiked = (image, userId) => !image.dislikes.includes(userId) && image.likes.includes(userId)
     const isNotVoted = (image, userId) => !image.dislikes.includes(userId) && !image.likes.includes(userId)
@@ -334,36 +334,36 @@ router.put('/image/:imageId/dislike', (req, res) => {
         .then((image) => {
 
             if (isAlreadyLiked(image, userId)) {
-                
+
                 Image.findByIdAndUpdate(image, { $push: { dislikes: userId }, $pull: { likes: userId } }, { new: true })
 
-                .then((image)=>{
+                    .then((image) => {
 
-                    image.countUsersInGroup()
-                    .then(totalUsers => {
+                        image.countUsersInGroup()
+                            .then(totalUsers => {
 
-                         if(democracy(image.dislikes,image.shields,totalUsers)){
+                                if (democracy(image.dislikes, image.shields, totalUsers)) {
 
-                           image.destroy()
-                        }  
+                                    image.destroy()
+                                }
+                            })
                     })
-                })
             }
             else if (isNotVoted(image, userId)) {
-                
+
                 Image.findByIdAndUpdate(image, { $push: { dislikes: userId } }, { new: true })
 
-                .then((image)=>{
+                    .then((image) => {
 
-                    image.countUsersInGroup()
-                    .then(totalUsers => {
-                        
-                        if(democracy(image.dislikes,image.shields,totalUsers)){
-               
-                            image.destroy()
-                        }  
+                        image.countUsersInGroup()
+                            .then(totalUsers => {
+
+                                if (democracy(image.dislikes, image.shields, totalUsers)) {
+
+                                    image.destroy()
+                                }
+                            })
                     })
-                })
             }
             else if (isAlreadyDisliked(image, userId)) {
                 return Image.findByIdAndUpdate(image, { $pull: { dislikes: userId } }, { new: true })
@@ -424,13 +424,11 @@ router.put('/image/:id/attack', (req, res) => {
         .then((image) => {
 
             data.push(image.shields)
-            console.log(data[0] > 0, "attacks vs shields", userId, id)
-
             if (data[0] > 0) {
 
                 User.findByIdAndUpdate(userId, { $inc: { attacks: -1 } }, { new: true })
                     .then(res => console.log(res))
-                    .catch(err => console.log(err, "ERORORRORORORO"))
+                    .catch(err => console.log(err, "Error"))
             }
             return image
         })
@@ -457,13 +455,12 @@ router.put('/image/:id/attack', (req, res) => {
                     .then(group => {
                         Image.findByIdAndDelete(id)
                             .then(res => console.log(res))
-                            .catch(err => console.log(err, "ERORORRORORORO"))
+                            .catch(err => console.log(err, "Error"))
                     })
             }
         })
         .then((newImage) => res.json({ code: 200, message: 'Image attacked', newImage }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to image', err: err.message }))
 })
-
 
 module.exports = router

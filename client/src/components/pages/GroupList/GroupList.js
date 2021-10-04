@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import GroupService from '../../../services/group.services'
 import GroupCircle from './GroupCircle'
 import { Container, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-
 import './GroupList.css'
-
 
 export default class GroupList extends Component {
     constructor(props) {
@@ -50,7 +47,7 @@ export default class GroupList extends Component {
     render() {
         return (
             <Container className='groups_container'>
-                <Row>
+                <Row className='grouplist-row'>
                     {
                         this.state.groups ?
                             this.displayGroups()
