@@ -145,12 +145,12 @@ router.put('/slander/:slanderId/dislike', (req, res) => {
 
 })
 
-router.put('/slander/:id/shield', (req, res) => { //TODO LINK DEL SLANDER? EN PARAMS
+router.put('/slander/:id/shield', (req, res) => { 
 
     const { id } = req.params
     const userId = req.session.currentUser._id
 
-    const data = []
+    const data = [] //USER SHIELDS - SLANDER SHIELD 
 
     User
         .findById(userId)
@@ -163,30 +163,42 @@ router.put('/slander/:id/shield', (req, res) => { //TODO LINK DEL SLANDER? EN PA
 
             data.push(slander.shields)
 
-            if (data[0]>0 && (slander.isValidated==0 || (slander.isValidated<0 && data[1]>0))) {
+            if(slander.isValidated > 0){
+                return
+            }
 
-                if(slander.isValidated==0 || (slander.isValidated <0 && slander.shields >0 )){ 
+            else if (data[0]>0 && (slander.isValidated==0 || (slander.isValidated<0 && data[1]>0))) {
                     
                     let newSlanderShields = ++data[1]
 
-                    return Slander.findByIdAndUpdate(id, { shields: newSlanderShields })
-                    
-                } else {
-                    
-                    return 
-                }
+                    Slander.findByIdAndUpdate(id, { shields: newSlanderShields })
+                    .then(()=>{
+
+                         let newUserShields = --data[0]
+                            return User.findByIdAndUpdate(userId, { shields: newUserShields })
+                    }) 
             }
+       
         })
+        // .then(() => {
+
+        //     if (data[0] <= 0) {
+        //         res.json({ code: 200, message: 'User has no shields' })
+        //     } else {
+        //         res.json({ code: 200, message: 'Slander shielded successfuly' })
+
+        //         let newUserShields = --data[0]
+        //         return User
+        //             .findByIdAndUpdate(userId, { shields: newUserShields })
+        //     }
+        // })
         .then(() => {
 
-            if (data[0] <= 0) {
-                res.json({ code: 200, message: 'User has no shields' })
+            if (data[0] == 0 || (data[1] == 0)) {
+                res.json({ code: 200, message: 'User cant shield' })
             } else {
-                res.json({ code: 200, message: 'Slander shielded successfuly' })
-
-                let newUserShields = --data[0]
-                return User
-                    .findByIdAndUpdate(userId, { shields: newUserShields })
+                res.json({ code: 200, message: 'Slander shieled succesfuly' })
+       
             }
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to slander', err: err.message }))
@@ -210,7 +222,7 @@ router.put('/slander/:id/attack', (req, res) => { //TODO LINK DEL SLANDER EN PAR
         .then(slander => {
             data.push(slander.shields)
 
-            if (data[0] == 0) {
+            if (data[0] == 0 || (data[1]==0 && (slander.isValidated == -1 || slander.isValidated == 1))) {
 
                 return
 
@@ -228,7 +240,7 @@ router.put('/slander/:id/attack', (req, res) => { //TODO LINK DEL SLANDER EN PAR
             else if (data[1]==0){
 
                 let newUserAttacks = --data[0]
-                
+
                 Slander.findByIdAndUpdate(id, { isValidated: -1}, { new: true } )
 
                 .then(()=>{
@@ -258,7 +270,7 @@ router.put('/slander/:id/attack', (req, res) => { //TODO LINK DEL SLANDER EN PAR
         })
         .then(() => {
 
-            if (data[0] == 0) {
+            if (data[0] == 0 || (data[1] == 0)) {
                 res.json({ code: 200, message: 'User cant attacks' })
             } else {
                 res.json({ code: 200, message: 'Slander attacked succesfuly' })
