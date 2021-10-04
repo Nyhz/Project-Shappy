@@ -10,13 +10,14 @@ module.exports = {
        }
     },
     
-     democracySlander : (arrDislikes,shields,users) => {
+     democracySlander : (arrDislikes,arrLikes,users,shields) => {
 
-       if(((arrDislikes.length*100)/users)>=75 && shields == 0){
+    
+       if(((arrDislikes.length*100)/users)>=75){
 
            return -1;
        } 
-       else if(((arrlikes.length*100)/users)>=75 && shields == 0){
+       else if(((arrLikes.length*100)/users)>=75){
            
            return 1;
        }
