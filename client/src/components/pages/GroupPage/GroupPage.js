@@ -23,7 +23,7 @@ export default class GroupPage extends Component {
     componentDidMount = () => {
         this.refreshImages()
         this.countUsers()
-         this.getGroupName()
+        this.getGroupName()
 
     }
 
