@@ -5,7 +5,7 @@ import './SlanderBox.css'
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
-import { Card } from 'react-bootstrap'
+import { Card, Tab, Tabs } from 'react-bootstrap'
 
 
 export default class SlanderBox extends Component {
@@ -36,19 +36,36 @@ export default class SlanderBox extends Component {
         this.groupService.getSlanders(this.props.groupId)
 
             .then((slanders) => {
+                console.log('slanders', slanders);
+
+                const allSlanders = slanders.data.slanders
+                console.log('allSlanders', allSlanders);
+
+                const confirmedSlanders = allSlanders.filter(elm => elm.isValidated === 1)
+                console.log('confirmed', confirmedSlanders);
+                const deniedSlanders = allSlanders.filter(elm => elm.isValidated === -1)
+                console.log('denied', deniedSlanders);
+                const activeSlanders = allSlanders.filter(elm => elm.isValidated === 0)
+                console.log('active', activeSlanders);
+
                 this.setState({
                     ...this.state,
-                    slanders: slanders.data.slanders
+                    slanders: {
+                        confirmed: confirmedSlanders,
+                        denied: deniedSlanders,
+                        active: activeSlanders
+                    }
                 })
             })
             .catch(err => console.log(err))
+
     }
 
-    displaySlanders = () => {
+    displaySlanders = (type) => {
 
         return (
-            this.state.slanders?.length > 0 ?
-                this.state.slanders.map(slander => {
+            this.state.slanders[type]?.length > 0 ?
+                this.state.slanders[type]?.map(slander => {
                     return (
                         <SlanderItem refreshSlanders={this.refreshSlanders} key={slander._id} {...slander} loggedUser={this.props.loggedUser} />
                     )
@@ -60,21 +77,57 @@ export default class SlanderBox extends Component {
     render = () => {
         return (
 
-            this.state.slanders?.length > 0 ?
+            this.state.slanders ?
 
-                <div className="slider-container">
-                    <Carousel
-                        showThumbs={false}
-                        className="carousel-style"
-                        stopOnHover={true}
-                        showIndicators={false}
-                        showStatus={false}
-                        width="100%"
-                    >
-                        {this.displaySlanders()}
-                    </Carousel>
+                <div>
+                    <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
+                        <Tab eventKey="Confirmed    " title="Confirmed  ">
+                            <Carousel
+                                showThumbs={false}
+                                className="carousel-style"
+                                stopOnHover={true}
+                                showIndicators={false}
+                                showStatus={false}
+                                width="100%"
+                            >
+                                {
+                                    this.displaySlanders('confirmed')
+                                }
+                            </Carousel>
+                        </Tab>
+                        <Tab eventKey="Active" title="Active">
+                            <Carousel
+                                showThumbs={false}
+                                className="carousel-style"
+                                stopOnHover={true}
+                                showIndicators={false}
+                                showStatus={false}
+                                width="100%"
+                            >
+                                {
+                                    this.displaySlanders('active')
+                                }
+                            </Carousel>
+                        </Tab>
+                        <Tab eventKey="Denied" title="Denied">
+                            <Carousel
+                                showThumbs={false}
+                                className="carousel-style"
+                                stopOnHover={true}
+                                showIndicators={false}
+                                showStatus={false}
+                                width="100%"
+                            >
+                                {
+                                    this.displaySlanders('denied')
+                                }
+                            </Carousel>
+                        </Tab>
+                    </Tabs>
                 </div>
+
                 :
+
                 <Carousel
                     showThumbs={false}
                     className="carousel-style"
