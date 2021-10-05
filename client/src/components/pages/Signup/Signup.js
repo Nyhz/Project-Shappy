@@ -14,7 +14,8 @@ export default class Signup extends Component {
             email: "",
             avatar: "",
             password: "",
-            isLoading: false
+            isLoading: false,
+            error: null
         }
         this.authService = new AuthService()
         this.uploadsService = new UploadsService()
@@ -33,7 +34,12 @@ export default class Signup extends Component {
                 this.props.storeUser(res.data)
                 this.props.history.push("/group/615717d8f7e751f86fb2c046") // Redirect to default group
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                this.setState({
+                    ...this.state,
+                    error: err.response.data.message
+                })
+            })
     }
 
     handleFile = (e) => {
@@ -88,6 +94,8 @@ export default class Signup extends Component {
                     </Form.Group>
 
                     <Button variant="primary" type="submit">Submit</Button>
+
+                    {this.state.error && <p>{this.state.error}</p>}
 
                 </Form>
             </Container>

@@ -15,7 +15,7 @@ router.get('/list', (req, res) => {
         .then(({ groups }) => {
             console.log(groups)
             let flatImageArr = groups.map(elm => elm.images).flat()
-            const imgPromiseArray = flatImageArr.map((image) => Image.findById(image.toString()))
+            const imgPromiseArray = flatImageArr.map((image) => Image.findById(image.toString()).populate('groupRef'))
             return Promise.all(imgPromiseArray)
         })
         .then(results => {

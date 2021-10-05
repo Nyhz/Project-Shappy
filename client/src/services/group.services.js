@@ -16,6 +16,8 @@ class GroupService {
     getSlanders = (groupId) => this.instance.get(`/slanders/${groupId}`)
     getImageByLikes = (groupId) => this.instance.get(`/morelikes/${groupId}`)
     getGroupEnd = () => this.instance.get('/groupend')
+    countUsers = (groupId) => this.instance.get(`/countusers/${groupId}`)
+    getGroupName = (groupId) => this.instance.get(`/getname/${groupId}`)
 }
 
 export default GroupService;

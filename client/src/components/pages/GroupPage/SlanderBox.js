@@ -81,7 +81,7 @@ export default class SlanderBox extends Component {
 
                 <div>
                     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
-                        <Tab eventKey="Confirmed    " title="Confirmed  ">
+                        <Tab eventKey="Confirmed" title="Confirmed">
                             <Carousel
                                 showThumbs={false}
                                 className="carousel-style"

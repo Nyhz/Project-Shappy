@@ -12,7 +12,9 @@ export default class GroupPage extends Component {
         super(props)
 
         this.state = {
-            images: null
+            images: null,
+            users: null,
+            group: null
 
         }
         this.groupService = new GroupService()
@@ -20,22 +22,45 @@ export default class GroupPage extends Component {
 
     componentDidMount = () => {
         this.refreshImages()
+        this.countUsers()
 
     }
 
     componentDidUpdate = (prevProps, prevState) => {
-
-        if (prevProps.match.params.groupId !== this.props.match.params.groupId) this.refreshImages()
-
-
+        if (prevProps.match.params.groupId !== this.props.match.params.groupId) {
+            this.refreshImages()
+            this.countUsers()
+            this.getGroupName()
+        }
     }
 
-    refreshImages = () => {
-        const groupId = this.props.match.params.groupId
+    getGroupName = () => {
 
-        this.groupService.getSingleGroup(groupId)
+        this.groupService.getGroupName(this.props.match.params.groupId)
+            .then(group => {
+                console.log('GRRRRRRR', group);
+                this.setState({
+                    ...this.state,
+                    group: group.data.group
+                })
+            })
+    }
+
+    countUsers = () => {
+        this.groupService.countUsers(this.props.match.params.groupId)
+            .then(users => {
+                this.setState({
+                    ...this.state,
+                    users: users.data.users
+                })
+            })
+    }
+
+
+    refreshImages = () => {
+        this.groupService.getSingleGroup(this.props.match.params.groupId)
             .then((group) => {
-                console.log(group)
+                console.log('adsasdsadas', group)
                 this.setState({
                     ...this.state,
                     images: group.data.images
@@ -65,7 +90,7 @@ export default class GroupPage extends Component {
                 {
                     this.state.images ?
 
-                        <h2 className='group-title'>{this.state.images[0]?.groupRef.name}</h2>
+                        <h2 className='group-title'>{this.state.group?.name} - {this.state.users}</h2>
 
                         :
                         <h2>Loading</h2>

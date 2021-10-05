@@ -33,10 +33,11 @@ export default class DashPage extends Component {
     }
 
     displayImages = () => {
+        const openGroupImages = this.state.images.filter(elm => elm.groupRef.isEnded === false)
 
         return (
-            this.state.images?.length > 0 ?
-                this.state.images.map(image => {
+            openGroupImages?.length > 0 ?
+                openGroupImages.map(image => {
                     return (
                         <DashItem refreshImages={this.refreshImages} key={image._id} {...image} loggedUser={this.props.loggedUser} />//? EN IMAGE EVITA QUE EXPLOTE
                     )

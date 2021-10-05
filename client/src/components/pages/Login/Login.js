@@ -9,6 +9,7 @@ class Login extends Component {
         this.state = {
             username: "",
             password: "",
+            error: null
         }
         this.innerRef = React.createRef();
         this.authService = new AuthService()
@@ -33,7 +34,12 @@ class Login extends Component {
                 this.props.storeUser(res.data)
                 this.props.history.push("/dashboard")
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                this.setState({
+                    ...this.state,
+                    error: err.response.data.message
+                })
+            })
     }
 
     render() {
@@ -56,8 +62,10 @@ class Login extends Component {
 
                     <Button variant="primary" type="submit">Submit</Button>
 
+                    {this.state.error && <p id='errorMessage'>{this.state.error}</p>}
+
                 </Form>
-            </Container>
+            </Container >
         )
     }
 }
