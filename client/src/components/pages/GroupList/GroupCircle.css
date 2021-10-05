@@ -1,7 +1,14 @@
 .search_container img {
   width: 75px;
+  height: 75px;
+  object-fit: cover;
 }
 
 .grouplist-column {
   justify-content: center;
+}
+
+.group-name {
+  line-height: 16px;
+  margin-top: 5px;
 }

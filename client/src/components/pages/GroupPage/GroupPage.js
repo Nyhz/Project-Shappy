@@ -27,6 +27,7 @@ export default class GroupPage extends Component {
 
         if (prevProps.match.params.groupId !== this.props.match.params.groupId) this.refreshImages()
 
+
     }
 
     refreshImages = () => {
@@ -34,6 +35,7 @@ export default class GroupPage extends Component {
 
         this.groupService.getSingleGroup(groupId)
             .then((group) => {
+                console.log(group)
                 this.setState({
                     ...this.state,
                     images: group.data.images
@@ -64,6 +66,7 @@ export default class GroupPage extends Component {
                     this.state.images ?
 
                         <h2 className='group-title'>{this.state.images[0]?.groupRef.name}</h2>
+
                         :
                         <h2>Loading</h2>
                 }

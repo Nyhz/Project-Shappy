@@ -8,6 +8,8 @@ class ContentService {
         })
     }
 
+    getUser = (userId) => this.instance.get(`/getuser/${userId}`)
+
     addLike = (imageId) => this.instance.put(`/image/${imageId}/like`, { imageId })
     addDislike = (imageId) => this.instance.put(`/image/${imageId}/dislike`, { imageId })
     refreshImage = (imageId) => this.instance.get(`/image/${imageId}/get`, { imageId })

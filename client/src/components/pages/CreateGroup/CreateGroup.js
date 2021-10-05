@@ -15,10 +15,25 @@ export default class CreateGroup extends Component {
             endDate: "",
             isEnded: false,
             owner: "",
-            isLoading: false
+            isLoading: false,
+            groups: null
         }
         this.groupService = new GroupService()
         this.uploadsService = new UploadsService()
+    }
+
+    checkMaxGroups = () => {
+
+        this.groupService.getGroups()
+            .then(groups => {
+                const totalOpenGroups = groups.data.groupArr.filter(group => group.isEnded === false)
+                if (totalOpenGroups.length < 4) {
+                    // this.setState() true
+                } else {
+                    return false
+                }
+            })
+            .catch(err => console.log(err))
     }
 
     handleInput = (e) => {
@@ -92,9 +107,14 @@ export default class CreateGroup extends Component {
                             <Form.Control name="endDate" value={this.state.endDate} onChange={this.handleInput} type="date" />
                         </Form.Group>
 
-                        <Button variant="primary" type="submit">
-                            Submit
-                        </Button>
+                        {
+                            this.checkMaxGroups() ?
+                                <Button variant="primary" type="submit">
+                                    Submit
+                                </Button>
+                                :
+                                <h2>You already have the maximum amount of groups</h2>
+                        }
                     </Form>
                 </Container>
                 <Container>
@@ -103,9 +123,18 @@ export default class CreateGroup extends Component {
                             <Form.Label>Type supersecret code:</Form.Label>
                             <Form.Control name="secret" value={this.state.secret} onChange={this.handleSecret} type="text" placeholder="Enter code..." />
                         </Form.Group>
-                        <Button variant="primary" type="submit">
-                            Submit
-                        </Button>
+
+                        {/* {
+                            console.log(this.checkMaxGroups())
+                        }
+                        {
+                            this.checkMaxGroups() ?
+                                <Button variant="primary" type="submit">
+                                    Submit
+                                </Button>
+                                :
+                                <h2>You already have the maximum amount of groups</h2>
+                        } */}
                     </Form>
 
 

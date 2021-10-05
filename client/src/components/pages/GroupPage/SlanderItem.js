@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import {Card} from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 import ContentService from '../../../services/content.services'
 
 
@@ -8,18 +8,27 @@ class SlanderItem extends Component {
     constructor(props) {
         super(props)
 
-    this.contentService = new ContentService()
+        this.state = {
+            user: null
+        }
+
+        this.contentService = new ContentService()
     }
+
+
+    componentDidMount = () => {
+        this.getUser()
+    }
+
     addLike = () => {
-        
+
         this.contentService.addSlanderLike(this.props._id)
-        
+
             .then((res) => {
-                
+
                 this.props.refreshSlanders()
             })
             .catch(err => console.log(err))
-        // console.log("CLICKY");
     }
 
     addDislike = () => {
@@ -31,10 +40,10 @@ class SlanderItem extends Component {
     }
 
     addShield = async () => {
-       
+
         this.contentService.addSlanderShield(this.props._id)
             .then((res) => {
-                
+
                 this.props.refreshSlanders()
             })
             .catch(err => console.log(err))
@@ -49,19 +58,37 @@ class SlanderItem extends Component {
             .catch(err => console.log(err))
 
     }
+
+
+    getUser = () => {
+
+        this.contentService.getUser(this.props.authorId)
+            .then(user => {
+                console.log(user);
+                this.setState({
+                    ...this.state,
+                    user: user.data.user
+                })
+            })
+    }
+
     render() {
         return (
             <div>
-             <Card>
-                <Card.Body>
-                    <Card.Title className='slander-card-active'>{this.props.content}</Card.Title>
-                </Card.Body>
-            </Card> 
-            <br/>
-                            <span className="display" onClick={this.addLike}>Likes: {this.props?.likes?.length}</span> -
-                            <span className="display" onClick={this.addDislike}>Dislikes: {this.props?.dislikes?.length}</span> -
-                            <span className="display" onClick={this.addShield}>Shields: {this.props?.shields}</span> -
-                            <span className="display" onClick={this.addAttack}>Attacks: {this.props.loggedUser?.attacks}</span>
+                <Card>
+                    <Card.Body>
+                        <Card.Title className='slander-card-active'>{this.props.content}</Card.Title>
+                        <p>User: {this.state.user?.username}
+
+
+                        </p>
+                    </Card.Body>
+                </Card>
+                <br />
+                <span className="display" onClick={this.addLike}>Likes: {this.props?.likes?.length}</span> -
+                <span className="display" onClick={this.addDislike}>Dislikes: {this.props?.dislikes?.length}</span> -
+                <span className="display" onClick={this.addShield}>Shields: {this.props?.shields}</span> -
+                <span className="display" onClick={this.addAttack}>Attacks: {this.props.loggedUser?.attacks}</span>
             </div>
         )
     }
