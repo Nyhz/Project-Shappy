@@ -44,20 +44,20 @@ const imageSchema = new Schema({
         timestamps: true
     })
 
-    imageSchema.methods.countUsersInGroup = function() {
-        return mongoose.model('User').count({groups: this.groupRef});
-    },
 
-    imageSchema.methods.destroy = function() {
+imageSchema.methods.countUsersInGroup = function () {
+    return mongoose.model('User').count({ groups: this.groupRef });
+}
 
-        mongoose.model('Group').findByIdAndUpdate(this.groupRef, {$pull: {images:this._id}})
-        .then(()=>Image.findByIdAndDelete(this._id))
+imageSchema.methods.destroy = function () {
+    return mongoose.model('Group').findByIdAndUpdate(this.groupRef, { $pull: { images: this._id } })
+        .then(() => Image.findByIdAndDelete(this._id))
         .catch(err => console.log(err, "ERORORRORORORO"))
-    }
+}
 
 
 
-    
+
 const Image = model("Image", imageSchema);
 module.exports = Image;
 

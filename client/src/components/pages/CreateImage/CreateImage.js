@@ -25,12 +25,15 @@ export default class CreateImage extends Component {
     }
 
     displayGroupList = () => {
+        const openGroups = this.state.groups?.filter(elm => elm.isEnded !== true)
         return (
-            this.state.groups?.map(elm => {
-                return (
-                    <option value={elm._id} name={'groupRef'}>{elm.name}</option>
-                )
-            })
+            openGroups.length > 0 ?
+                openGroups.map(elm => {
+                    return (
+                        <option value={elm._id} name={'groupRef'}>{elm.name}</option>
+                    )
+                }) :
+                <p>Sin resultados</p>
         )
     }
 

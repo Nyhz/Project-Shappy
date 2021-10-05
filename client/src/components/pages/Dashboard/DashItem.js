@@ -36,8 +36,11 @@ class DashItem extends Component {
     }
 
     addImageDislike = () => {
+        console.log('entrando en dislike');
         this.contentService.addDislike(this.props._id)
             .then((res) => {
+                console.log('entrando en then');
+                console.log(this.props);
                 this.props.refreshImages()
             })
             .catch(err => console.log(err))
@@ -57,6 +60,7 @@ class DashItem extends Component {
     addImageAttack = () => {
         this.contentService.addAttack(this.props._id)
             .then((res) => {
+                console.log(this.props.refreshImages)
                 this.props.refreshImages()
             })
             .catch(err => console.log(err))

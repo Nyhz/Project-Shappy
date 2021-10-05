@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
-const Group = require("./Group.model")
-const User = require("./User.model");
+
 const mongoose = require("mongoose")
 
 const slanderSchema = new Schema({
@@ -46,24 +45,11 @@ const slanderSchema = new Schema({
     {
         timestamps: true
     })
-       slanderSchema.methods.countUsersInGroup = function() {
-        return mongoose.model('User').count({groups: this.groupRef});
-    }
+slanderSchema.methods.countUsersInGroup = function () {
+    return mongoose.model('User').count({ groups: this.groupRef });
+}
 
 
-    //    slanderSchema.methods.reveal = function() {
-    //     //IF DEMOCRACY TRUE{
-            
-    //         //NO LIKE
-    //         //NO DISLIKE
-    //         //NO SHIELD
-    //         //NO ATTACK 
-    //         //REVEAL 
-    //     //}
-    //     mongoose.model('Group').findByIdAndUpdate(this.groupRef, {$pull: {images:this._id}})
-    //     .then(()=>Image.findByIdAndDelete(this._id))
-    //     .catch(err => console.log(err, "ERORORRORORORO"))
-    // }
 
 const Slander = model("Slander", slanderSchema);
 module.exports = Slander;

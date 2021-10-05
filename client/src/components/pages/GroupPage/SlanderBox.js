@@ -29,12 +29,9 @@ export default class SlanderBox extends Component {
 
         if (prevProps.groupId !== this.props.groupId) this.refreshSlanders()
 
-        //if (prevProps.match.params.groupId !== this.props.match.params.groupId) this.refreshSlanders()
     }
 
     refreshSlanders = () => {
-        
-        //const groupId = this.props.match.params.groupId
 
         this.groupService.getSlanders(this.props.groupId)
 
@@ -45,8 +42,6 @@ export default class SlanderBox extends Component {
                 })
             })
             .catch(err => console.log(err))
-            
-
     }
 
     displaySlanders = () => {
@@ -65,7 +60,6 @@ export default class SlanderBox extends Component {
     render = () => {
         return (
 
-
             this.state.slanders?.length > 0 ?
 
                 <div className="slider-container">
@@ -77,12 +71,18 @@ export default class SlanderBox extends Component {
                         showStatus={false}
                         width="100%"
                     >
-
                         {this.displaySlanders()}
                     </Carousel>
                 </div>
                 :
-                <Carousel showThumbs={false}>
+                <Carousel
+                    showThumbs={false}
+                    className="carousel-style"
+                    stopOnHover={true}
+                    showIndicators={false}
+                    showStatus={false}
+                    width="100%"
+                >
                     <div>
                         <Card>
                             <Card.Body>
