@@ -184,16 +184,20 @@ router.put('/slander/:id/shield', (req, res) => {
         .then(() => {
 
             if((data[1] == 0)){
-                res.json({ code: 200, message: 'Slander is checked' })
+                throw new Error ('Slander is checked')
+                
             } 
             else if(data[1]==5){
-                res.json({ code: 200, message: 'Maximun shields reached' })
+                throw new Error ('Maximun shields reached')
+               
             }
             else if (data[0] == 0) {
-                res.json({ code: 200, message: 'User dont have shields' })
+                throw new Error ('You dont have any shields')
+                
             }
             else {
-                res.json({ code: 200, message: 'Slander shieled succesfuly' })
+                throw new Error ('Slander shieled succesfuly')
+                
 
             }
         })
@@ -246,19 +250,18 @@ router.put('/slander/:id/attack', (req, res) => {
         .then(() => {
 
             if (data[1] == 0) {
-                res.json({ code: 200, message: 'Slander is checked' })
-            
+                throw new Error ('Slander is checked')
             }
             else if(data[0] == 0) {
-                res.json({ code: 200, message: 'User dont have attacks' })
-                
+
+                 throw new Error ('You dont have any attacks')
             }
             else {
                 res.json({ code: 200, message: 'Slander attacked succesfuly' })
 
             }
         })
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to slander', err: err.message }))
+        .catch(err => res.status(500).json({ code: 500, message: err.message }))
 })
 
 
@@ -397,21 +400,24 @@ router.put('/image/:id/shield', (req, res) => {
             if (data[0] > 0) {
                 return User.findByIdAndUpdate(userId, { $inc: { shields: -1 } }, { new: true })
             }
+            else{
+                throw new Error ('You dont have shields')
+            }
         })
         .then(() => {
             if (data[0] > 0 && data[1] < 5) {
                 return Image.findByIdAndUpdate(id, { $inc: { shields: 1 } }, { new: true })
             }
+            else{
+                throw new Error ('Maximun shields reached')
+            }
         })
         .then(newImage => {
             if (newImage) {
                 res.json({ code: 200, message: 'Image shielded succesfuly', newImage })
-            } else {
-                
-                return
-            }
+            } 
         })
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to image', err: err.message }))
+        .catch(err => res.status(500).json({ code: 500, message: err.message }))
 })
 
 

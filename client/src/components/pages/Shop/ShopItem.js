@@ -39,4 +39,8 @@ export default function ShopItem({ description, title, image, buyShield, buyAtta
     )
 }
 
-
+{/* <option value="99">10 coins = 9.99€</option>
+                <option value="499">50 + 10 FREE coins = 4.99€</option>
+                <option value="999">100 + 50 FREE coins = 9.99€</option>
+                <option value="1999">200 + 150 FREE coins = 19.99€</option>
+                <option value="4999">500 + 500 FREE coins = 49.99€</option> */}
