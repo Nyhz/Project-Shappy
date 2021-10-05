@@ -6,6 +6,7 @@ import ProfileService from '../../../services/profile.services'
 
 
 export default class ShopPage extends Component {
+
     constructor(props) {
         super(props)
 
@@ -13,43 +14,52 @@ export default class ShopPage extends Component {
             user : null,
           
         }
+
        this.shopService = new ShopService()
        this.profileService = new ProfileService()
     }
 
     componentDidMount = () => {
-
+        
         this.refreshUser()
 
     }
 
-    // componentDidUpdate = (prevProps, prevState) => {
 
-    //     if (prevProps.match.params.groupId !== this.props.match.params.groupId) this.refreshImages()
-
-    // }
-    refreshUser= () => {
+    refreshUser = () => {
 
         this.profileService.getInfo()
+
         .then((user)=>{
+
             this.setState({
                 ...this.state,
-                user
+                user: user.data.user
             })
         })
+        .catch(err => console.log(err))
     }
 
     buyShield = () =>{
 
         this.shopService.buyShield()
+
         .then(()=>{
+
             this.refreshUser()
+
         })
     }
 
     buyAttack = () =>{
 
         this.shopService.buyAttack()
+
+        .then(()=>{
+
+            this.refreshUser()
+
+        })
     }
 
     render() {
@@ -58,8 +68,8 @@ export default class ShopPage extends Component {
 
              <Container className='shop_container'>
 
-                <h1>Welcome {this.props.loggedUser?.username}</h1>
-                <h3>Shields: {this.props.loggedUser?.shields} - Attacks:{this.props.loggedUser?.attacks} - Coins:{this.props.loggedUser?.coins} </h3>
+                <h1>Welcome {this.state.user?.username}</h1>
+                <h3>Shields: {this.state.user?.shields} - Attacks:{this.state.user?.attacks} - Coins:{this.state.user?.coins} </h3>
 
                 <ShopItem title="Shield" description="Adds one shield to an image or slander. You can only add a maximum of 10 shields to a particular content." image="hola" buyShield={this.buyShield}/>
                 <ShopItem title="Attack" description="Reduce the shields protecting an image or a slander by one. If there are no shields, the image or slander gets destroyed." image="a" buyShield={this.buyShield} buyAttack = {this.buyAttack}/>

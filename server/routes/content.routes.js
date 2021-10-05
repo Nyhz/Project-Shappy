@@ -273,6 +273,9 @@ router.post('/image', (req, res) => {
                 .then(() => {
                     return Image.findById(image._id)
                 })
+                .then(()=>{
+                    return User.findByIdAndUpdate(authorId,{ $inc: { coins: 1 } } )
+                })
                 .then(image => res.json({ code: 200, message: 'Image created', image }))
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating image', err: err.message }))
