@@ -45,21 +45,11 @@ const slanderSchema = new Schema({
     {
         timestamps: true
     })
-<<<<<<< HEAD
-       slanderSchema.methods.countUsersInGroup = function() {
-        return mongoose.model('User').count({groups: this.groupRef});
-    },
-
-    slanderSchema.methods.slanderUserName = function() {
-        return mongoose.model('User').findById(this.authorId).username;
-    }
-=======
 slanderSchema.methods.countUsersInGroup = function () {
     return mongoose.model('User').count({ groups: this.groupRef });
 }
 
 
->>>>>>> 75807f719f7dcc70a2ba65919694d9cab585e07c
 
 const Slander = model("Slander", slanderSchema);
 module.exports = Slander;
