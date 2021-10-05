@@ -57,8 +57,20 @@ router.put('/join/:secret', (req, res) => {
     const { secret } = req.params
     const userId = req.session.currentUser._id
 
-    Group
-        .find({ secret })
+    User
+        .findById(userId)
+        .select('groups')
+        .populate('groups')
+        .then(groups => {
+            const openGroups = groups.groups.filter(elm => elm.isEnded === false)
+            if (openGroups.length >= 4) {
+                throw new Error('You joined the maximum amount of groups')
+            }
+        })
+        .then(() => {
+            return Group
+                .find({ secret })
+        })
         .then(group => {
             const groupId = group[0]._id.toString()
             return User
@@ -67,7 +79,7 @@ router.put('/join/:secret', (req, res) => {
         .then(user => {
             res.json({ code: 200, message: 'User joined the group!', user })
         })
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while joining group', err: err.message }))
+        .catch(err => res.json({ code: 500, message: err.message }))
 })
 
 router.get('/list', (req, res) => {
@@ -83,6 +95,19 @@ router.get('/list', (req, res) => {
             res.json({ code: 200, message: 'User groups retrieved', groupArr })
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while retrieving user groups', err: err.message }))
+})
+
+router.get('/countusers/:groupId', (req, res) => {
+
+    const { groupId } = req.params
+
+    User
+        .count({ groups: groupId })
+        .then((users) => {
+            console.log('que es esto', users);
+            res.json({ code: 200, message: 'Users counted', users })
+        })
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while retrieving counting users', err: err.message }))
 })
 
 router.get('/images/:groupId', (req, res) => {
@@ -110,8 +135,7 @@ router.get('/slanders/:groupId', (req, res) => {
 
 router.get('/tag/:tag', (req, res) => {
 
-    //const { tag } = req.params
-    //const tag = 'asdf'
+    const { tag } = req.params
 
     Image
         .find({ tag })
@@ -172,6 +196,17 @@ router.get('/groupend', (req, res) => {
         })
         .then(group => res.json({ code: 200, message: 'Group closed', group }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while closing groups', err: err.message }))
+})
+
+router.get('/getname/:groupId', (req, res) => {
+
+    const { groupId } = req.params
+
+    Group
+        .findById(groupId)
+        .then(group => res.json({ code: 200, message: 'Group name fetched', group }))
+        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group', err: err.message }))
+
 })
 
 router.put('/closegroup', (req, res) => {

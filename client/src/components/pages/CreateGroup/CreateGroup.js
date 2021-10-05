@@ -132,6 +132,7 @@ export default class CreateGroup extends Component {
                         }
                     </Form>
                 </Container>
+
                 <Container>
                     <Form onSubmit={this.handleJoinForm}>
                         <Form.Group className="mb-3" controlId="formBasicUsername">
@@ -148,7 +149,6 @@ export default class CreateGroup extends Component {
                                 <h2>You already have the maximum amount of groups</h2>
                         }
                     </Form>
-
 
                 </Container>
             </div>

@@ -14,8 +14,15 @@ router.post('/signup', (req, res) => {
         .then(user => {
 
             if (user) {
-                res.status(400).json({ code: 400, message: 'Username already exixts' })
-                return
+                throw new Error('Username already exists')
+            }
+
+            if (password.length < 4) {
+                throw new Error('Password must have at least 4 characters')
+            }
+
+            if (!email.match(/^[^@]+@[^@]{2,}\.[^@]{2,}$/)) {
+                throw new Error('Please, enter a valid email')
             }
 
             const salt = bcrypt.genSaltSync(bcryptSalt)
@@ -31,36 +38,36 @@ router.post('/signup', (req, res) => {
             req.session.currentUser = user
             res.json(req.session.currentUser)
         })
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while creating user', err: err.message }))
+        .catch(err => res.status(500).json({ code: 500, message: err.message }))
 })
 
 router.post('/login', (req, res) => {
 
     const { username, password } = req.body
 
+
     User
         .findOne({ username })
         .then(user => {
 
             if (!user) {
-                res.status(401).json({ code: 401, message: 'Username not registered' })
-                return
+                throw new Error('Username not registered')
             }
 
             if (bcrypt.compareSync(password, user.password) === false) {
-                res.status(401).json({ code: 401, message: 'Incorrect password' })
-                return
+                throw new Error('Incorrect password')
             }
 
             req.session.currentUser = user
             res.json(req.session.currentUser)
         })
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching user', err: err.message }))
+        .catch(err => res.status(500).json({ code: 500, message: err.message }))
 })
 
 router.get('/logout', (req, res) => {
     req.session.destroy((err) => res.json({ message: 'Logout successful' }));
 })
+
 
 router.post('/isloggedin', (req, res) => {
     req.session.currentUser ? res.json(req.session.currentUser) : res.status(401).json({ code: 401, message: 'Unauthorized' })

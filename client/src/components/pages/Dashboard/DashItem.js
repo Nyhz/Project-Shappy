@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { Card, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import './DashItem.css'
 
 import ContentService from '../../../services/content.services'
@@ -8,24 +9,12 @@ class DashItem extends Component {
     constructor(props) {
         super(props)
 
-        // this.state = {
-        //     calling: false
-        // }
-
         this.contentService = new ContentService()
     }
-
-    // shouldCall = (func) => {
-    //     !this.state.calling && func()
-    // }
-
 
     componentDidMount = () => {
         console.log(this.props.groupRef)
     }
-
-
-
 
     addImageLike = () => {
         this.contentService.addLike(this.props._id)
@@ -54,7 +43,6 @@ class DashItem extends Component {
                 this.props.refreshImages()
             })
             .catch(err => console.log(err))
-
     }
 
     addImageAttack = () => {
@@ -64,16 +52,17 @@ class DashItem extends Component {
                 this.props.refreshImages()
             })
             .catch(err => console.log(err))
-
     }
     render = () => {
         return (
             <div>
                 <Col md={4} className="mb-3">
                     <Card className='image-card'>
+                        <h2>#{this.props?.tag}</h2>
                         <Card.Img variant="top" src={this.props?.imageUrl} />
                         <Card.Body>
-                            <Card.Title className='card_title'>#{this.props?.tag}</Card.Title>
+                            <Link to={`/group/${this.props.groupRef._id}`}><span>{this.props.groupRef.name}</span></Link>
+
                             <Card.Text>
                                 <span onClick={this.addImageLike}>Likes: {this.props?.likes?.length}</span> -
                                 <span onClick={this.addImageDislike}>Dislikes: {this.props?.dislikes?.length}</span> -
@@ -83,7 +72,7 @@ class DashItem extends Component {
                         </Card.Body>
                     </Card>
                 </Col>
-            </div>
+            </div >
         )
     }
 }

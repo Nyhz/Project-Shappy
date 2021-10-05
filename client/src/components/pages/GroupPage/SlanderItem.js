@@ -64,7 +64,6 @@ class SlanderItem extends Component {
 
         this.contentService.getUser(this.props.authorId)
             .then(user => {
-                console.log(user);
                 this.setState({
                     ...this.state,
                     user: user.data.user
@@ -78,17 +77,21 @@ class SlanderItem extends Component {
                 <Card>
                     <Card.Body>
                         <Card.Title className='slander-card-active'>{this.props.content}</Card.Title>
-                        <p>User: {this.state.user?.username}
-
-
-                        </p>
+                        {
+                            this.props.isValidated === -1 && <p>User: {this.state.user?.username}</p>
+                        }
                     </Card.Body>
                 </Card>
                 <br />
-                <span className="display" onClick={this.addLike}>Likes: {this.props?.likes?.length}</span> -
-                <span className="display" onClick={this.addDislike}>Dislikes: {this.props?.dislikes?.length}</span> -
-                <span className="display" onClick={this.addShield}>Shields: {this.props?.shields}</span> -
-                <span className="display" onClick={this.addAttack}>Attacks: {this.props.loggedUser?.attacks}</span>
+                {
+                    this.props.isValidated === 0 &&
+                    <div>
+                        <span className="display" onClick={this.addLike}>Likes: {this.props?.likes?.length}</span> -
+                        <span className="display" onClick={this.addDislike}>Dislikes: {this.props?.dislikes?.length}</span> -
+                        <span className="display" onClick={this.addShield}>Shields: {this.props?.shields}</span> -
+                        <span className="display" onClick={this.addAttack}>Attacks: {this.props.loggedUser?.attacks}</span>
+                    </div>
+                }
             </div>
         )
     }
