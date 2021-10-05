@@ -165,10 +165,10 @@ router.put('/slander/:id/shield', (req, res) => {
             data.push(slander.shields)
 
             if (slander.isValidated > 0) {
-                return
-            }
 
-            else if (data[0] > 0 && (slander.isValidated == 0 || (slander.isValidated < 0 && data[1] > 0))) {
+                return 
+            }
+            else if ((data[0] > 0 && data[1]<5) && (slander.isValidated == 0 || (slander.isValidated < 0 && data[1] > 0))) {
 
                 let newSlanderShields = ++data[1]
 
@@ -183,14 +183,21 @@ router.put('/slander/:id/shield', (req, res) => {
 
         .then(() => {
 
-            if (data[0] == 0 || (data[1] == 0)) {
-                res.json({ code: 200, message: 'User cant shield' })
-            } else {
+            if((data[1] == 0)){
+                res.json({ code: 200, message: 'Slander is checked' })
+            } 
+            else if(data[1]==5){
+                res.json({ code: 200, message: 'Maximun shields reached' })
+            }
+            else if (data[0] == 0) {
+                res.json({ code: 200, message: 'User dont have shields' })
+            }
+            else {
                 res.json({ code: 200, message: 'Slander shieled succesfuly' })
 
             }
         })
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to slander', err: err.message }))
+        .catch(err => res.status(500).json({ code: 500, message: err.message }))
 })
 
 router.put('/slander/:id/attack', (req, res) => {
@@ -238,9 +245,15 @@ router.put('/slander/:id/attack', (req, res) => {
         })
         .then(() => {
 
-            if (data[0] == 0 || (data[1] == 0)) {
-                res.json({ code: 200, message: 'User cant attacks' })
-            } else {
+            if (data[1] == 0) {
+                res.json({ code: 200, message: 'Slander is checked' })
+            
+            }
+            else if(data[0] == 0) {
+                res.json({ code: 200, message: 'User dont have attacks' })
+                
+            }
+            else {
                 res.json({ code: 200, message: 'Slander attacked succesfuly' })
 
             }

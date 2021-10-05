@@ -25,7 +25,6 @@ export default class GroupPage extends Component {
         this.countUsers()
         this.getGroupName()
 
-
     }
 
     componentDidUpdate = (prevProps, prevState) => {
