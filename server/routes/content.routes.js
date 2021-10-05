@@ -442,7 +442,9 @@ router.put('/image/:id/attack', (req, res) => {
                     .then(res => console.log(res))
                     .catch(err => console.log(err, "Error"))
             }
-            return image
+            else{
+                throw new Error ('You don´t have attacks')
+            }
         })
         .then(image => {
 
@@ -469,7 +471,7 @@ router.put('/image/:id/attack', (req, res) => {
             }
         })
         .then((newImage) => res.json({ code: 200, message: 'Image attacked', newImage }))
-        .catch(err => res.status(500).json({ code: 500, message: 'DB error while applying shield to image', err: err.message }))
+        .catch(err => res.status(500).json({ code: 500, message: err.message }))
 })
 
 router.get('/getuser/:userId', (req, res) => {
