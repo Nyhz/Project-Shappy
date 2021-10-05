@@ -63,9 +63,16 @@ router.put('/join/:secret', (req, res) => {
         .populate('groups')
         .then(groups => {
             const openGroups = groups.groups.filter(elm => elm.isEnded === false)
+            console.log(openGroups);
             if (openGroups.length >= 4) {
                 throw new Error('You joined the maximum amount of groups')
             }
+
+            openGroups.forEach(elm => {
+                if (secret === elm.secret) {
+                    throw new Error('You already joined that group!')
+                }
+            })
         })
         .then(() => {
             return Group
@@ -79,7 +86,7 @@ router.put('/join/:secret', (req, res) => {
         .then(user => {
             res.json({ code: 200, message: 'User joined the group!', user })
         })
-        .catch(err => res.json({ code: 500, message: err.message }))
+        .catch(err => res.status(500).json({ code: 500, message: err.message }))
 })
 
 router.get('/list', (req, res) => {

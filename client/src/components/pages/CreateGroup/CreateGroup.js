@@ -19,7 +19,8 @@ export default class CreateGroup extends Component {
             owner: "",
             isLoading: false,
             groups: null,
-            maxGroups: false
+            maxGroups: false,
+            error: null
         }
         this.groupService = new GroupService()
         this.uploadsService = new UploadsService()
@@ -61,8 +62,13 @@ export default class CreateGroup extends Component {
         e.preventDefault()
         this.groupService.join(this.state.secret)
             .then(() => this.props.history.push('/dashboard'))
-            .catch(err => console.log(err))
-
+            .catch(err => {
+                console.log('error', err.response.data.message);
+                this.setState({
+                    ...this.state,
+                    error: err.response.data.message
+                })
+            })
     }
 
     handleSecret = (e) => {
@@ -122,14 +128,10 @@ export default class CreateGroup extends Component {
                             <Form.Control name="endDate" min={this.formatDate()} value={this.state.endDate} onChange={this.handleInput} type="date" />
                         </Form.Group>
 
-                        {
-                            this.state.maxGroups ?
-                                <Button variant="primary" type="submit">
-                                    Submit
-                                </Button>
-                                :
-                                <h2>You already have the maximum amount of groups</h2>
-                        }
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+
                     </Form>
                 </Container>
 
@@ -140,14 +142,12 @@ export default class CreateGroup extends Component {
                             <Form.Control name="secret" value={this.state.secret} onChange={this.handleSecret} type="text" placeholder="Enter code..." />
                         </Form.Group>
 
-                        {
-                            this.state.maxGroups ?
-                                <Button variant="primary" type="submit">
-                                    Submit
-                                </Button>
-                                :
-                                <h2>You already have the maximum amount of groups</h2>
-                        }
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                        {this.state.error && <p>{this.state.error}</p>}
+
+
                     </Form>
 
                 </Container>
