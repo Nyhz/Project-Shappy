@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
 
+import moment from 'moment'
+
 import GroupService from '../../../services/group.services'
 import UploadsService from '../../../services/uploads.services'
 
@@ -16,21 +18,26 @@ export default class CreateGroup extends Component {
             isEnded: false,
             owner: "",
             isLoading: false,
-            groups: null
+            groups: null,
+            maxGroups: false
         }
         this.groupService = new GroupService()
         this.uploadsService = new UploadsService()
     }
 
-    checkMaxGroups = () => {
+    componentDidMount = () => {
+        this.checkMaxGroups()
+    }
 
+    checkMaxGroups = () => {
         this.groupService.getGroups()
             .then(groups => {
                 const totalOpenGroups = groups.data.groupArr.filter(group => group.isEnded === false)
                 if (totalOpenGroups.length < 4) {
-                    // this.setState() true
-                } else {
-                    return false
+                    this.setState({
+                        ...this.state,
+                        maxGroups: true
+                    })
                 }
             })
             .catch(err => console.log(err))
@@ -86,6 +93,14 @@ export default class CreateGroup extends Component {
 
     }
 
+    formatDate = () => {
+
+        const today = new Date()
+        today.setDate(today.getDate() + 1)
+
+        return moment.utc(today).format('YYYY-MM-DD')
+    }
+
     render() {
         return (
             <div>
@@ -94,7 +109,7 @@ export default class CreateGroup extends Component {
                     <Form onSubmit={this.handleFormSubmit}>
                         <Form.Group className="mb-3" controlId="formBasicUsername">
                             <Form.Label>Name of the group</Form.Label>
-                            <Form.Control name="name" value={this.state.name} onChange={this.handleInput} type="text" placeholder="Enter group name..." />
+                            <Form.Control name="name" value={this.state.name} maxlength={20} onChange={this.handleInput} type="text" placeholder="Enter group name..." />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="imageUrl">
@@ -104,11 +119,11 @@ export default class CreateGroup extends Component {
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Specify end date</Form.Label>
-                            <Form.Control name="endDate" value={this.state.endDate} onChange={this.handleInput} type="date" />
+                            <Form.Control name="endDate" min={this.formatDate()} value={this.state.endDate} onChange={this.handleInput} type="date" />
                         </Form.Group>
 
                         {
-                            this.checkMaxGroups() ?
+                            this.state.maxGroups ?
                                 <Button variant="primary" type="submit">
                                     Submit
                                 </Button>
@@ -124,17 +139,14 @@ export default class CreateGroup extends Component {
                             <Form.Control name="secret" value={this.state.secret} onChange={this.handleSecret} type="text" placeholder="Enter code..." />
                         </Form.Group>
 
-                        {/* {
-                            console.log(this.checkMaxGroups())
-                        }
                         {
-                            this.checkMaxGroups() ?
+                            this.state.maxGroups ?
                                 <Button variant="primary" type="submit">
                                     Submit
                                 </Button>
                                 :
                                 <h2>You already have the maximum amount of groups</h2>
-                        } */}
+                        }
                     </Form>
 
 
