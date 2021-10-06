@@ -5,6 +5,8 @@ import './DashItem.css'
 import moment from 'moment'
 import ContentService from '../../../services/content.services'
 import GroupService from '../../../services/group.services'
+import { Slide } from "react-awesome-reveal";
+
 
 class DashItem extends Component {
     constructor() {

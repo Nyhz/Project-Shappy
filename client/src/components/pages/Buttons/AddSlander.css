@@ -1,1 +1,9 @@
+.slander-btn {
+  height: 55px;
+  margin-top: 15px;
+  width: 120px;
+}
 
+.slander-btn img {
+  width: 100%;
+}

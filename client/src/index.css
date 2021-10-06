@@ -1,6 +1,7 @@
 @import url('http://fonts.cdnfonts.com/css/gruppo');
 body,
 html {
+  background-color: black;
   font-family: 'Gruppo', sans-serif;
   font-weight: 800;
 }

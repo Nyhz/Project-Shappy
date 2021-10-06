@@ -32,7 +32,7 @@ export default class Signup extends Component {
         this.authService.signUp(username, password, email, avatar)
             .then((res) => {
                 this.props.storeUser(res.data)
-                this.props.history.push("/group/615717d8f7e751f86fb2c046") // Redirect to default group
+                this.props.history.push("/dashboard") // Redirect to default group
             })
             .catch(err => {
                 this.setState({

@@ -7,7 +7,7 @@ import './AddImage.css'
 export default function AddImage() {
     return (
         <div className='image-btn'>
-            <Link to='/createimage'><Button className='btn btn-dark'>Add Image</Button></Link>
+            <Link to='/createimage'><img src="../../../../Camera.png" alt="Photo" /></Link>
         </div>
     )
 }

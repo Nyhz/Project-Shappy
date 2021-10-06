@@ -15,11 +15,9 @@ export default class SlanderBox extends Component {
         this.state = {
             slanders: null
 
-
         }
         this.groupService = new GroupService()
     }
-
 
     componentDidMount = () => {
         this.refreshSlanders()
@@ -73,15 +71,16 @@ export default class SlanderBox extends Component {
 
             this.state.slanders ?
 
-                <div>
-                    <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
-                        <Tab eventKey="Confirmed" title="Confirmed">
+                <div className='slander_container'>
+                    <Tabs defaultActiveKey="Active" id="uncontrolled-tab-example" className="tabs_container">
+                        <Tab className='confirmed-tab' eventKey="Confirmed" title="Confirmed">
                             <Carousel
                                 showThumbs={false}
                                 className="carousel-style"
                                 stopOnHover={true}
                                 showIndicators={false}
                                 showStatus={false}
+                                showArrows={false}
                                 width="100%"
                             >
                                 {
@@ -89,7 +88,7 @@ export default class SlanderBox extends Component {
                                 }
                             </Carousel>
                         </Tab>
-                        <Tab eventKey="Active" title="Active">
+                        <Tab className='active-tab' eventKey="Active" title="Active">
                             <Carousel
                                 showThumbs={false}
                                 className="carousel-style"
@@ -103,7 +102,7 @@ export default class SlanderBox extends Component {
                                 }
                             </Carousel>
                         </Tab>
-                        <Tab eventKey="Denied" title="Denied">
+                        <Tab className='denied-tab' eventKey="Denied" title="Denied">
                             <Carousel
                                 showThumbs={false}
                                 className="carousel-style"

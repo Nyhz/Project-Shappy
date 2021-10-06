@@ -19,17 +19,17 @@ const Routes = ({ storeUser, loggedUser }) => {
 
         <Switch>
             <Route exact path="/" render={(props) => <LandingPage loggedUser={loggedUser} storeUser={storeUser} {...props} />} />
-            <Route exact path="/creategroup" render={(props) => <CreateGroup loggedUser={loggedUser} {...props} />} />
-            <Route exact path="/profile" render={(props) => <ProfilePage loggedUser={loggedUser} {...props} />} />
-            <Route exact path="/shop" render={() => <ShopPage loggedUser={loggedUser} />} />
-            <Route exact path="/dashboard" render={(props) => loggedUser ? <DashPage loggedUser={loggedUser} {...props} /> : <Redirect to='/' />} />
-            <Route path="/group/:groupId" render={(props) => <GroupPage loggedUser={loggedUser} {...props} />} />
-            <Route path="/summary/:groupId" render={(props) => <SummaryPage loggedUser={loggedUser} {...props} />} />
-            <Route exact path="/createimage" render={(props) => <CreateImage loggedUser={loggedUser} {...props} />} />
-            <Route exact path="/createslander" render={(props) => <CreateSlander loggedUser={loggedUser} {...props} />} />
-            <Route exact path="/payment" render={() => <PaymentPage loggedUser={loggedUser} />} />
-
+            <Route exact path="/creategroup" render={(props) => loggedUser ? <CreateGroup loggedUser={loggedUser} storeUser={storeUser} {...props} /> : <Redirect to='/' />} />
+            <Route exact path="/profile" render={(props) => loggedUser ? <ProfilePage loggedUser={loggedUser} storeUser={storeUser} {...props} /> : <Redirect to='/' />} />
+            <Route exact path="/shop" render={() => loggedUser ? <ShopPage loggedUser={loggedUser} storeUser={storeUser} /> : <Redirect to='/' />} />
+            <Route exact path="/dashboard" render={(props) => loggedUser ? <DashPage loggedUser={loggedUser} storeUser={storeUser} {...props} /> : <Redirect to='/' />} />
+            <Route path="/group/:groupId" render={(props) => loggedUser ? <GroupPage loggedUser={loggedUser} storeUser={storeUser} {...props} /> : <Redirect to='/' />} />
+            <Route path="/summary/:groupId" render={(props) => loggedUser ? <SummaryPage loggedUser={loggedUser} storeUser={storeUser} {...props} /> : <Redirect to='/' />} />
+            <Route exact path="/createimage" render={(props) => loggedUser ? <CreateImage loggedUser={loggedUser} storeUser={storeUser} {...props} /> : <Redirect to='/' />} />
+            <Route exact path="/createslander" render={(props) => loggedUser ? <CreateSlander loggedUser={loggedUser} storeUser={storeUser} {...props} /> : <Redirect to='/' />} />
+            <Route exact path="/payment" render={() => loggedUser ? <PaymentPage loggedUser={loggedUser} storeUser={storeUser} /> : <Redirect to='/' />} />
         </Switch>
+
     )
 }
 

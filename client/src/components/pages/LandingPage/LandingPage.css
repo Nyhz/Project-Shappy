@@ -1,13 +1,52 @@
-:root {
-  --clr-neon: hsl(317 100% 54%);
-  --clr-bg: hsl(323 21% 16%);
-}
-
-.landing_container {
-  height: 90vh;
+.landing_container_one {
+  grid-template-columns: 50% 50%;
+  height: 50vh;
   background-color: black;
   color: white;
-  padding: 50px;
+}
+
+.box-one {
+  padding: 25px 10px 0px 10px;
+  text-align: center;
+}
+
+.why-shappy {
+  list-style: none;
+  text-align: start;
+}
+
+.box-two {
+  background-color: white;
+  color: black;
+  padding: 15px;
+  width: 75%;
+  box-shadow: 0px 0px 15px 5px white;
+  border-radius: 15px;
+  margin: auto;
+
+  text-align: center;
+}
+
+.box-two img {
+  width: 50%;
+}
+
+.box-three {
+  background-color: white;
+  color: black;
+  padding: 15px;
+  width: 75%;
+  box-shadow: 0px 0px 15px 5px white;
+  border-radius: 15px;
+  margin: 15px;
+  margin: auto;
+
+  text-align: center;
+}
+
+.landing_container_two {
+  background-color: black;
+  color: white;
 }
 
 h3 {

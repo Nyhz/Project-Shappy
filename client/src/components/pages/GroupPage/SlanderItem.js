@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { Card } from 'react-bootstrap'
 import ContentService from '../../../services/content.services'
-
+import { JackInTheBox } from "react-awesome-reveal";
 
 
 class SlanderItem extends Component {
@@ -81,14 +81,16 @@ class SlanderItem extends Component {
     render() {
         return (
             <div>
-                <Card>
-                    <Card.Body>
-                        <Card.Title className='slander-card-active'>{this.props.content}</Card.Title>
-                        {
-                            this.props.isValidated === -1 && <p>User: {this.state.user?.username}</p>
-                        }
-                    </Card.Body>
-                </Card>
+                <JackInTheBox>
+                    <Card className='slander_container'>
+                        <Card.Body className='slander-card'>
+                            <Card.Title className='slander-card-active'>{this.props.content}</Card.Title>
+                            {
+                                this.props.isValidated === -1 && <p>User: {this.state.user?.username}</p>
+                            }
+                        </Card.Body>
+                    </Card>
+                </JackInTheBox>
                 <br />
                 {
                     this.props.isValidated === 0 &&

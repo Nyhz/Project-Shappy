@@ -1,8 +1,53 @@
+.slander_container {
+  background-color: black;
+}
+
 .slanders-title {
   text-align: center;
 }
 
 .slander-card {
-  color: red;
-  padding: 20px;
+  color: white;
+  background-color: black;
+  border: none;
+}
+.carousel-style {
+  background-color: none;
+}
+
+.tabs_container {
+  background-color: black;
+  font-size: 1.2rem;
+}
+
+.confirmed-tab {
+  background-color: black;
+  color: white;
+  padding: 15px;
+  margin: 10px;
+
+  border: 2px solid green;
+  box-shadow: 0px 0px 15px 5px green;
+  border-radius: 15px;
+}
+
+.active-tab {
+  background-color: black;
+  color: white;
+  padding: 15px;
+  margin: 10px;
+  border: 2px solid #8ec4ca;
+  box-shadow: 0px 0px 15px 5px #8ec4ca;
+  border-radius: 15px;
+}
+
+.denied-tab {
+  background-color: black;
+  color: white;
+  padding: 15px;
+  margin: 10px;
+
+  border: 2px solid red;
+  box-shadow: 0px 0px 15px 5px red;
+  border-radius: 15px;
 }

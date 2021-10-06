@@ -67,12 +67,16 @@ export default class ShopPage extends Component {
         return (
 
             <Container className='shop_container'>
-
-                <h1>Welcome {this.state.user?.username}</h1>
-                <h3>Shields: {this.state.user?.shields} - Attacks:{this.state.user?.attacks} - Coins:{this.state.user?.coins} </h3>
-
-                <ShopItem title="Shield" description="Adds one shield to an image or slander. You can only add a maximum of 10 shields to a particular content." image="hola" buyShield={this.buyShield} />
-                <ShopItem title="Attack" description="Reduce the shields protecting an image or a slander by one. If there are no shields, the image or slander gets destroyed." image="a" buyShield={this.buyShield} buyAttack={this.buyAttack} />
+                <h1>Welcome, {this.state.user?.username}</h1>
+                <h3><img className='shield-image' src="../../../../Shield.png" alt="shield" />: {this.state.user?.shields} - <img className='bomb-image' src="../../../../Bomb.png" alt="" />:{this.state.user?.attacks} - Coins:{this.state.user?.coins} </h3>
+                <div className='shields_container'>
+                    <ShopItem className='item-card-one' title="Shield" description="Adds one shield to an image or slander." image="hola" buyShield={this.buyShield} />
+                    <ShopItem className='item-card-two' title="Shield x5" description="Adds one shield to an image or slander." image="hola" buyShield={this.buyShield} />
+                </div>
+                <div className='attacks_container'>
+                    <ShopItem className='item-card-one' title="Attack" description="Reduce the shields protec" image="a" buyAttack={this.buyAttack} />
+                    <ShopItem className='item-card-two' title="Attack x5" description="Reduce the shields protec" image="a" buyAttack={this.buyAttack} />
+                </div>
                 {this.state.error && <p id='errorMessage'>{this.state.error}</p>}
             </Container>
         )

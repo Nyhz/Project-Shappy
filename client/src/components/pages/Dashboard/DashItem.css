@@ -1,22 +1,21 @@
 .image-card {
-  margin: 30px 10px;
+  margin: 0px 10px;
   background-color: black;
   padding: 5px 25px 0px 25px;
   border-radius: 10px;
-  border: 2px solid rgb(196, 69, 152);
-  box-shadow: 0px 0px 15px 5px rgb(196, 69, 152);
+  /* border: 2px solid #8ec4ca; */
 }
 
 .tag-element {
-  text-shadow: 0 0 3px #8ad3bf;
-  color: #8ad3bf;
+  text-shadow: rgb(196, 69, 152);
+  color: rgb(196, 69, 152);
   font-size: 2rem;
   margin-bottom: 20px;
 }
 
 .image-card img {
   border-radius: 10px;
-  box-shadow: 0px 0px 15px 5px white;
+  box-shadow: 0px 0px 15px 5px #8ec4ca;
 }
 
 .groupname-element {

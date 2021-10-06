@@ -1,3 +1,12 @@
+.group_page_container {
+  background-color: black;
+}
+
+.group-title {
+  color: rgb(196, 69, 152);
+  text-align: center;
+}
+
 .images-title {
   text-align: center;
 }

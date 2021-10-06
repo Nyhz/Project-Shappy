@@ -96,7 +96,7 @@ export default class GroupPage extends Component {
 
     render() {
         return (
-            <>
+            <div className='group_page_container'>
                 <GroupList />
                 {
                     this.state.images ?
@@ -118,7 +118,7 @@ export default class GroupPage extends Component {
                     }
                 </div>
                 <ButtonContainer />
-            </>
+            </div>
         )
     }
 }
