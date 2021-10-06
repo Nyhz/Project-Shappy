@@ -100,11 +100,10 @@ export default class CreateGroup extends Component {
     }
 
     formatDate = () => {
-
         const today = new Date()
         today.setDate(today.getDate() + 1)
 
-        return moment.utc(today).format('YYYY-MM-DD')
+        return moment(today).utcOffset('+0200').format('YYYY-MM-DD')
     }
 
     render() {
@@ -146,7 +145,6 @@ export default class CreateGroup extends Component {
                             Submit
                         </Button>
                         {this.state.error && <p>{this.state.error}</p>}
-
 
                     </Form>
 

@@ -36,17 +36,11 @@ export default class SlanderBox extends Component {
         this.groupService.getSlanders(this.props.groupId)
 
             .then((slanders) => {
-                console.log('slanders', slanders);
-
                 const allSlanders = slanders.data.slanders
-                console.log('allSlanders', allSlanders);
 
                 const confirmedSlanders = allSlanders.filter(elm => elm.isValidated === 1)
-                console.log('confirmed', confirmedSlanders);
                 const deniedSlanders = allSlanders.filter(elm => elm.isValidated === -1)
-                console.log('denied', deniedSlanders);
                 const activeSlanders = allSlanders.filter(elm => elm.isValidated === 0)
-                console.log('active', activeSlanders);
 
                 this.setState({
                     ...this.state,

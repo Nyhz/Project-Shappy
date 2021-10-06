@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import BaseService from '../../../services/base.services'
+import GroupService from '../../../services/group.services'
 import DashItem from './DashItem'
 import GroupList from '../GroupList/GroupList'
 import ButtonContainer from '../Buttons/ButtonContainer'
+import './DashPage.css'
 
 export default class DashPage extends Component {
 
@@ -13,6 +15,7 @@ export default class DashPage extends Component {
             images: null
         }
         this.baseService = new BaseService()
+        this.groupService = new GroupService()
     }
 
     componentDidMount = () => {
@@ -22,7 +25,6 @@ export default class DashPage extends Component {
 
     refreshImages = () => {
         this.baseService.showDashboard()
-
             .then((images) => {
                 this.setState({
                     ...this.state,
@@ -39,18 +41,30 @@ export default class DashPage extends Component {
             openGroupImages?.length > 0 ?
                 openGroupImages.map(image => {
                     return (
-                        <DashItem refreshImages={this.refreshImages} key={image._id} {...image} loggedUser={this.props.loggedUser} />//? EN IMAGE EVITA QUE EXPLOTE
+                        <DashItem refreshImages={this.refreshImages} filterByTag={this.filterByTag} key={image._id} {...image} loggedUser={this.props.loggedUser} />//? EN IMAGE EVITA QUE EXPLOTE
                     )
                 }) :
                 <h2>Sin resultados</h2>
         )
     }
+
+    filterByTag = (tag) => {
+        this.groupService.filterByTag(tag)
+            .then((images) => {
+                this.setState({
+                    ...this.state,
+                    images: images.data.images
+                })
+            })
+            .catch(err => console.log(err))
+    }
+
+
     render() {
         return (
             <>
                 <GroupList />
                 <div className='dashboard_container'>
-
                     {
                         this.state.images ?
                             this.displayImages()

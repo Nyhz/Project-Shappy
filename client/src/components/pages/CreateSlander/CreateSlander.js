@@ -22,12 +22,15 @@ export default class CreateSlander extends Component {
     }
 
     displayGroupList = () => {
+        const openGroups = this.state.groups?.filter(elm => elm.isEnded !== true)
         return (
-            this.state.groups?.map(elm => {
-                return (
-                    <option value={elm._id} name={'groupRef'}>{elm.name}</option>
-                )
-            })
+            openGroups.length > 0 ?
+                openGroups.map(elm => {
+                    return (
+                        <option value={elm._id} name={'groupRef'}>{elm.name}</option>
+                    )
+                }) :
+                <p>Sin resultados</p>
         )
     }
 
@@ -70,7 +73,6 @@ export default class CreateSlander extends Component {
         e.preventDefault();
         this.contentService.newSlander(this.state)
             .then((slander) => {
-                console.log('RES slander', slander.data);
                 this.setState({
                     slander: slander.data
                 })

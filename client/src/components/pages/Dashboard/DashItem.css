@@ -1,4 +1,31 @@
 .image-card {
-  margin: 30px 30px;
-  text-align: center;
+  margin: 30px 10px;
+  background-color: black;
+  padding: 5px 25px 0px 25px;
+  border-radius: 10px;
+  border: 2px solid rgb(196, 69, 152);
+  box-shadow: 0px 0px 15px 5px rgb(196, 69, 152);
+}
+
+.tag-element {
+  text-shadow: 0 0 3px #8ad3bf;
+  color: #8ad3bf;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.image-card img {
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px 5px white;
+}
+
+.groupname-element {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.date-element {
+  margin-top: 15px;
+  color: grey;
 }

@@ -13,7 +13,6 @@ router.get('/', (req, res) => {
             res.json({ code: 200, message: 'User profile retrieved', user })
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while retrieving user profile', err: err.message }))
-
 })
 
 router.get('/groups', (req, res) => {
@@ -28,7 +27,6 @@ router.get('/groups', (req, res) => {
             res.json({ code: 200, message: 'User historic groups retrieved', user })
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while retrieving user groups', err: err.message }))
-
 })
 
 

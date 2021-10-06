@@ -24,7 +24,6 @@ export default class GroupPage extends Component {
         this.refreshImages()
         this.countUsers()
         this.getGroupName()
-
     }
 
     componentDidUpdate = (prevProps, prevState) => {
@@ -36,10 +35,8 @@ export default class GroupPage extends Component {
     }
 
     getGroupName = () => {
-
         this.groupService.getGroupName(this.props.match.params.groupId)
             .then(group => {
-                console.log('GRRRRRRR', group);
                 this.setState({
                     ...this.state,
                     group: group.data.group
@@ -57,26 +54,39 @@ export default class GroupPage extends Component {
             })
     }
 
-
     refreshImages = () => {
         this.groupService.getSingleGroup(this.props.match.params.groupId)
             .then((group) => {
-                console.log('adsasdsadas', group)
+                console.log('imagenes normales', group.data.images);
+                const orderedImages = group.data.images.sort((a, b) => b.createdAt - a.createdAt)
+                console.log('ordenadas', orderedImages);
                 this.setState({
                     ...this.state,
-                    images: group.data.images
+                    images: orderedImages
+                })
+            })
+            .catch(err => console.log(err))
+    }
+
+
+    filterByTag = (tag) => {
+        this.groupService.filterByTag(tag)
+            .then((images) => {
+                const filteredImages = images.data.images.filter(image => image.groupRef.isEnded === false && image.groupRef._id === this.props.match.params.groupId)
+                this.setState({
+                    ...this.state,
+                    images: filteredImages
                 })
             })
             .catch(err => console.log(err))
     }
 
     displayImages = () => {
-
         return (
             this.state.images.length > 0 ?
                 this.state.images.map(image => {
                     return (
-                        <DashItem key={image._id} {...image} refreshImages={this.refreshImages} loggedUser={this.props.loggedUser} />
+                        <DashItem key={image._id} {...image} filterByTag={this.filterByTag} refreshImages={this.refreshImages} loggedUser={this.props.loggedUser} />
                     )
                 }) :
                 <h2>Sin resultados</h2>

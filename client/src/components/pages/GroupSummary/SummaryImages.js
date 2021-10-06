@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Col, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import GroupService from '../../../services/group.services'
 
 export default class SummaryImages extends Component {
     constructor() {
@@ -11,7 +10,6 @@ export default class SummaryImages extends Component {
             images: null
         }
 
-        this.groupService = new GroupService()
     }
 
 
