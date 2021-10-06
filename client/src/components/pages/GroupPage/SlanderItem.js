@@ -9,12 +9,12 @@ class SlanderItem extends Component {
         super(props)
 
         this.state = {
-            user: null
+            user: null,
+            error: null
         }
 
         this.contentService = new ContentService()
     }
-
 
     componentDidMount = () => {
         this.getUser()
@@ -39,11 +39,10 @@ class SlanderItem extends Component {
             .catch(err => console.log(err))
     }
 
-    addShield = async () => {
+    addShield = () => {
 
         this.contentService.addSlanderShield(this.props._id)
             .then((res) => {
-
                 this.props.refreshSlanders()
             })
             .catch(err => console.log(err))
@@ -55,8 +54,12 @@ class SlanderItem extends Component {
             .then((res) => {
                 this.props.refreshSlanders()
             })
-            .catch(err => console.log(err))
-
+            .catch(err => {
+                this.setState({
+                    ...this.state,
+                    error: err.response.data.message
+                })
+            })
     }
 
 
@@ -69,6 +72,10 @@ class SlanderItem extends Component {
                     user: user.data.user
                 })
             })
+    }
+
+    showAlert = () => {
+        alert(this.state.error)
     }
 
     render() {
@@ -91,6 +98,10 @@ class SlanderItem extends Component {
                         <span className="display" onClick={this.addShield}>Shields: {this.props?.shields}</span> -
                         <span className="display" onClick={this.addAttack}>Attacks: {this.props.loggedUser?.attacks}</span>
                     </div>
+                }
+
+                {
+                    this.state.error && this.showAlert()
                 }
             </div>
         )

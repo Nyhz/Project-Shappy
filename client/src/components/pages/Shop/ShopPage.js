@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap'
 import ShopItem from './ShopItem'
 import ShopService from '../../../services/shop.services'
 import ProfileService from '../../../services/profile.services'
-
+import './ShopPage.css'
 
 export default class ShopPage extends Component {
 
@@ -11,69 +11,69 @@ export default class ShopPage extends Component {
         super(props)
 
         this.state = {
-            user : null,
-          
+            user: null,
+            error: null
         }
 
-       this.shopService = new ShopService()
-       this.profileService = new ProfileService()
+        this.shopService = new ShopService()
+        this.profileService = new ProfileService()
     }
 
     componentDidMount = () => {
-        
         this.refreshUser()
-
     }
-
 
     refreshUser = () => {
-
         this.profileService.getInfo()
-
-        .then((user)=>{
-
-            this.setState({
-                ...this.state,
-                user: user.data.user
+            .then((user) => {
+                this.setState({
+                    ...this.state,
+                    user: user.data.user
+                })
             })
-        })
-        .catch(err => console.log(err))
+            .catch(err => console.log(err))
     }
 
-    buyShield = () =>{
-
+    buyShield = () => {
         this.shopService.buyShield()
-
-        .then(()=>{
-
-            this.refreshUser()
-
-        })
+            .then(() => {
+                this.refreshUser()
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({
+                    ...this.state,
+                    error: err.response.data.message
+                })
+            })
     }
 
-    buyAttack = () =>{
-
+    buyAttack = () => {
         this.shopService.buyAttack()
-
-        .then(()=>{
-
-            this.refreshUser()
-
-        })
+            .then(() => {
+                this.refreshUser()
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({
+                    ...this.state,
+                    error: err.response.data.message
+                })
+            })
     }
 
     render() {
 
         return (
 
-             <Container className='shop_container'>
+            <Container className='shop_container'>
 
                 <h1>Welcome {this.state.user?.username}</h1>
                 <h3>Shields: {this.state.user?.shields} - Attacks:{this.state.user?.attacks} - Coins:{this.state.user?.coins} </h3>
 
-                <ShopItem title="Shield" description="Adds one shield to an image or slander. You can only add a maximum of 10 shields to a particular content." image="hola" buyShield={this.buyShield}/>
-                <ShopItem title="Attack" description="Reduce the shields protecting an image or a slander by one. If there are no shields, the image or slander gets destroyed." image="a" buyShield={this.buyShield} buyAttack = {this.buyAttack}/>
-
+                <ShopItem title="Shield" description="Adds one shield to an image or slander. You can only add a maximum of 10 shields to a particular content." image="hola" buyShield={this.buyShield} />
+                <ShopItem title="Attack" description="Reduce the shields protecting an image or a slander by one. If there are no shields, the image or slander gets destroyed." image="a" buyShield={this.buyShield} buyAttack={this.buyAttack} />
+                {this.state.error && <p id='errorMessage'>{this.state.error}</p>}
             </Container>
         )
     }

@@ -18,6 +18,7 @@ class GroupService {
     getGroupEnd = () => this.instance.get('/groupend')
     countUsers = (groupId) => this.instance.get(`/countusers/${groupId}`)
     getGroupName = (groupId) => this.instance.get(`/getname/${groupId}`)
+    filterByTag = (tag) => this.instance.get(`/tag/${tag}`)
 }
 
 export default GroupService;

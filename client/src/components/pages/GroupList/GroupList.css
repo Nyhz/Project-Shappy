@@ -1,4 +1,5 @@
 .grouplist-row {
+  background-color: black;
   text-align: center;
-  margin-top: 5px;
+  padding-top: 15px;
 }

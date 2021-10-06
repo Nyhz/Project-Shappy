@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
-
 const Group = require('./../models/Group.model')
 const User = require('../models/User.model')
 const Image = require('./../models/Image.model');
 const Slander = require("../models/Slander.model");
-
 const transporter = require('../config/mailing.config')
 
 let rand = function () {
@@ -63,11 +61,9 @@ router.put('/join/:secret', (req, res) => {
         .populate('groups')
         .then(groups => {
             const openGroups = groups.groups.filter(elm => elm.isEnded === false)
-            console.log(openGroups);
             if (openGroups.length >= 4) {
                 throw new Error('You joined the maximum amount of groups')
             }
-
             openGroups.forEach(elm => {
                 if (secret === elm.secret) {
                     throw new Error('You already joined that group!')
@@ -111,7 +107,6 @@ router.get('/countusers/:groupId', (req, res) => {
     User
         .count({ groups: groupId })
         .then((users) => {
-            console.log('que es esto', users);
             res.json({ code: 200, message: 'Users counted', users })
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while retrieving counting users', err: err.message }))
@@ -124,6 +119,7 @@ router.get('/images/:groupId', (req, res) => {
     Image
         .find({ groupRef: groupId })
         .populate('groupRef')
+        .sort({ "createdAt": -1 })
         .then((images) => {
             res.json({ code: 200, message: 'Images fetched', images })
         })
@@ -146,6 +142,8 @@ router.get('/tag/:tag', (req, res) => {
 
     Image
         .find({ tag })
+        .populate('groupRef')
+        .sort({ 'createdAt': -1 })
         .then((images) => res.json({ code: 200, message: 'Images by tag fetched', images }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching images', err: err.message }))
 })
@@ -157,7 +155,8 @@ router.get('/morelikes/:groupId', (req, res) => {
     Image
         .find({ groupRef: groupId })
         .then((images) => {
-            const sortedImages = [...images].sort((a, b) => a.likes.length > b.likes.length)
+            const sortedImages = [...images]
+            sortedImages.sort((a, b) => b.likes.length - a.likes.length)
             res.json({ code: 200, message: 'Fetched images by group, ordered by popularity (HIGHER FIRST)', images: sortedImages })
         })
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group images', err: err.message }))
@@ -179,7 +178,6 @@ router.get('/summary/:groupId', (req, res) => {
 router.get('/groupend', (req, res) => {
 
     const today = new Date();
-    console.log(today);
 
     Group
         .find({})
@@ -193,11 +191,8 @@ router.get('/groupend', (req, res) => {
                 }
             }
             return closingGroups
-
-
         })
         .then(groups => {
-            console.log(groups);
             return Group
                 .findByIdAndUpdate(groups[0]?._id, { isEnded: true })
         })
@@ -213,14 +208,6 @@ router.get('/getname/:groupId', (req, res) => {
         .findById(groupId)
         .then(group => res.json({ code: 200, message: 'Group name fetched', group }))
         .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group', err: err.message }))
-
 })
-
-router.put('/closegroup', (req, res) => {
-
-    Group
-        .findByIdAndUpdate({})
-})
-
 
 module.exports = router

@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
-
 const User = require('./../models/User.model')
 
 router.post("/charge", async (req, res) => {
@@ -27,7 +26,7 @@ router.post("/charge", async (req, res) => {
         res.json({
             message: "Payment Failed",
             success: false,
-        });
+        })
     }
 });
 
@@ -38,7 +37,6 @@ router.put('/addcoins/:amount', (req, res) => {
     const userId = req.session.currentUser._id
 
     switch (amount) {
-
         case '99':
             return User
                 .findByIdAndUpdate(userId, { $inc: { coins: 10 } }, { new: true })
@@ -46,8 +44,6 @@ router.put('/addcoins/:amount', (req, res) => {
                     res.json({ code: 200, message: 'Coins added', newUser })
                 })
                 .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group', err: err.message }))
-
-
         case '499':
             return User
                 .findByIdAndUpdate(userId, { $inc: { coins: 60 } }, { new: true })
@@ -62,7 +58,6 @@ router.put('/addcoins/:amount', (req, res) => {
                     res.json({ code: 200, message: 'Coins added', newUser })
                 })
                 .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group', err: err.message }))
-
         case '1999':
             return User
                 .findByIdAndUpdate(userId, { $inc: { coins: 350 } }, { new: true })
@@ -70,7 +65,6 @@ router.put('/addcoins/:amount', (req, res) => {
                     res.json({ code: 200, message: 'Coins added', newUser })
                 })
                 .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group', err: err.message }))
-
         case '4999':
             console.log('entra case')
             return User
@@ -80,9 +74,7 @@ router.put('/addcoins/:amount', (req, res) => {
                     res.json({ code: 200, message: 'Coins added', newUser })
                 })
                 .catch(err => res.status(500).json({ code: 500, message: 'DB error while fetching group', err: err.message }))
-
     }
 })
-
 
 module.exports = router
