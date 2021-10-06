@@ -183,11 +183,7 @@ router.put('/slander/:id/shield', (req, res) => {
 
         .then(() => {
 
-            if((data[1] == 0)){
-                throw new Error ('Slander is checked')
-                
-            } 
-            else if(data[1]==5){
+            if(data[1]==5){
                 throw new Error ('Maximun shields reached')
                
             }
@@ -196,7 +192,7 @@ router.put('/slander/:id/shield', (req, res) => {
                 
             }
             else {
-                throw new Error ('Slander shieled succesfuly')
+               res.json({ code: 200, message: 'Slander shieled succesfuly' })
                 
 
             }

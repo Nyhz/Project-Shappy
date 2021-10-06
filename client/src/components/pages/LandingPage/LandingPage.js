@@ -46,7 +46,7 @@ export default class LandingPage extends Component {
     render = () => {
         return (
             <div className='landing_container' >
-                <h1>Hola, bienvenido a Shappy.</h1>
+                <h1>Hello, welcome to Shappy.</h1>
                 <h3>~ Ashamed of being Happy ~</h3>
                 {!this.props.loggedUser && <Button className="landing-button mt-2" onClick={() => this.openLoginModal()}>Log in</Button>}
                 {!this.props.loggedUser && <Button className="landing-button mt-2" onClick={() => this.openSignupModal()}>Sign up</Button>}
