@@ -6,7 +6,6 @@ const profileRouter = require('./profile.routes')
 const shopRouter = require('./shop.routes')
 const uploadsRouter = require('./uploads.routes')
 const paymentRouter = require('./payment.routes')
-
 const baseRouter = require('./base.routes')
 
 router.use("/auth", authRouter)

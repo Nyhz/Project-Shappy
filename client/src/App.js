@@ -29,7 +29,6 @@ class App extends Component {
       .then((groups) => {
       })
       .catch(err => console.log)
-
   }
 
   storeUser = (user) => this.setState({ loggedUser: user })
@@ -45,7 +44,6 @@ class App extends Component {
       <>
         <Navigation loggedUser={this.state.loggedUser} storeUser={this.storeUser} />
         <Routes storeUser={this.storeUser} loggedUser={this.state.loggedUser} />
-
 
       </>
     );

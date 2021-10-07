@@ -12,7 +12,6 @@ module.exports = {
 
     democracySlander: (arrDislikes, arrLikes, users, shields) => {
 
-
         if (((arrDislikes.length * 100) / users) >= 75) {
 
             return -1;

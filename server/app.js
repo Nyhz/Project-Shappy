@@ -10,11 +10,15 @@ require('./config/session.config')(app)
 require("./config/cors.config")(app);
 
 
-app.use(express.static(path.join(__dirname, "public")))
-app.use((req, res) => res.sendFile(__dirname + "/public/index.html"))
 
 const allRoutes = require("./routes");
 app.use("/api", allRoutes);
+
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
 
 require("./error-handling")(app);
 
