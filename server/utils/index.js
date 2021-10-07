@@ -33,6 +33,14 @@ module.exports = {
         } else {
             return false
         }
+    },
+
+    hasMoreCoins: (user) => {
+        if (user.coins >= 50) {
+            return true
+        } else {
+            return false
+        }
     }
 }
 

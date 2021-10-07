@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap'
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
 import './LandingPage.css'
-import { Slide } from "react-awesome-reveal";
+import { Fade, Zoom } from "react-awesome-reveal";
 
 export default class LandingPage extends Component {
     constructor() {
@@ -28,6 +28,7 @@ export default class LandingPage extends Component {
             showLogin: false
         });
     }
+
     openSignupModal = () => {
         this.setState({
             ...this.state,
@@ -42,40 +43,43 @@ export default class LandingPage extends Component {
         });
     }
 
-
     render = () => {
         return (
             <div className='landing_container' >
                 <div className='landing_container_one' >
                     <div className='box-one'>
-                        <h1>Hello, welcome to Shappy.</h1>
+                        <h1>Hello, welcome to Shappy!</h1>
                         <h3>~ Ashamed of being Happy ~</h3>
-                        {!this.props.loggedUser && <Button className="landing-button mt-2" onClick={() => this.openLoginModal()}>Log in</Button>}
-                        {!this.props.loggedUser && <Button className="landing-button mt-2" onClick={() => this.openSignupModal()}>Sign up</Button>}
+                        <div className='button_container'>
+                            {!this.props.loggedUser && <Button className="login-button mt-2" onClick={() => this.openLoginModal()}>Log in</Button>}
+                            {!this.props.loggedUser && <Button className="signup-button mt-2" onClick={() => this.openSignupModal()}>Sign up</Button>}
+                        </div>
                     </div>
-                    {/* <Slide duration='2500'>
-                        <div className='box-two'>
+                    <div className='landing-box'>
+                        <Fade delay='150'>
                             <h2>Why Shappy?</h2>
-                            <ul className='why-shappy'>
-                                <li>Upload amazing photos you can always download!</li>
-                                <li>Have fun messing with your friends</li>
-                                <li>Democracy based system to delete images and slanders</li>
-                                <li>Much, much more!</li>
-                            </ul>
+                        </Fade>
+                        <Fade delay='250'>
+                            <p>You can share your photos!</p>
+                        </Fade>
+                        <Fade delay='350'>
+                            <p>Have fun while uploading</p>
+                        </Fade>
+                        <Fade delay='450'>
+                            <p>Mess up with your friends</p>
+                        </Fade>
+                    </div>
+                    <Zoom>
+                        <div className='shappy-logo'>
+                            <img src="../../../../shappy_straight.png" alt="" />
+                        </div>
+                    </Zoom>
+                    <div className='footer'>
+                        <Fade delay='700'>
+                            <small>Proudly developed by Nyhz and JesusLovesYou</small>
+                        </Fade>
+                    </div>
 
-                        </div>
-                    </Slide>
-                    <Slide duration='2500'>
-                        <div className='box-three'>
-                            <h2>Why Shappy?</h2>
-                            <ul className='why-shappy'>
-                                <li>Upload amazing photos you can always download!</li>
-                                <li>Have fun messing with your friends</li>
-                                <li>Democracy based system to delete images and slanders</li>
-                                <li>Much, much more!</li>
-                            </ul>
-                        </div>
-                    </Slide> */}
                     <Modal className='modal_container' show={this.state.showLogin} onHide={() => this.closeLoginModal()}>
                         <Modal.Header className='modal_header' closeButton>
                             <Modal.Title>Log in</Modal.Title>

@@ -9,7 +9,10 @@ class ShopService {
     }
 
     buyShield = () => this.instance.put("/shield")
+    buyFiveShields = () => this.instance.put("/fiveshields")
     buyAttack = () => this.instance.put("/attack")
+    buyFiveAttacks = () => this.instance.put("/fiveattacks")
 }
+
 
 export default ShopService;

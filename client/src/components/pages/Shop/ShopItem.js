@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, Col } from 'react-bootstrap'
 import './ShopItem.css'
 
-export default function ShopItem({ description, title, image, buyShield, buyAttack }) {
+export default function ShopItem({ description, title, image, buyShield, buyAttack, buyFiveAttacks, buyFiveShields }) {
 
 
     const chooseProduct = (title) => {
@@ -13,9 +13,17 @@ export default function ShopItem({ description, title, image, buyShield, buyAtta
 
                 return buyAttack
 
+            case "Attack5":
+
+                return buyFiveAttacks
+
             case "Shield":
 
                 return buyShield
+
+            case "Shield5":
+
+                return buyFiveShields
 
             default:
 

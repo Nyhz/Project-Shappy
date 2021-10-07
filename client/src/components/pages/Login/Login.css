@@ -3,6 +3,10 @@
   background-color: black;
 }
 
+.form_container h2 {
+  text-align: center;
+}
+
 #errorMessage {
   background-color: rgb(255, 202, 202);
   width: 100%;

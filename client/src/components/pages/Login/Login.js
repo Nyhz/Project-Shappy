@@ -46,7 +46,7 @@ class Login extends Component {
         return (
             <Container className='form_container'>
 
-                <h1>LOGIN</h1>
+                <h2>LOGIN</h2>
 
                 <Form onSubmit={this.handleFormSubmit}>
 

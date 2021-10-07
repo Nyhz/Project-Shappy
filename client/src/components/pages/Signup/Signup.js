@@ -69,7 +69,7 @@ export default class Signup extends Component {
         return (
             <Container className='form_container'>
 
-                <h1>SIGN UP</h1>
+                <h2>SIGN UP</h2>
 
                 <Form onSubmit={this.handleFormSubmit}>
 
@@ -79,7 +79,7 @@ export default class Signup extends Component {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>Email <br /> <span className='greyed-text'>Use a valid email, you will need it.</span></Form.Label>
                         <Form.Control name="email" value={this.state.email} onChange={this.handleInput} type="text" placeholder="Enter email" />
                     </Form.Group>
 

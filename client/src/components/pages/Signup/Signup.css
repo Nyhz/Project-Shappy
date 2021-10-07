@@ -1,0 +1,41 @@
+.greyed-text {
+  color: grey;
+}
+
+.form_container {
+  padding: 15px;
+}
+
+.form_container h2 {
+  text-align: center;
+  padding: 5px;
+  border-radius: 15px;
+  border: 2px solid #c44598;
+  box-shadow: 0px 0px 3px 15px #c44598;
+  animation-name: discoBorders;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes discoBorders {
+  0% {
+    border: 2px solid #c44598;
+    box-shadow: 0px 0px 3px 15px #c44598;
+  }
+  25% {
+    border: 2px solid #a5f1ac;
+    box-shadow: 0px 0px 3px 5px #a5f1ac;
+  }
+  50% {
+    border: 2px solid #7f86d3;
+    box-shadow: 0px 0px 3px 5px #7f86d3;
+  }
+  75% {
+    border: 2px solid #e3b271;
+    box-shadow: 0px 0px 3px 5px #e3b271;
+  }
+  100% {
+    border: 2px solid #e79675;
+    box-shadow: 0px 0px 3px 5px #e79675;
+  }
+}

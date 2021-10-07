@@ -1,8 +1,69 @@
+.landing_container {
+  justify-content: center;
+}
+
 .landing_container_one {
-  grid-template-columns: 50% 50%;
-  height: 50vh;
   background-color: black;
+  display: flex;
+  flex-direction: column;
   color: white;
+  height: 90vh;
+}
+
+.button_container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-auto-flow: column;
+  gap: 4px;
+  align-items: center;
+  justify-items: center;
+}
+
+.login-button {
+  grid-column: 1/2;
+  width: 75%;
+  color: black;
+  background-color: #a5f1ac;
+  border: 1px solid #a5f1ac;
+  box-shadow: 0px 0px 5px 5px #a5f1ac;
+  animation-name: buttonParty;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+.signup-button {
+  grid-column: 2/2;
+  width: 75%;
+  color: white;
+  background-color: black;
+  border: 1px solid #8ec4ca;
+  box-shadow: 0px 0px 5px 5px #8ec4ca;
+  animation-name: buttonParty;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes buttonParty {
+  0% {
+    border: 2px solid #c44598;
+    box-shadow: 0px 0px 3px 15px #c44598;
+  }
+  25% {
+    border: 2px solid #a5f1ac;
+    box-shadow: 0px 0px 3px 5px #a5f1ac;
+  }
+  50% {
+    border: 2px solid #7f86d3;
+    box-shadow: 0px 0px 3px 5px #7f86d3;
+  }
+  75% {
+    border: 2px solid #e3b271;
+    box-shadow: 0px 0px 3px 5px #e3b271;
+  }
+  100% {
+    border: 2px solid #e79675;
+    box-shadow: 0px 0px 3px 5px #e79675;
+  }
 }
 
 .box-one {
@@ -10,38 +71,33 @@
   text-align: center;
 }
 
-.why-shappy {
-  list-style: none;
-  text-align: start;
+.landing-text {
+  color: white;
 }
 
-.box-two {
-  background-color: white;
-  color: black;
-  padding: 15px;
-  width: 75%;
-  box-shadow: 0px 0px 15px 5px white;
-  border-radius: 15px;
-  margin: auto;
-
+.landing-box {
+  padding: 25px 0px 25px 0px;
+  margin: 0 auto;
   text-align: center;
 }
 
-.box-two img {
-  width: 50%;
+.shappy-logo {
+  align-content: center;
+  margin: 0 auto;
 }
 
-.box-three {
-  background-color: white;
-  color: black;
-  padding: 15px;
-  width: 75%;
-  box-shadow: 0px 0px 15px 5px white;
-  border-radius: 15px;
-  margin: 15px;
-  margin: auto;
+.landing-box h2 {
+  font-size: 2rem;
+}
 
+.footer {
+  margin: auto;
   text-align: center;
+}
+
+.shappy-box img {
+  width: 45%;
+  margin: auto;
 }
 
 .landing_container_two {
