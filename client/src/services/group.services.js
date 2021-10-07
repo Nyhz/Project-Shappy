@@ -3,7 +3,7 @@ import axios from 'axios';
 class GroupService {
     constructor() {
         this.instance = axios.create({
-            baseURL: `${process.env.REACT_APP_API_URL}/group`,
+            baseURL: `${process.env.REACT_APP_BASE_URL}/group`,
             withCredentials: true
         })
     }

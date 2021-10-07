@@ -3,7 +3,7 @@ import axios from 'axios';
 class ProfileService {
     constructor() {
         this.instance = axios.create({
-            baseURL: `${process.env.REACT_APP_API_URL}/profile`,
+            baseURL: `${process.env.REACT_APP_BASE_URL}/profile`,
             withCredentials: true
         })
     }

@@ -3,7 +3,7 @@ import axios from 'axios';
 class ContentService {
     constructor() {
         this.instance = axios.create({
-            baseURL: `${process.env.REACT_APP_API_URL}/content`,
+            baseURL: `${process.env.REACT_APP_BASE_URL}/content`,
             withCredentials: true
         })
     }

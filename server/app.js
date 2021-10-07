@@ -15,4 +15,7 @@ app.use("/api", allRoutes);
 
 require("./error-handling")(app);
 
+app.use(express.static(path.join(__dirname, "public")))
+app.use((req, res) => res.sendFile(__dirname + "/public/index.html"));
+
 module.exports = app;
