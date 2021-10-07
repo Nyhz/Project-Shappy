@@ -17,6 +17,20 @@
   animation-iteration-count: infinite;
 }
 
+.form_container input {
+  background: black;
+  border: 1px solid white;
+  box-sizing: border-box;
+  border-radius: 20px;
+  color: white;
+}
+
+.form_container input:focus {
+  background-color: black;
+  color: white;
+  border: 1px solid #c44598;
+}
+
 @keyframes discoBorders {
   0% {
     border: 2px solid #c44598;

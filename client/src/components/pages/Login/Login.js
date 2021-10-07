@@ -52,7 +52,7 @@ class Login extends Component {
 
                     <Form.Group className="mb-3" controlId="formBasicUsername">
                         <Form.Label>Username</Form.Label>
-                        <Form.Control ref={this.innerRef} name="username" value={this.state.username} onChange={this.handleInput} type="text" placeholder="Enter username" />
+                        <Form.Control ref={this.innerRef} name="username" value={this.state.username} onChange={this.handleInput} type="text" placeholder="Enter username" autoComplete='off' />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">

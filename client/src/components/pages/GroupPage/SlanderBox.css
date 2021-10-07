@@ -20,6 +20,8 @@
 .tabs_container {
   background-color: black;
   font-size: 1.2rem;
+  text-align: center;
+  justify-content: center;
 }
 
 .confirmed-tab {

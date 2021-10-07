@@ -2,6 +2,7 @@ import { Component } from 'react'
 import { Card } from 'react-bootstrap'
 import ContentService from '../../../services/content.services'
 import { JackInTheBox } from "react-awesome-reveal";
+import './SlanderItem.css'
 
 
 class SlanderItem extends Component {
@@ -94,11 +95,11 @@ class SlanderItem extends Component {
                 <br />
                 {
                     this.props.isValidated === 0 &&
-                    <div>
-                        <span className="display" onClick={this.addLike}>Likes: {this.props?.likes?.length}</span> -
-                        <span className="display" onClick={this.addDislike}>Dislikes: {this.props?.dislikes?.length}</span> -
-                        <span className="display" onClick={this.addShield}>Shields: {this.props?.shields}</span> -
-                        <span className="display" onClick={this.addAttack}>Attacks: {this.props.loggedUser?.attacks}</span>
+                    <div className='slander_interactions'>
+                        <span className="display" onClick={this.addAttack}><img src="../../../../Bomb.png" alt="Like" /></span>
+                        <span className="display" onClick={this.addLike}> <img src="../../../../Like2.png" alt="Like" /> {this.props?.likes?.length}</span>
+                        <span className="display" onClick={this.addDislike}><img src="../../../../Dislike2.png" alt="Like" /> {this.props?.dislikes?.length}</span>
+                        <span className="display" onClick={this.addShield}><img src="../../../../Shield.png" alt="Like" /> {this.props?.shields}</span>
                     </div>
                 }
 

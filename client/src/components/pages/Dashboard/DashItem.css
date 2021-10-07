@@ -13,12 +13,32 @@
   margin-bottom: 20px;
 }
 
-.interacion_container {
-  display: flex;
+.interactions_container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
 }
 
-.interaction-image img {
-  width: 75px;
+.interaction-attack img {
+  grid-column: 1/2;
+  width: 60px;
+  box-shadow: none !important;
+}
+
+.interaction-like img {
+  grid-column: 2/3;
+  width: 60px;
+  box-shadow: none !important;
+}
+.interaction-dislike img {
+  grid-column: 3/4;
+  width: 60px;
+  box-shadow: none !important;
+}
+
+.interaction-shield img {
+  grid-column: 4/4;
+  width: 58px;
   box-shadow: none !important;
 }
 

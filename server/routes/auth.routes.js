@@ -8,7 +8,7 @@ const bcryptSalt = 10
 router.post('/signup', (req, res) => {
 
     const { username, password, avatar, email } = req.body
-    const preDefinedGroup = '615ac7752af5ca370dafd384'
+    const preDefinedGroup = '615f2fbb875149aab5fad2df'
 
     User
         .findOne({ username })

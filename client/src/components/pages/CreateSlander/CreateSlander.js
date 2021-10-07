@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
 import UploadsService from '../../../services/uploads.services'
 import ContentService from '../../../services/content.services'
+import './CreateSlander.css'
 
 export default class CreateSlander extends Component {
     constructor() {
         super()
         this.state = {
             content: null,
-            groupRef: null
+            groupRef: null,
+            error: null
 
         }
 
@@ -78,7 +80,13 @@ export default class CreateSlander extends Component {
                 })
             })
             .then(() => this.props.history.push(`/group/${this.state.groupRef}`))
-            .catch(err => console.error(err))
+            .catch(err => {
+                this.setState({
+                    ...this.state,
+                    error: err.response.data.message
+                })
+                console.error(err)
+            })
     }
 
 
@@ -89,7 +97,7 @@ export default class CreateSlander extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group className="mb-3" controlId="tag">
                         <Form.Label>Slander: </Form.Label>
-                        <Form.Control onChange={(e) => this.handleChange(e)} name="content" type="text" />
+                        <Form.Control onChange={(e) => this.handleChange(e)} name="content" type="text" autoComplete='off' />
                     </Form.Group>
                     <Form.Group>
                         <Form.Control as="select" onChange={(e) => this.handleSelectChanges(e)}>
@@ -102,10 +110,13 @@ export default class CreateSlander extends Component {
                             }
                         </Form.Control>
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button className='slander-submit' type="submit">
                         Submit
                     </Button>
                 </Form>
+
+                <img className='slander-img' src="../../../../Bla_background.png" alt="backgroundbla" />
+                {this.state.error && <span id='errorMsg'>{this.state.error}</span>}
             </Container>
         )
     }

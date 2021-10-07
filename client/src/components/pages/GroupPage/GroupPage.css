@@ -7,6 +7,17 @@
   text-align: center;
 }
 
+.info_container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+  line-height: 5px;
+}
 .images-title {
+  text-align: center;
+}
+
+.active-users {
+  color: white;
   text-align: center;
 }

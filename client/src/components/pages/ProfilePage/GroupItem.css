@@ -1,14 +1,32 @@
 .card_title {
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+  background-color: black;
 }
 
-img {
-  width: 95vw;
-  margin: auto;
+.card_container {
+  background-color: black;
+  box-shadow: 0px 0px 15px 5px #8ec4ca;
+  color: white;
+  margin: 50px 25px;
+}
+
+.card_container img {
+  height: 75%;
+  width: 75%;
+  object-fit: cover;
+}
+
+.card_text {
+  font-size: 0.9rem !important;
+  color: white;
 }
 
 .card_img {
-  width: 50%;
   margin: auto;
+  padding: 25px;
+}
+
+.card_body {
+  background-color: black;
 }

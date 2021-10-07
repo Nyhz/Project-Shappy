@@ -75,12 +75,12 @@ export default class Signup extends Component {
 
                     <Form.Group className="mb-3" controlId="formBasicUsername">
                         <Form.Label>Username</Form.Label>
-                        <Form.Control name="username" value={this.state.username} onChange={this.handleInput} type="text" placeholder="Enter username" />
+                        <Form.Control name="username" value={this.state.username} onChange={this.handleInput} type="text" placeholder="Enter username" autoComplete='off' />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email <br /> <span className='greyed-text'>Use a valid email, you will need it.</span></Form.Label>
-                        <Form.Control name="email" value={this.state.email} onChange={this.handleInput} type="text" placeholder="Enter email" />
+                        <Form.Control name="email" value={this.state.email} onChange={this.handleInput} type="text" placeholder="Enter email" autoComplete='off' />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="avatar">

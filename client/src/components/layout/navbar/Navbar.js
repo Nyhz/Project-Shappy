@@ -45,6 +45,7 @@ class Navigation extends React.Component {
                         <Nav className="ms-auto">
                             {this.props.loggedUser &&
                                 <div className='nav_container'>
+                                    <Nav.Link as={Link} to="/creategroup"><span class="material-icons">control_point</span></Nav.Link>
                                     <Nav.Link as={Link} to="/shop"><span class="material-icons">shopping_basket</span></Nav.Link>
                                     <Nav.Link
                                         as={Link}

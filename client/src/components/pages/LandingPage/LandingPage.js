@@ -50,11 +50,12 @@ export default class LandingPage extends Component {
                     <div className='box-one'>
                         <h1>Hello, welcome to Shappy!</h1>
                         <h3>~ Ashamed of being Happy ~</h3>
-                        <div className='button_container'>
-                            {!this.props.loggedUser && <Button className="login-button mt-2" onClick={() => this.openLoginModal()}>Log in</Button>}
-                            {!this.props.loggedUser && <Button className="signup-button mt-2" onClick={() => this.openSignupModal()}>Sign up</Button>}
-                        </div>
                     </div>
+                    <div className='button_container'>
+                        {!this.props.loggedUser && <Button className="login-button mt-2" onClick={() => this.openLoginModal()}>Log in</Button>}
+                        {!this.props.loggedUser && <Button className="signup-button mt-2" onClick={() => this.openSignupModal()}>Sign up</Button>}
+                    </div>
+
                     <div className='landing-box'>
                         <Fade delay='150'>
                             <h2>Why Shappy?</h2>
@@ -76,7 +77,7 @@ export default class LandingPage extends Component {
                     </Zoom>
                     <div className='footer'>
                         <Fade delay='700'>
-                            <small>Proudly developed by Nyhz and JesusLovesYou</small>
+                            <small>Proudly developed by Nyhz and JesusLovesYou <span class="heart-icon material-icons">favorite</span></small>
                         </Fade>
                     </div>
 

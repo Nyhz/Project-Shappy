@@ -5,8 +5,6 @@ import './DashItem.css'
 import moment from 'moment'
 import ContentService from '../../../services/content.services'
 import GroupService from '../../../services/group.services'
-import { Slide } from "react-awesome-reveal";
-
 
 class DashItem extends Component {
     constructor() {
@@ -52,6 +50,8 @@ class DashItem extends Component {
         return moment(date).utcOffset('+0200').format('MMM Do, HH:mm')
     }
 
+
+
     render = () => {
         return (
             <div>
@@ -62,13 +62,13 @@ class DashItem extends Component {
                         <Card.Body>
                             <Link className='groupname-element' to={`/group/${this.props.groupRef._id}`}><span className='groupname-element'>/{this.props.groupRef.name}</span></Link>
                             <Card.Text className='interactions_container'>
-                                <span className='interaction-image' onClick={this.addImageAttack}><img src="../../../../Bomb.png" alt="Attack" /></span>
-
-                                <span onClick={this.addImageLike}>Likes: {this.props?.likes?.length}</span> -
-                                <span onClick={this.addImageDislike}>Dislikes: {this.props?.dislikes?.length}</span> -
-                                <span className='interaction-image' onClick={this.addImageShield}><img src="../../../../Shield.png" alt="Shield" /> {this.props?.shields}</span> -
-                                <p className='date-element'>{this.formatDate(this.props.createdAt)}</p>
+                                <span className='interaction-attack' onClick={this.addImageAttack}><img src="../../../../Bomb.png" alt="Attack" /></span>
+                                <span className='interaction-like' onClick={this.addImageLike}> <img src="../../../../Like2.png" alt="Like" /> {this.props?.likes?.length}</span>
+                                <span className='interaction-dislike' onClick={this.addImageDislike}> <img src="../../../../Dislike2.png" alt="Dislike" /> {this.props?.dislikes?.length}</span>
+                                <span className='interaction-shield' onClick={this.addImageShield}><img src="../../../../Shield.png" alt="Shield" /> {this.props?.shields}</span>
                             </Card.Text>
+                            <p className='date-element'>{this.formatDate(this.props.createdAt)}</p>
+
                         </Card.Body>
                     </Card>
                 </Col>

@@ -1,0 +1,25 @@
+.form_container input {
+  background: black;
+  border: 1px solid white;
+  box-sizing: border-box;
+  border-radius: 20px;
+  color: white;
+}
+
+.form_container input:focus {
+  background-color: black;
+  color: white;
+  border: 1px solid #c44598;
+}
+
+.image-submit {
+  background-color: #c44598;
+}
+
+.bg-image {
+  width: 90%;
+}
+
+.image-upload {
+  width: 100%;
+}

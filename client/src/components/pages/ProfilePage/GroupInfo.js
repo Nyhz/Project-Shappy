@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ProfileService from '../../../services/profile.services'
 import GroupItem from './GroupItem'
+import './GroupInfo.css'
 
 export default class UserInfo extends Component {
     constructor(props) {

@@ -10,13 +10,47 @@
   padding: 15px;
 }
 
+.inventory_container {
+  text-align: center;
+}
+
 .shop_container h1 {
   color: white;
+  background-color: black;
   text-align: center;
   padding: 15px;
   border-radius: 10px;
   margin: 15px;
   box-shadow: 0px 0px 15px 2px #8ec4ca;
+}
+
+.shields_container {
+  background-color: black;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.attacks_container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.item-card-one {
+  grid-column: 1/2;
+  width: 100%;
+}
+
+.item-card-two img {
+  grid-column: 2/2;
+  width: 50%;
+}
+
+.item-card {
+  background-color: black;
+}
+
+.item-card img {
+  width: 100%;
+  height: 100%;
 }
 
 .shield-image {
@@ -26,22 +60,12 @@
 .bomb-image {
   width: 35px;
 }
-.shields_container {
-  display: grid;
-  grid-template-columns: 50% 50%;
+
+.coin-image {
+  width: 35px;
 }
 
-.attacks_container {
-  display: grid;
-  grid-template-columns: 50% 50%;
-}
-
-.item-card {
-  font-size: 0.5rem;
-}
-.item-card-one {
-  grid-column: 1/2;
-}
-.item-card-two {
-  grid-column: 2/2;
+.shoppy-image {
+  width: 100%;
+  margin-bottom: 20px;
 }

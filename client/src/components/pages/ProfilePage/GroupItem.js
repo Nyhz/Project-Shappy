@@ -15,11 +15,11 @@ export default function GroupItem({ _id, name, groupAvatar, endDate, createdAt }
     return (
 
         <Col md={4} className="mb-3">
-            <Card>
+            <Card className='card_container'>
                 <Card.Title className='card_title'>{name}</Card.Title>
                 <Card.Img className='card_img' variant="top" src={groupAvatar} />
-                <Card.Body>
-                    <Card.Text>
+                <Card.Body className='card_body'>
+                    <Card.Text className='card_text'>
                         Start date: {formatDate(createdAt)} <br />
                         End date: {formatDate(endDate)}
                     </Card.Text>

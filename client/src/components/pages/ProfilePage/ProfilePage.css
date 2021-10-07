@@ -1,0 +1,8 @@
+.profile_container {
+  background-color: black;
+}
+
+.profile_container h1 {
+  color: white;
+  text-align: center;
+}

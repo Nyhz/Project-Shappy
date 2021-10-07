@@ -3,12 +3,13 @@ import { Container } from 'react-bootstrap'
 import UserInfo from './UserInfo'
 import GroupInfo from './GroupInfo'
 import GroupList from '../GroupList/GroupList'
+import './ProfilePage.css'
 
 
 export default function ProfilePage({ loggedUser }) {
 
     return (
-        <div>
+        <div className='profile_container'>
             <GroupList loggedUser={loggedUser} />
             <Container className='profile_container'>
                 <h1>Profile of {loggedUser?.username}</h1>
@@ -20,9 +21,6 @@ export default function ProfilePage({ loggedUser }) {
                     <GroupInfo loggerUser={loggedUser} />
 
                 </div>
-
-
-
             </Container>
         </div>
     )

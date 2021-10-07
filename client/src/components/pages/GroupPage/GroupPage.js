@@ -100,9 +100,10 @@ export default class GroupPage extends Component {
                 <GroupList />
                 {
                     this.state.images ?
-
-                        <h2 className='group-title'>{this.state.group?.name} - {this.state.users}</h2>
-
+                        <div className='info_container'>
+                            <h2 className='group-title'>{this.state.group?.name}</h2>
+                            <small className='active-users'>{this.state.users > 1 ? this.state.users + ' ShappyLovers' : this.state.users + ' ShappyLover'}</small>
+                        </div>
                         :
                         <h2>Loading</h2>
                 }

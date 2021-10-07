@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
 import UploadsService from '../../../services/uploads.services'
 import ContentService from '../../../services/content.services'
+import './CreateImage.css'
 
 export default class CreateImage extends Component {
     constructor() {
@@ -11,7 +12,8 @@ export default class CreateImage extends Component {
             tag: null,
             groupRef: null,
             groups: null,
-            name: 'groupRef'
+            name: 'groupRef',
+            error: null
 
         }
 
@@ -40,7 +42,6 @@ export default class CreateImage extends Component {
     getGroupList = () => {
         this.contentService.getGroups()
             .then((groups) => {
-                console.log(groups.data.groups.groups)
                 this.setState({
                     groups: groups.data.groups.groups
                 })
@@ -52,8 +53,6 @@ export default class CreateImage extends Component {
     handleChange = (e) => {
 
         const { value } = e.target;
-        console.log(value);
-        console.log(this.state.tag);
 
         this.setState({
             ...this.state,
@@ -72,7 +71,6 @@ export default class CreateImage extends Component {
     }
 
     handleFile = (e) => {
-        console.log(e.target);
         this.setState({
             ...this.state,
             isLoading: true
@@ -97,7 +95,6 @@ export default class CreateImage extends Component {
     handleSubmit = (e) => {
 
         e.preventDefault();
-        console.log(this.state);
         this.contentService.newImage(this.state)
             .then((resImage) => {
                 this.setState({
@@ -106,7 +103,14 @@ export default class CreateImage extends Component {
                 })
             })
             .then(() => this.props.history.push(`/group/${this.state.groupRef}`))
-            .catch(err => console.error(err))
+            .catch(err => {
+                console.log(err)
+                this.setState({
+                    ...this.state,
+                    error: err
+                })
+                console.error(err)
+            })
     }
 
 
@@ -120,8 +124,7 @@ export default class CreateImage extends Component {
                         <Form.Control onChange={(e) => this.handleChange(e)} name="tag" type="text" />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="imageUrl">
-                        <Form.Label>Imagen: </Form.Label>
-                        <Form.Control onChange={(e) => this.handleFile(e)} name="imageUrl" type="file" />
+                        <Form.Control className='image-upload' onChange={(e) => this.handleFile(e)} name="imageUrl" type="file" />
                     </Form.Group>
                     <Form.Group>
                         <Form.Control as="select" onChange={(e) => this.handleSelectChanges(e)}>
@@ -134,10 +137,11 @@ export default class CreateImage extends Component {
                             }
                         </Form.Control>
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button className='image-submit' variant="primary" type="submit">
                         Submit
                     </Button>
                 </Form>
+                <img className='bg-image' src="../../../../Photo_background.png" alt="Photo" />
             </Container >
         )
     }

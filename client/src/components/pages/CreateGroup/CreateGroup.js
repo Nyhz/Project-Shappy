@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
+import './CreateGroup.css'
 
 import moment from 'moment'
 
@@ -127,21 +128,21 @@ export default class CreateGroup extends Component {
                             <Form.Control name="endDate" min={this.formatDate()} value={this.state.endDate} onChange={this.handleInput} type="date" />
                         </Form.Group>
 
-                        <Button variant="primary" type="submit">
+                        <Button className='create-submit' variant="primary" type="submit">
                             Submit
                         </Button>
 
                     </Form>
                 </Container>
 
-                <Container>
+                <Container className='form_container'>
                     <Form onSubmit={this.handleJoinForm}>
                         <Form.Group className="mb-3" controlId="formBasicUsername">
                             <Form.Label>Type supersecret code:</Form.Label>
                             <Form.Control name="secret" value={this.state.secret} onChange={this.handleSecret} type="text" placeholder="Enter code..." />
                         </Form.Group>
 
-                        <Button variant="primary" type="submit">
+                        <Button className='create-submit' variant="primary" type="submit">
                             Submit
                         </Button>
                         {this.state.error && <p>{this.state.error}</p>}

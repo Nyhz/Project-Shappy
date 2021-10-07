@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ProfileService from '../../../services/profile.services'
+import './UserInfo.css'
 
 
 export default class UserInfo extends Component {
@@ -33,9 +34,8 @@ export default class UserInfo extends Component {
 
     render() {
         return (
-            <div>
+            <div className='user_container'>
                 <img src={this.state.user?.avatar} alt="avatar" />
-                <p>Name: {this.state.user?.username}</p>
                 <p>Email: {this.state.user?.email}</p>
             </div>
         )
