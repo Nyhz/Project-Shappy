@@ -28,7 +28,8 @@
     "start": "REACT_APP_BASE_URL=http://localhost:5005/api react-scripts start",
     "build": "REACT_APP_BASE_URL=https://shappy.herokuapp.com/api react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject", 
+    "deploy": "rm -rf build/*; rm -rf ../server/public/*; npm run build; mv build/* ../server/public; cd ..; git add .; git commit -m deploy; git subtree push --prefix server heroku_app_master master"
   },
 
   "eslintConfig": {

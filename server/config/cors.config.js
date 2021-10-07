@@ -1,6 +1,6 @@
 const cors = require('cors');
 
-const whitelist = [process.env.ORIGIN];
+const whitelist = [process.env.ORIGIN, "http://localhost:5005"];
 
 const corsOptions = {
     origin: (origin, cb) => {

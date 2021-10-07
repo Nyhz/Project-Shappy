@@ -13,7 +13,7 @@ export default function ShopItem({ description, title, image, buyShield, buyAtta
 
                 return buyAttack
 
-            case "Attack5":
+            case "Attack x 5":
 
                 return buyFiveAttacks
 
@@ -21,7 +21,7 @@ export default function ShopItem({ description, title, image, buyShield, buyAtta
 
                 return buyShield
 
-            case "Shield5":
+            case "Shield x 5":
 
                 return buyFiveShields
 
@@ -33,12 +33,12 @@ export default function ShopItem({ description, title, image, buyShield, buyAtta
 
     return (
         <div>
-            <Col md={4} className="mb-3">
+            <Col md={4} className="shop_card mb-3">
                 <Card className='item-card' onClick={chooseProduct(title)}>
                     <Card.Img className='card_img' variant="top" src={image} />
                     <Card.Body>
                         <Card.Title className='card_title'>{title}</Card.Title>
-                        <Card.Text>{description}</Card.Text>
+                        <Card.Text className='card-text'>{description}</Card.Text>
 
                     </Card.Body>
                 </Card>

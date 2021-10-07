@@ -61,11 +61,12 @@ class DashItem extends Component {
                         <Card.Img variant="top" src={this.props?.imageUrl} />
                         <Card.Body>
                             <Link className='groupname-element' to={`/group/${this.props.groupRef._id}`}><span className='groupname-element'>/{this.props.groupRef.name}</span></Link>
-                            <Card.Text>
+                            <Card.Text className='interactions_container'>
+                                <span className='interaction-image' onClick={this.addImageAttack}><img src="../../../../Bomb.png" alt="Attack" /></span>
+
                                 <span onClick={this.addImageLike}>Likes: {this.props?.likes?.length}</span> -
                                 <span onClick={this.addImageDislike}>Dislikes: {this.props?.dislikes?.length}</span> -
-                                <span onClick={this.addImageShield}>Shields: {this.props?.shields}</span> -
-                                <span onClick={this.addImageAttack}>Attacks: {this.props.loggedUser?.attacks}</span>
+                                <span className='interaction-image' onClick={this.addImageShield}><img src="../../../../Shield.png" alt="Shield" /> {this.props?.shields}</span> -
                                 <p className='date-element'>{this.formatDate(this.props.createdAt)}</p>
                             </Card.Text>
                         </Card.Body>

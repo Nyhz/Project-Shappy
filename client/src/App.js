@@ -43,7 +43,7 @@ class App extends Component {
     return (
       <>
         <Navigation loggedUser={this.state.loggedUser} storeUser={this.storeUser} />
-        <Routes storeUser={this.storeUser} loggedUser={this.state.loggedUser} />
+        {this.state.loggedUser !== undefined && <Routes storeUser={this.storeUser} loggedUser={this.state.loggedUser} />}
 
       </>
     );
