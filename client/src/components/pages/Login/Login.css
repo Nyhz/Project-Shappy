@@ -1,5 +1,6 @@
 .form_container {
-  padding: 50px;
+  padding: 15px 25px 25px 25px;
+  background-color: black;
 }
 
 #errorMessage {

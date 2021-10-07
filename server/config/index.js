@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 
 const cors = require("cors");
 
+const path = require('path')
+
 
 module.exports = (app) => {
   app.set("trust proxy", 1);
@@ -22,4 +24,7 @@ module.exports = (app) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
+
+  app.use(express.static(path.join(__dirname, "public")))
+
 };

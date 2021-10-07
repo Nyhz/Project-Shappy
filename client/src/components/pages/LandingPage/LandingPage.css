@@ -55,4 +55,27 @@ h3 {
 
 .modal_container {
   margin-top: 80px;
+  background-color: black;
+}
+
+.modal_header {
+  background-color: black;
+  color: white;
+}
+
+.modal_header button {
+  background-color: white;
+  width: 25%;
+  color: black;
+}
+.modal_body {
+  background-color: black;
+  border: 2px solid rgb(196, 69, 152);
+  box-shadow: 0px 0px 5px 5px rgb(196, 69, 152);
+  color: rgb(196, 69, 152);
+  justify-content: center;
+}
+
+.modal_body button {
+  background-color: rgb(196, 69, 152);
 }
