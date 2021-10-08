@@ -25,8 +25,8 @@ export default function ShopItem({ title, image, buyShield, buyAttack, buyFiveAt
     }
 
     return (
-        <div className='card_container' onClick={chooseProduct(title)}>
-            <img className='shop-image' src={image} alt="shop" />
+        <div className='card_container'>
+            <img onClick={chooseProduct(title)} className='shop-image' src={image} alt="shop" />
         </div>
 
     )

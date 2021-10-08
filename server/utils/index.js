@@ -27,7 +27,7 @@ module.exports = {
     },
 
     hasCoins: (user) => {
-        if (user.coins >= 10) {
+        if (user.coins >= 5) {
             return true
         } else {
             return false
@@ -35,7 +35,7 @@ module.exports = {
     },
 
     hasMoreCoins: (user) => {
-        if (user.coins >= 50) {
+        if (user.coins >= 20) {
             return true
         } else {
             return false
