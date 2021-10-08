@@ -55,9 +55,24 @@ export default class SlanderBox extends Component {
 
     displaySlanders = (type) => {
 
+
+
+        const slandersCopy = [...this.state.slanders[type]]
+
+        slandersCopy.sort((a, b) => {
+            const aCopy = new Date(a.updatedAt)
+            const bCopy = new Date(b.updatedAt)
+
+            return bCopy - aCopy
+        })
+
+        if (type === 'active') {
+            slandersCopy.splice(5)
+        }
+
         return (
-            this.state.slanders[type]?.length > 0 ?
-                this.state.slanders[type]?.map(slander => {
+            slandersCopy?.length > 0 ?
+                slandersCopy?.map(slander => {
                     return (
                         <SlanderItem refreshSlanders={this.refreshSlanders} key={slander._id} {...slander} loggedUser={this.props.loggedUser} />
                     )

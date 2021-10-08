@@ -15,7 +15,7 @@ export default function GroupItem({ _id, name, groupAvatar, endDate, createdAt }
     return (
 
         <Col md={4} className="mb-3">
-            <Card className='card_container'>
+            <Card className='card_container2'>
                 <Card.Title className='card_title'>{name}</Card.Title>
                 <Card.Img className='card_img' variant="top" src={groupAvatar} />
                 <Card.Body className='card_body'>

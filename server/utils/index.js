@@ -2,7 +2,7 @@
 module.exports = {
     democracy: (arrDislikes, shields, users) => {
 
-        if (((arrDislikes.length * 100) / users) >= 75 && shields == 0) {
+        if (((arrDislikes.length * 100) / users) >= 20 && shields == 0) {
             return true;
         }
         else {
@@ -12,11 +12,11 @@ module.exports = {
 
     democracySlander: (arrDislikes, arrLikes, users, shields) => {
 
-        if (((arrDislikes.length * 100) / users) >= 75) {
+        if (((arrDislikes.length * 100) / users) >= 20) {
 
             return -1;
         }
-        else if (((arrLikes.length * 100) / users) >= 75) {
+        else if (((arrLikes.length * 100) / users) >= 20) {
 
             return 1;
         }

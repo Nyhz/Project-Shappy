@@ -57,9 +57,7 @@ export default class GroupPage extends Component {
     refreshImages = () => {
         this.groupService.getSingleGroup(this.props.match.params.groupId)
             .then((group) => {
-                console.log('imagenes normales', group.data.images);
                 const orderedImages = group.data.images.sort((a, b) => b.createdAt - a.createdAt)
-                console.log('ordenadas', orderedImages);
                 this.setState({
                     ...this.state,
                     images: orderedImages

@@ -13,7 +13,8 @@ export default class CreateImage extends Component {
             groupRef: null,
             groups: null,
             name: 'groupRef',
-            error: null
+            error: null,
+            disabled: false
 
         }
 
@@ -53,10 +54,17 @@ export default class CreateImage extends Component {
     handleChange = (e) => {
 
         const { value } = e.target;
+        let newValue = ""
+
+        if (value.match(/^#.*$/)) {
+            newValue = value.substring(1)
+        } else {
+            newValue = value
+        }
 
         this.setState({
             ...this.state,
-            tag: value
+            tag: newValue
         })
     }
 
@@ -92,8 +100,9 @@ export default class CreateImage extends Component {
 
     }
 
-    handleSubmit = (e) => {
 
+    handleSubmit = async (e) => {
+        await this.setState({ disabled: true })
         e.preventDefault();
         this.contentService.newImage(this.state)
             .then((resImage) => {
@@ -113,6 +122,8 @@ export default class CreateImage extends Component {
             })
     }
 
+    disableButton = () => document.getElementById('uploadbutton').disabled = true
+
 
     render = () => {
         return (
@@ -121,7 +132,7 @@ export default class CreateImage extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group className="mb-3" controlId="tag">
                         <Form.Label>Tag: </Form.Label>
-                        <Form.Control onChange={(e) => this.handleChange(e)} name="tag" type="text" />
+                        <Form.Control onChange={(e) => this.handleChange(e)} name="tag" type="text" autoComplete='off' />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="imageUrl">
                         <Form.Control className='image-upload' onChange={(e) => this.handleFile(e)} name="imageUrl" type="file" />
@@ -137,7 +148,7 @@ export default class CreateImage extends Component {
                             }
                         </Form.Control>
                     </Form.Group>
-                    <Button className='image-submit' variant="primary" type="submit">
+                    <Button disabled={this.state.disabled} id='uploadbutton' className='image-submit' variant="primary" type="submit">
                         Submit
                     </Button>
                 </Form>

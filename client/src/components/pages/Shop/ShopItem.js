@@ -1,8 +1,8 @@
 import React from 'react'
-import { Card, Col } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 import './ShopItem.css'
 
-export default function ShopItem({ description, title, image, buyShield, buyAttack, buyFiveAttacks, buyFiveShields }) {
+export default function ShopItem({ title, image, buyShield, buyAttack, buyFiveAttacks, buyFiveShields }) {
 
     const chooseProduct = (title) => {
         switch (title) {
@@ -25,10 +25,8 @@ export default function ShopItem({ description, title, image, buyShield, buyAtta
     }
 
     return (
-        <div className='card_container'>
-            <Card className='item-card' onClick={chooseProduct(title)}>
-                <Card.Img className='card_img' variant="top" src={image} />
-            </Card>
+        <div className='card_container' onClick={chooseProduct(title)}>
+            <img className='shop-image' src={image} alt="shop" />
         </div>
 
     )

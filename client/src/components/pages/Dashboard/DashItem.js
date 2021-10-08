@@ -68,7 +68,6 @@ class DashItem extends Component {
                                 <span className='interaction-shield' onClick={this.addImageShield}><img src="../../../../Shield.png" alt="Shield" /> {this.props?.shields}</span>
                             </Card.Text>
                             <p className='date-element'>{this.formatDate(this.props.createdAt)}</p>
-
                         </Card.Body>
                     </Card>
                 </Col>

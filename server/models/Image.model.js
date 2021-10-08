@@ -27,10 +27,10 @@ const imageSchema = new Schema({
 
     tag: {
         type: String,
-        // required: true,
+        required: true,
         lowercase: true,
+        minlength: 1,
         maxlength: 20,
-        match: [/^[a-zA-Z]+$/, 'is invalid']
     },
 
     shields: {

@@ -11,7 +11,7 @@ router.put('/shield', (req, res) => {
         .findById(userId)
         .then((user) => {
             if (hasCoins(user)) {
-                return User.findByIdAndUpdate(user, { $inc: { shields: 1, coins: -10 } }, { new: true })
+                return User.findByIdAndUpdate(user, { $inc: { shields: 1, coins: -5 } }, { new: true })
             }
             else {
                 throw new Error('You dont have enough coins')
@@ -29,7 +29,7 @@ router.put('/fiveshields', (req, res) => {
         .findById(userId)
         .then((user) => {
             if (hasMoreCoins(user)) {
-                return User.findByIdAndUpdate(user, { $inc: { shields: 5, coins: -50 } }, { new: true })
+                return User.findByIdAndUpdate(user, { $inc: { shields: 5, coins: -20 } }, { new: true })
             }
             else {
                 throw new Error('You dont have enough coins')
@@ -47,7 +47,7 @@ router.put('/attack', (req, res) => {
         .findById(userId)
         .then((user) => {
             if (hasCoins(user)) {
-                return User.findByIdAndUpdate(user, { $inc: { attacks: 1, coins: -10 } }, { new: true })
+                return User.findByIdAndUpdate(user, { $inc: { attacks: 1, coins: -5 } }, { new: true })
             }
             else {
                 throw new Error('You dont have enough coins')
@@ -65,7 +65,7 @@ router.put('/fiveattacks', (req, res) => {
         .findById(userId)
         .then((user) => {
             if (hasMoreCoins(user)) {
-                return User.findByIdAndUpdate(user, { $inc: { attacks: 5, coins: -50 } }, { new: true })
+                return User.findByIdAndUpdate(user, { $inc: { attacks: 5, coins: -20 } }, { new: true })
             }
             else {
                 throw new Error('You dont have enough coins')

@@ -10,7 +10,8 @@ export default class CreateSlander extends Component {
         this.state = {
             content: null,
             groupRef: null,
-            error: null
+            error: null,
+            disabled: false
 
         }
 
@@ -70,8 +71,8 @@ export default class CreateSlander extends Component {
         })
     }
 
-    handleSubmit = (e) => {
-
+    handleSubmit = async (e) => {
+        await this.setState({ disabled: true })
         e.preventDefault();
         this.contentService.newSlander(this.state)
             .then((slander) => {
@@ -110,7 +111,7 @@ export default class CreateSlander extends Component {
                             }
                         </Form.Control>
                     </Form.Group>
-                    <Button className='slander-submit' type="submit">
+                    <Button disabled={this.state.disabled} className='slander-submit' type="submit">
                         Submit
                     </Button>
                 </Form>

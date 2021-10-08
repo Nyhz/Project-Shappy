@@ -4,14 +4,14 @@
   background-color: black;
 }
 
-.card_container {
+.card_container2 {
   background-color: black;
   box-shadow: 0px 0px 15px 5px #8ec4ca;
   color: white;
   margin: 50px 25px;
 }
 
-.card_container img {
+.card_container2 img {
   height: 75%;
   width: 75%;
   object-fit: cover;

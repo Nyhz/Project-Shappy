@@ -119,7 +119,8 @@ router.get('/images/:groupId', (req, res) => {
     Image
         .find({ groupRef: groupId })
         .populate('groupRef')
-        .sort({ "createdAt": -1 })
+        .limit(30)
+        .sort({ "updatedAt": -1 })
         .then((images) => {
             res.json({ code: 200, message: 'Images fetched', images })
         })

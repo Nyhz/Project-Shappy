@@ -217,7 +217,7 @@ router.post('/image', (req, res) => {
                     return Image.findById(image._id)
                 })
                 .then(() => {
-                    return User.findByIdAndUpdate(authorId, { $inc: { coins: 1 } })
+                    return User.findByIdAndUpdate(authorId, { $inc: { coins: 2 } })
                 })
                 .then(image => res.json({ code: 200, message: 'Image created', image }))
         })
@@ -354,8 +354,8 @@ router.put('/image/:id/attack', (req, res) => {
                     .then(res => console.log(res))
                     .catch(err => console.log(err, "Error"))
             }
-            else{
-                throw new Error ('You don´t have attacks')
+            else {
+                throw new Error('You don´t have attacks')
             }
         })
         .then(image => {
